@@ -19,14 +19,10 @@
             theme: {
                 extend: {
                     colors: {
-                        saffron: {
-                            50: '#fffbf0', 100: '#fffae0', 500: '#F97316', 600: '#EA580C', 700: '#C2410C',
-                        },
+                        saffron: { 50: '#fffbf0', 100: '#fffae0', 500: '#F97316', 600: '#EA580C', 700: '#C2410C' },
                         gold: '#FBBF24',
                     },
-                    fontFamily: {
-                        sans: ['Mukta', 'Poppins', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Mukta', 'Poppins', 'sans-serif'] }
                 }
             }
         }
@@ -39,15 +35,16 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #F97316; border-radius: 10px; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="bg-orange-50/20 text-gray-800 font-sans">
+<body class="bg-orange-50/20 text-gray-800 font-sans relative">
 
     <!-- TOP HEADER BAR -->
     <div class="saffron-gradient text-white py-2 px-4 text-center text-xs md:text-sm font-semibold shadow-md flex justify-between items-center flex-wrap gap-2">
         <div class="mx-auto flex items-center gap-2">
             <span>🚩 "एक समाज • एक विचार • एक दिशा" 🚩</span>
-            <span class="bg-yellow-400 text-amber-950 px-2 py-0.5 rounded text-[10px] font-bold">स्थापना दिवस: १ मे २०२६ (डिजिटल पर्व)</span>
+            <span class="bg-yellow-400 text-amber-950 px-2 py-0.5 rounded text-[10px] font-bold shadow-sm">स्थापना दिवस: १ मे २०२६ (डिजिटल पर्व)</span>
         </div>
         <div class="hidden lg:flex items-center gap-4 text-xs">
             <span><i class="fa-solid fa-phone mr-1"></i> हेल्पलाईन: +91 9623558719</span>
@@ -56,14 +53,14 @@
     </div>
 
     <!-- MAIN NAV BAR -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <nav class="bg-white shadow-lg sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-20">
                 <!-- Logo & Title -->
                 <div class="flex items-center gap-3">
-                    <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center border-2 border-saffron-500 shadow-inner">
-                        <svg viewBox="0 0 100 100" class="w-12 h-12">
-                            <!-- Flute (Bansuri) -->
+                    <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center border-2 border-saffron-500 shadow-inner overflow-hidden relative">
+                        <svg viewBox="0 0 100 100" class="w-12 h-12 relative z-10">
+                            <!-- Flute -->
                             <rect x="15" y="48" width="70" height="4" rx="2" fill="#D97706" transform="rotate(-15 50 50)"></rect>
                             <circle cx="30" cy="44" r="1" fill="#fff"></circle><circle cx="40" cy="41" r="1" fill="#fff"></circle><circle cx="50" cy="39" r="1" fill="#fff"></circle>
                             <!-- Peacock Feather -->
@@ -87,64 +84,64 @@
                     <a href="#ekikaran" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">एकीकरण</a>
                     <a href="#census" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">डिजिटल जनगणना</a>
                     <a href="#dashboard" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">डॅशबोर्ड</a>
-                    <a href="#talent" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">गुणवंत गौरव</a>
                     <a href="#matrimony" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">विवाह परिचय</a>
                     <a href="#committee" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">पदाधिकारी</a>
-                    <a href="#gallery" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">गॅलरी</a>
-                    <button onclick="openAdminModal()" class="py-1.5 px-3.5 bg-gray-950 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-1.5 font-bold">
+                    <a href="#events" class="py-2 px-3 text-gray-700 hover:text-saffron-500 transition">उपक्रम</a>
+                    <button onclick="openAdminModal()" class="py-1.5 px-3.5 bg-gray-950 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-1.5 font-bold shadow-md">
                         <i class="fa-solid fa-lock text-[10px]"></i> ॲडमिन
                     </button>
-                    <a href="#donation" class="py-2 px-4 bg-saffron-500 text-white rounded-full hover:bg-saffron-600 transition shadow-md font-bold">देणगी</a>
+                    <a href="#donation" class="py-1.5 px-4 bg-saffron-500 text-white rounded-full hover:bg-saffron-600 transition shadow-md font-bold ml-1">देणगी</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
                 <div class="xl:hidden flex items-center gap-2">
-                    <button onclick="openAdminModal()" class="py-1.5 px-3 bg-gray-900 text-white text-xs rounded-lg hover:bg-gray-800 transition flex items-center gap-1 font-bold">
+                    <button onclick="openAdminModal()" class="py-1.5 px-3 bg-gray-900 text-white text-xs rounded-lg hover:bg-gray-800 transition flex items-center gap-1 font-bold shadow-sm">
                         <i class="fa-solid fa-lock text-[9px]"></i> ॲडमिन
                     </button>
-                    <button onclick="toggleMobileMenu()" class="outline-none text-gray-700 hover:text-saffron-500">
-                        <svg class="w-8 h-8" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    <button onclick="toggleMobileMenu()" class="outline-none text-gray-700 hover:text-saffron-500 p-1">
+                        <svg class="w-7 h-7" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden xl:hidden bg-orange-50 border-t border-orange-100 px-4 py-2 space-y-1 absolute w-full shadow-lg">
-            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 px-3 text-saffron-600 font-bold bg-orange-100 rounded">मुख्यपृष्ठ</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b">आमच्याविषयी</a>
-            <a href="#census" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b">डिजिटल जनगणना</a>
-            <a href="#dashboard" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b">लाईव्ह डॅशबोर्ड</a>
-            <a href="#matrimony" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b">वधू-वर परिचय</a>
-            <a href="#committee" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b">पदाधिकारी</a>
-            <a href="#donation" onclick="toggleMobileMenu()" class="block py-2 px-3 text-center bg-saffron-500 text-white font-bold rounded mt-2">देणगी विभाग</a>
+        <div id="mobile-menu" class="hidden xl:hidden bg-white border-t border-orange-100 px-4 py-2 space-y-1 absolute w-full shadow-2xl z-50 rounded-b-2xl">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2 px-3 text-saffron-600 font-bold bg-orange-50 rounded-lg">मुख्यपृष्ठ</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b border-gray-100">आमच्याविषयी</a>
+            <a href="#census" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b border-gray-100">डिजिटल जनगणना</a>
+            <a href="#dashboard" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b border-gray-100">लाईव्ह डॅशबोर्ड</a>
+            <a href="#matrimony" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b border-gray-100">वधू-वर परिचय</a>
+            <a href="#committee" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b border-gray-100">पदाधिकारी</a>
+            <a href="#events" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 font-bold border-b border-gray-100">आगामी उपक्रम</a>
+            <a href="#donation" onclick="toggleMobileMenu()" class="block py-2.5 px-3 text-center bg-saffron-500 text-white font-bold rounded-lg mt-3 shadow-md">देणगी विभाग</a>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="home" class="relative bg-amber-950 text-white overflow-hidden py-16 md:py-24 px-4">
-        <!-- Background Overlay -->
+    <section id="home" class="relative bg-amber-950 text-white overflow-hidden py-16 md:py-28 px-4">
+        <!-- Background Elements -->
         <div class="absolute inset-0 opacity-20 bg-cover bg-center mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1590050752117-238cb0612b1b?auto=format&fit=crop&q=80&w=1920');"></div>
-        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-saffron-500 rounded-full filter blur-3xl opacity-20"></div>
-        <div class="absolute -left-20 -top-20 w-96 h-96 bg-yellow-500 rounded-full filter blur-3xl opacity-20"></div>
+        <div class="absolute -right-20 -bottom-20 w-[30rem] h-[30rem] bg-saffron-500 rounded-full filter blur-[100px] opacity-30"></div>
+        <div class="absolute -left-20 -top-20 w-[30rem] h-[30rem] bg-yellow-500 rounded-full filter blur-[100px] opacity-20"></div>
 
-        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Left Text -->
-            <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
-                <span class="inline-flex items-center gap-2 bg-saffron-500/30 text-saffron-300 border border-saffron-500/50 rounded-full px-4 py-1.5 text-xs font-semibold">
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <!-- Left Text Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <span class="inline-flex items-center gap-2 bg-white/10 text-saffron-300 border border-saffron-500/50 rounded-full px-4 py-1.5 text-xs font-semibold backdrop-blur-sm shadow-lg">
                     <span class="w-2 h-2 rounded-full bg-saffron-400 animate-pulse"></span> नवीन सुवर्ण पर्व: डिजिटल महा-एकीकरण २०२६
                 </span>
-                <h2 class="text-3xl md:text-5xl font-black leading-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-200">
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-200 drop-shadow-sm">
                     अखिल भारतीय गोपाळ समाज उत्कर्ष संघ
                 </h2>
-                <p class="text-base md:text-lg text-orange-100 font-medium italic">
+                <p class="text-base md:text-xl text-orange-100 font-medium italic drop-shadow-md">
                     "मन जोडूया... समाज घडवूया... भविष्य उज्ज्वल बनवूया!"
                 </p>
                 <p class="text-xs md:text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                     गोपाळ समाजातील बांधवांच्या वैयक्तिक गोपनीयतेची (Privacy) संपूर्ण काळजी घेऊन हा सुरक्षित डिजिटल डेटाबेस प्रस्थापित केला गेला आहे. येथे नोंदवलेली सर्व वैयक्तिक माहिती कूटबद्ध (Encrypted) स्वरूपात सुरक्षित साठवली जाते.
                 </p>
-                <div class="flex flex-wrap gap-3 justify-center lg:justify-start pt-2">
-                    <a href="#census" class="px-6 py-3 bg-saffron-500 hover:bg-saffron-600 text-white text-xs font-bold rounded-lg shadow-lg hover:shadow-orange-500/20 transition-all flex items-center gap-2">
+                <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-4">
+                    <a href="#census" class="px-8 py-3.5 bg-gradient-to-r from-saffron-500 to-orange-600 hover:from-saffron-600 hover:to-orange-700 text-white text-sm font-bold rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] transition-all flex items-center gap-2 transform hover:-translate-y-1">
                         <i class="fa-solid fa-users"></i> जनगणनेत नाव नोंदवा
                     </a>
                 </div>
@@ -152,21 +149,24 @@
 
             <!-- Right Graphic (Thematic Krishna Card) -->
             <div class="lg:col-span-5 flex justify-center hidden md:flex">
-                <div class="relative w-72 h-72 md:w-80 md:h-80">
-                    <div class="absolute inset-0 rounded-full border-4 border-dashed border-yellow-500/30 animate-spin" style="animation-duration: 25s;"></div>
-                    <div class="absolute inset-4 rounded-full border-2 border-orange-500/20"></div>
-                    <div class="absolute inset-8 rounded-full bg-gradient-to-tr from-saffron-600 to-yellow-500 flex flex-col items-center justify-center p-6 text-center shadow-2xl border-4 border-yellow-300/50">
-                        <svg viewBox="0 0 100 100" class="w-16 h-16 drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]">
-                            <path d="M 50 15 C 25 15, 20 40, 20 50 C 20 70, 50 85, 50 85 C 50 85, 80 70, 80 50 C 80 40, 75 15, 50 15 Z" fill="rgba(255,255,255,0.08)"></path>
-                            <!-- Bansuri -->
-                            <line x1="10" y1="65" x2="90" y2="35" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
-                            <!-- Peacock Feather -->
-                            <path d="M 50 15 Q 60 25 50 35 Q 40 25 50 15" fill="#059669" stroke="#FBBF24" stroke-width="1"/>
-                            <circle cx="50" cy="27" r="3" fill="#0284c7" />
-                        </svg>
-                        <h4 class="text-sm md:text-base font-bold text-white mt-1 drop-shadow">|| श्रीमद्भगवद्गीता ||</h4>
-                        <p class="text-[10px] text-yellow-100 font-serif italic mt-0.5 max-w-[160px]">"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन"</p>
-                        <div class="mt-2 bg-white/20 text-white rounded-full px-2.5 py-0.5 text-[9px] font-bold backdrop-blur-sm">🚩 जय श्रीकृष्ण 🚩</div>
+                <div class="relative w-80 h-80 md:w-96 md:h-96">
+                    <!-- Spinning Rings -->
+                    <div class="absolute inset-0 rounded-full border-4 border-dashed border-yellow-500/40 animate-[spin_30s_linear_infinite]"></div>
+                    <div class="absolute inset-4 rounded-full border-2 border-orange-500/30"></div>
+                    <!-- Main Card -->
+                    <div class="absolute inset-8 rounded-full bg-gradient-to-tr from-saffron-600 to-yellow-500 flex flex-col items-center justify-center p-6 text-center shadow-2xl border-4 border-yellow-300/50 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <svg viewBox="0 0 100 100" class="w-20 h-20 drop-shadow-[0_4px_6px_rgba(0,0,0,0.4)] mb-2">
+                                <path d="M 50 15 C 25 15, 20 40, 20 50 C 20 70, 50 85, 50 85 C 50 85, 80 70, 80 50 C 80 40, 75 15, 50 15 Z" fill="rgba(255,255,255,0.1)"></path>
+                                <line x1="10" y1="65" x2="90" y2="35" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+                                <path d="M 50 15 Q 60 25 50 35 Q 40 25 50 15" fill="#059669" stroke="#FBBF24" stroke-width="1.5"/>
+                                <circle cx="50" cy="27" r="4" fill="#0284c7" />
+                            </svg>
+                            <h4 class="text-base md:text-lg font-bold text-white drop-shadow-md">|| श्रीमद्भगवद्गीता ||</h4>
+                            <p class="text-[11px] text-yellow-100 font-serif italic mt-1 max-w-[180px]">"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन"</p>
+                            <div class="mt-3 bg-white/25 text-white rounded-full px-3 py-1 text-[10px] font-bold backdrop-blur-md border border-white/20 shadow-sm">🚩 जय श्रीकृष्ण 🚩</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -174,98 +174,98 @@
     </section>
 
     <!-- STATISTICS QUICK STRIP (LIVE) -->
-    <section class="bg-white border-y border-orange-100 shadow-inner py-4 sticky top-20 z-40">
+    <section class="bg-white border-b border-orange-100 shadow-sm py-5 sticky top-20 z-30">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div class="p-1 border-r border-orange-100">
-                <span class="block text-2xl md:text-3xl font-extrabold text-saffron-600" id="live-census-counter">0</span>
-                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider">लाईव्ह डिजिटल जनगणना</span>
+            <div class="p-2 border-r border-orange-100">
+                <span class="block text-3xl md:text-4xl font-extrabold text-saffron-600" id="live-census-counter">0</span>
+                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider mt-1 block">लाईव्ह डिजिटल जनगणना</span>
             </div>
-            <div class="p-1 md:border-r border-orange-100">
-                <span class="block text-2xl md:text-3xl font-extrabold text-saffron-600" id="live-states-counter">0</span>
-                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider">नोंदणीकृत राज्ये</span>
+            <div class="p-2 md:border-r border-orange-100">
+                <span class="block text-3xl md:text-4xl font-extrabold text-saffron-600" id="live-states-counter">0</span>
+                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider mt-1 block">नोंदणीकृत राज्ये</span>
             </div>
-            <div class="p-1 border-r border-orange-100">
-                <span class="block text-2xl md:text-3xl font-extrabold text-saffron-600" id="last-reg-time">-</span>
-                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider">शेवटची नोंदणी</span>
+            <div class="p-2 border-r border-orange-100">
+                <span class="block text-2xl md:text-3xl font-extrabold text-saffron-600 mt-1" id="last-reg-time">-</span>
+                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider mt-2 block">शेवटची नोंदणी</span>
             </div>
-            <div class="p-1">
-                <span class="block text-2xl md:text-3xl font-extrabold text-green-500 animate-pulse">१००%</span>
-                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider">सुरक्षित डेटा एनक्रिप्शन</span>
+            <div class="p-2">
+                <span class="block text-3xl md:text-4xl font-extrabold text-green-500 animate-pulse">१००%</span>
+                <span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-wider mt-1 block">सुरक्षित एनक्रिप्शन</span>
             </div>
         </div>
     </section>
 
     <!-- REAL-TIME LIVE RECENT REGISTRATIONS FEED -->
-    <section id="live-feed" class="py-8 px-4 bg-orange-50/10 border-b border-orange-100">
+    <section id="live-feed" class="py-6 px-4 bg-orange-50/30 border-b border-orange-100">
         <div class="max-w-7xl mx-auto">
             <div class="flex items-center gap-2 mb-4">
-                <span class="flex h-2.5 w-2.5 relative">
+                <span class="flex h-3 w-3 relative">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <h3 class="text-sm md:text-base font-bold text-gray-900">नुकतीच झालेली नोंदणी (लाईव्ह सर्व्हर अपडेट)</h3>
-                <span class="text-[10px] text-gray-500 ml-auto hidden sm:inline"><i class="fa-solid fa-shield text-saffron-500"></i> युजरच्या सुरक्षेसाठी संपर्क क्रमांक मास्क केला आहे</span>
+                <h3 class="text-sm md:text-base font-bold text-gray-900">लाईव्ह सर्व्हर अपडेट: नुकतीच झालेली नोंदणी</h3>
+                <span class="text-[10px] text-gray-500 ml-auto hidden sm:inline bg-white px-2 py-1 rounded-md border border-gray-200"><i class="fa-solid fa-shield text-saffron-500"></i> सुरक्षेसाठी नंबर मास्क केला आहे</span>
             </div>
 
-            <!-- Feed Grid Container -->
-            <div id="recent-registrations-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div class="col-span-full py-4 text-center text-xs text-gray-500">
-                    <i class="fa-solid fa-circle-notch animate-spin text-saffron-500 text-lg mb-1 block"></i>
+            <div id="recent-registrations-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="col-span-full py-6 text-center text-xs text-gray-500 bg-white rounded-xl border border-orange-100 shadow-sm">
+                    <i class="fa-solid fa-circle-notch animate-spin text-saffron-500 text-2xl mb-2 block"></i>
                     सुरक्षित सर्व्हरवरून रिअल-टाईम नोंदी शोधत आहे...
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ABOUT SECTION (Preserved original UI) -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="py-16 px-4 bg-white">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">परिचय व ध्येय</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">अखिल भारतीय गोपाळ समाज उत्कर्ष संघ</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">अखिल भारतीय गोपाळ समाज उत्कर्ष संघ</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div class="lg:col-span-5 bg-orange-50/20 p-6 rounded-2xl shadow-md border border-orange-100 space-y-4">
-                    <h4 class="text-base font-bold text-saffron-600 border-b pb-2 border-orange-100 flex items-center gap-2">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5 bg-orange-50/40 p-8 rounded-3xl shadow-lg border border-orange-100 space-y-5 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 text-[100px] text-orange-500/10"><i class="fa-solid fa-quote-right"></i></div>
+                    <h4 class="text-lg font-bold text-saffron-600 border-b-2 pb-3 border-orange-200 flex items-center gap-2 relative z-10">
                         <i class="fa-solid fa-bullseye"></i> संघटनेची मुख्य भूमिका
                     </h4>
-                    <p class="text-gray-600 text-xs leading-relaxed">
+                    <p class="text-gray-700 text-sm leading-relaxed relative z-10">
                         आमचा मुख्य उद्देश विखुरलेल्या गोपाळ समाज बांधवांना एका धाग्यात गुंफणे हा आहे. शिक्षण, नोकरी, व्यवसाय आणि वैवाहिक क्षेत्रात सक्षम व्यासपीठ देऊन पिढ्यानपिढ्या मागे राहिलेल्या घटकांना प्रवाहात आणणे हे आमचे उद्दिष्ट आहे.
                     </p>
-                    <div class="space-y-2 text-xs">
-                        <div class="flex items-start gap-2"><span class="text-saffron-500 mt-0.5"><i class="fa-solid fa-circle-check text-[10px]"></i></span><p class="text-gray-700 font-semibold">संपूर्ण भारतात अधिकृत सामाजिक नेटवर्क विस्तार.</p></div>
-                        <div class="flex items-start gap-2"><span class="text-saffron-500 mt-0.5"><i class="fa-solid fa-circle-check text-[10px]"></i></span><p class="text-gray-700 font-semibold">शासकीय योजना व सवलती शेवटच्या घटकांपर्यंत पोहोचवणे.</p></div>
-                        <div class="flex items-start gap-2"><span class="text-saffron-500 mt-0.5"><i class="fa-solid fa-circle-check text-[10px]"></i></span><p class="text-gray-700 font-semibold">युवक, युवती आणि महिलांना सामाजिक क्षेत्रात स्वयंपूर्ण बनवणे.</p></div>
+                    <div class="space-y-3 text-sm relative z-10">
+                        <div class="flex items-start gap-2.5"><span class="text-saffron-500 mt-0.5 text-base"><i class="fa-solid fa-circle-check"></i></span><p class="text-gray-800 font-semibold">संपूर्ण भारतात अधिकृत सामाजिक नेटवर्क विस्तार.</p></div>
+                        <div class="flex items-start gap-2.5"><span class="text-saffron-500 mt-0.5 text-base"><i class="fa-solid fa-circle-check"></i></span><p class="text-gray-800 font-semibold">शासकीय योजना व सवलती शेवटच्या घटकांपर्यंत पोहोचवणे.</p></div>
+                        <div class="flex items-start gap-2.5"><span class="text-saffron-500 mt-0.5 text-base"><i class="fa-solid fa-circle-check"></i></span><p class="text-gray-800 font-semibold">युवक, युवती आणि महिलांना सामाजिक क्षेत्रात स्वयंपूर्ण बनवणे.</p></div>
                     </div>
                 </div>
 
                 <!-- 6 Objectives Grid -->
-                <div class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-orange-50 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-saffron-500 flex items-center justify-center text-sm font-bold mb-2"><i class="fa-solid fa-network-wired"></i></div>
-                        <h5 class="font-bold text-gray-900 text-xs mb-1">समाज एकीकरण</h5><p class="text-[10px] text-gray-500">अखंड भारतभरातील गोपाळ समाजाला संघटित करणे.</p>
+                <div class="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 hover:shadow-xl hover:border-saffron-300 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-lg font-bold mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-network-wired"></i></div>
+                        <h5 class="font-bold text-gray-900 text-sm mb-1.5">समाज एकीकरण</h5><p class="text-xs text-gray-500 leading-relaxed">अखंड भारतभरातील गोपाळ समाजाला संघटित करणे.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-orange-50 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-saffron-500 flex items-center justify-center text-sm font-bold mb-2"><i class="fa-solid fa-id-card"></i></div>
-                        <h5 class="font-bold text-gray-900 text-xs mb-1">डिजिटल जनगणना</h5><p class="text-[10px] text-gray-500">प्रत्येक कुटुंबाची सुरक्षित डिजिटल नोंदणी.</p>
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 hover:shadow-xl hover:border-saffron-300 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-lg font-bold mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-id-card"></i></div>
+                        <h5 class="font-bold text-gray-900 text-sm mb-1.5">डिजिटल जनगणना</h5><p class="text-xs text-gray-500 leading-relaxed">प्रत्येक कुटुंबाची सुरक्षित डिजिटल नोंदणी.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-orange-50 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-saffron-500 flex items-center justify-center text-sm font-bold mb-2"><i class="fa-solid fa-graduation-cap"></i></div>
-                        <h5 class="font-bold text-gray-900 text-xs mb-1">शैक्षणिक प्रगती</h5><p class="text-[10px] text-gray-500">विद्यार्थ्यांना शिष्यवृत्ती व करिअर मार्गदर्शन देणे.</p>
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 hover:shadow-xl hover:border-saffron-300 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-lg font-bold mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <h5 class="font-bold text-gray-900 text-sm mb-1.5">शैक्षणिक प्रगती</h5><p class="text-xs text-gray-500 leading-relaxed">विद्यार्थ्यांना शिष्यवृत्ती व करिअर मार्गदर्शन देणे.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-orange-50 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-saffron-500 flex items-center justify-center text-sm font-bold mb-2"><i class="fa-solid fa-briefcase"></i></div>
-                        <h5 class="font-bold text-gray-900 text-xs mb-1">रोजगार व उद्योग</h5><p class="text-[10px] text-gray-500">व्यवसाय मार्गदर्शन व नोकरीच्या संधी उपलब्ध करणे.</p>
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 hover:shadow-xl hover:border-saffron-300 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-lg font-bold mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-briefcase"></i></div>
+                        <h5 class="font-bold text-gray-900 text-sm mb-1.5">रोजगार व उद्योग</h5><p class="text-xs text-gray-500 leading-relaxed">व्यवसाय मार्गदर्शन व नोकरीच्या संधी उपलब्ध करणे.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-orange-50 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-saffron-500 flex items-center justify-center text-sm font-bold mb-2"><i class="fa-solid fa-user-shield"></i></div>
-                        <h5 class="font-bold text-gray-900 text-xs mb-1">युवक सक्षमीकरण</h5><p class="text-[10px] text-gray-500">तरुणांमध्ये नेतृत्व कौशल्य विकसित करणे.</p>
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 hover:shadow-xl hover:border-saffron-300 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-lg font-bold mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-user-shield"></i></div>
+                        <h5 class="font-bold text-gray-900 text-sm mb-1.5">युवक सक्षमीकरण</h5><p class="text-xs text-gray-500 leading-relaxed">तरुणांमध्ये नेतृत्व कौशल्य विकसित करणे.</p>
                     </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-orange-50 hover:shadow-md transition">
-                        <div class="w-8 h-8 rounded-lg bg-orange-100 text-saffron-500 flex items-center justify-center text-sm font-bold mb-2"><i class="fa-solid fa-person-dress"></i></div>
-                        <h5 class="font-bold text-gray-900 text-xs mb-1">महिला बचत गट</h5><p class="text-[10px] text-gray-500">महिला गृहउद्योगांना योग्य व्यासपीठ देणे.</p>
+                    <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 hover:shadow-xl hover:border-saffron-300 transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-lg font-bold mb-3 group-hover:scale-110 transition-transform"><i class="fa-solid fa-person-dress"></i></div>
+                        <h5 class="font-bold text-gray-900 text-sm mb-1.5">महिला बचत गट</h5><p class="text-xs text-gray-500 leading-relaxed">महिला गृहउद्योगांना योग्य व्यासपीठ देणे.</p>
                     </div>
                 </div>
             </div>
@@ -273,108 +273,110 @@
     </section>
 
     <!-- INTEGRATION CAMPAIGN (Ekikaran) -->
-    <section id="ekikaran" class="py-12 px-4 bg-orange-500 text-white relative overflow-hidden">
+    <section id="ekikaran" class="py-16 px-4 bg-orange-600 text-white relative overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-20" style="background-image: url('https://images.unsplash.com/photo-1544654803-b69140b285a1?auto=format&fit=crop&q=80&w=1200');"></div>
-        <div class="max-w-5xl mx-auto relative z-10 text-center space-y-3">
-            <span class="bg-white/20 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">🚩 ऐक्य हीच शक्ती 🚩</span>
-            <h3 class="text-2xl md:text-3xl font-extrabold">गोपाळ समाज एकीकरण राष्ट्रीय अभियान</h3>
-            <p class="text-xs md:text-sm text-orange-100 max-w-2xl mx-auto leading-relaxed">
+        <div class="max-w-5xl mx-auto relative z-10 text-center space-y-4">
+            <span class="bg-white/20 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase border border-white/30 backdrop-blur-sm shadow-lg">🚩 ऐक्य हीच शक्ती 🚩</span>
+            <h3 class="text-3xl md:text-4xl font-extrabold text-yellow-300 drop-shadow-md">गोपाळ समाज एकीकरण राष्ट्रीय अभियान</h3>
+            <p class="text-sm md:text-base text-orange-100 max-w-3xl mx-auto leading-relaxed">
                 विविध भौगोलिक भागांत विखुरलेल्या आपल्या समाज बांधवांना एका धाग्यात आणून लोकसंख्या बल आणि सामाजिक सुरक्षितता प्रस्थापित करणे हेच आपले मुख्य ध्येय आहे.
             </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 text-left text-gray-900">
-                <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-yellow-500">
-                    <h5 class="font-bold text-saffron-600 text-xs md:text-sm mb-1.5">देशात स्वतंत्र ओळख निर्माण करणे</h5>
-                    <p class="text-[10px] text-gray-600 leading-relaxed">भारतातील सर्व राज्यांमधील गोपाळ बांधवांना एका डिजिटल डेटाबेसखाली संघटित करणे.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 text-left text-gray-900">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-l-4 border-yellow-500 transform hover:-translate-y-2 transition-transform">
+                    <h5 class="font-bold text-saffron-600 text-sm md:text-base mb-2">देशात स्वतंत्र ओळख निर्माण करणे</h5>
+                    <p class="text-xs text-gray-600 leading-relaxed">भारतातील सर्व राज्यांमधील गोपाळ बांधवांना एका डिजिटल डेटाबेसखाली संघटित करणे.</p>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-yellow-500">
-                    <h5 class="font-bold text-saffron-600 text-xs md:text-sm mb-1.5">नवीन पिढीला दिशा देणे</h5>
-                    <p class="text-[10px] text-gray-600 leading-relaxed">शिक्षणापासून रोजगारापर्यंत सर्व गरजा पूर्ण करणारे सक्षम आणि व्यावसायिक सामाजिक नेटवर्क तयार करणे.</p>
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-l-4 border-yellow-500 transform hover:-translate-y-2 transition-transform">
+                    <h5 class="font-bold text-saffron-600 text-sm md:text-base mb-2">नवीन पिढीला दिशा देणे</h5>
+                    <p class="text-xs text-gray-600 leading-relaxed">शिक्षणापासून रोजगारापर्यंत सर्व गरजा पूर्ण करणारे सक्षम आणि व्यावसायिक सामाजिक नेटवर्क तयार करणे.</p>
                 </div>
-                <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-yellow-500">
-                    <h5 class="font-bold text-saffron-600 text-xs md:text-sm mb-1.5">अधिकार आणि सवलतींचा पाठपुरावा</h5>
-                    <p class="text-[10px] text-gray-600 leading-relaxed">समाजाचे संघटन मजबूत करून शासन दरबारी प्रलंबित प्रश्नांचा व हक्कांचा पाठपुरावा करणे.</p>
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-l-4 border-yellow-500 transform hover:-translate-y-2 transition-transform">
+                    <h5 class="font-bold text-saffron-600 text-sm md:text-base mb-2">अधिकार आणि सवलतींचा पाठपुरावा</h5>
+                    <p class="text-xs text-gray-600 leading-relaxed">समाजाचे संघटन मजबूत करून शासन दरबारी प्रलंबित प्रश्नांचा व हक्कांचा पाठपुरावा करणे.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- DIGITAL CENSUS (JANAGANANA) FORM -->
-    <section id="census" class="py-16 px-4 bg-white">
-        <div class="max-w-4xl mx-auto bg-orange-50/40 border border-orange-100 p-6 md:p-10 rounded-3xl shadow-xl">
-            <div class="text-center mb-8">
-                <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">डिजिटल डेटाबेस नोंदणी</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">राष्ट्रीय डिजिटल जनगणना फॉर्म</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                <p class="text-xs text-gray-500 mt-2">आपली माहिती अधिकृत सर्व्हरमध्ये साठवली जाते, जिचा गैरवापर करणे अशक्य आहे. अचूक माहिती नोंदवा.</p>
+    <section id="census" class="py-20 px-4 bg-orange-50/30">
+        <div class="max-w-4xl mx-auto bg-white border border-orange-100 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-saffron-500 via-yellow-400 to-saffron-600"></div>
+            
+            <div class="text-center mb-10">
+                <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs bg-orange-50 px-3 py-1 rounded-full border border-orange-100">डिजिटल डेटाबेस नोंदणी</span>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-3">राष्ट्रीय डिजिटल जनगणना फॉर्म</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
+                <p class="text-xs md:text-sm text-gray-500 mt-3 bg-gray-50 inline-block px-4 py-2 rounded-lg border border-gray-100"><i class="fa-solid fa-lock text-green-500 mr-1"></i> आपली माहिती अधिकृत सर्व्हरमध्ये साठवली जाते, जिचा गैरवापर करणे अशक्य आहे. अचूक माहिती नोंदवा.</p>
             </div>
 
             <!-- Form starts -->
             <form id="censusForm" onsubmit="handleCensusSubmit(event)" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">पूर्ण नाव (मराठीत) <span class="text-red-500">*</span></label>
-                        <input type="text" id="c_name" required placeholder="उदा. रामेश सुदाम गोपाळ" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">पूर्ण नाव (मराठीत) <span class="text-red-500">*</span></label>
+                        <input type="text" id="c_name" required placeholder="उदा. रामेश सुदाम गोपाळ" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">मोबाईल क्रमांक <span class="text-red-500">*</span></label>
-                        <input type="tel" id="c_phone" required pattern="[0-9]{10}" placeholder="१० अंकी मोबाईल नंबर" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">मोबाईल क्रमांक <span class="text-red-500">*</span></label>
+                        <input type="tel" id="c_phone" required pattern="[0-9]{10}" placeholder="१० अंकी मोबाईल नंबर" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">वय <span class="text-red-500">*</span></label>
-                        <input type="number" id="c_age" required min="1" max="115" placeholder="वय" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">वय <span class="text-red-500">*</span></label>
+                        <input type="number" id="c_age" required min="1" max="115" placeholder="वय" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">लिंग <span class="text-red-500">*</span></label>
-                        <select id="c_gender" required class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">लिंग <span class="text-red-500">*</span></label>
+                        <select id="c_gender" required class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                             <option value="">निवडा</option><option value="पुरुष">पुरुष</option><option value="महिला">महिला</option>
                         </select>
                     </div>
                     <div class="col-span-2">
-                        <label class="block text-xs font-bold text-gray-700 mb-1">शिक्षण <span class="text-red-500">*</span></label>
-                        <input type="text" id="c_education" required placeholder="उदा. १२ वी / पदवी (B.A)" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">शिक्षण <span class="text-red-500">*</span></label>
+                        <input type="text" id="c_education" required placeholder="उदा. १२ वी / पदवी (B.A)" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">व्यवसाय <span class="text-red-500">*</span></label>
-                        <input type="text" id="c_job" required placeholder="उदा. नोकरी / शेती / व्यवसाय" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">व्यवसाय <span class="text-red-500">*</span></label>
+                        <input type="text" id="c_job" required placeholder="उदा. नोकरी / शेती / व्यवसाय" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">सामाजिक योगदान / पद</label>
-                        <input type="text" id="c_social" placeholder="उदा. सामाजिक कार्यकर्ता / सभासद" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">सामाजिक योगदान / पद</label>
+                        <input type="text" id="c_social" placeholder="उदा. सामाजिक कार्यकर्ता / सभासद" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">राज्य निवडा <span class="text-red-500">*</span></label>
-                        <select id="c_state" required onchange="populateDistricts(this.value)" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">राज्य निवडा <span class="text-red-500">*</span></label>
+                        <select id="c_state" required onchange="populateDistricts(this.value)" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                             <option value="">राज्य निवडा</option>
                             <!-- Populated via JS -->
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">जिल्हा निवडा <span class="text-red-500">*</span></label>
-                        <select id="c_district" required class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">जिल्हा निवडा <span class="text-red-500">*</span></label>
+                        <select id="c_district" required class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                             <option value="">पहिले राज्य निवडा</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">तालुका <span class="text-red-500">*</span></label>
-                        <input type="text" id="c_taluka" required placeholder="उदा. संगमनेर" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">तालुका <span class="text-red-500">*</span></label>
+                        <input type="text" id="c_taluka" required placeholder="उदा. संगमनेर" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">गाव / शहर <span class="text-red-500">*</span></label>
-                        <input type="text" id="c_village" required placeholder="उदा. शिर्डी" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none bg-white">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">गाव / शहर <span class="text-red-500">*</span></label>
+                        <input type="text" id="c_village" required placeholder="उदा. शिर्डी" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-saffron-500 outline-none bg-gray-50 focus:bg-white transition-colors">
                     </div>
                 </div>
 
-                <div class="text-center pt-2">
-                    <button type="submit" class="px-10 py-3.5 bg-gradient-to-r from-saffron-500 to-orange-600 hover:from-saffron-600 hover:to-orange-700 text-white font-bold text-sm rounded-lg shadow-md hover:shadow-lg transition flex items-center gap-2 mx-auto">
+                <div class="text-center pt-4 border-t border-gray-100 mt-6">
+                    <button type="submit" class="px-10 py-4 bg-gradient-to-r from-saffron-500 to-orange-600 hover:from-saffron-600 hover:to-orange-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 mx-auto w-full sm:w-auto">
                         <i class="fa-solid fa-cloud-arrow-up"></i> जनगणनेत सुरक्षित नोंदणी पूर्ण करा
                     </button>
                 </div>
@@ -383,34 +385,34 @@
     </section>
 
     <!-- STATE AND DISTRICT CENSUS DASHBOARDS (LIVE) -->
-    <section id="dashboard" class="py-16 px-4 bg-orange-50/20 border-t border-orange-100">
+    <section id="dashboard" class="py-16 px-4 bg-white border-t border-orange-100">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">डिजिटल आकडेवारी</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">राष्ट्रीय व राज्य जनगणना डॅशबोर्ड</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                <p class="text-xs text-gray-500 mt-2">नोंदणी झालेल्या माहितीवरून गोपाळ समाजाचे देशभरातील विवरण रिअल-टाईम प्रदर्शित केले आहे.</p>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">राष्ट्रीय व राज्य जनगणना डॅशबोर्ड</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
+                <p class="text-xs md:text-sm text-gray-500 mt-3">नोंदणी झालेल्या माहितीवरून गोपाळ समाजाचे देशभरातील विवरण रिअल-टाईम प्रदर्शित केले आहे.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- India Dashboard State-wise -->
-                <div class="bg-white p-6 rounded-2xl shadow-md border border-orange-100">
-                    <h4 class="text-sm md:text-base font-bold text-gray-900 border-b pb-3 mb-4 flex justify-between items-center">
-                        <span><i class="fa-solid fa-earth-asia text-saffron-500 mr-1"></i> भारत: राज्यनिहाय जनगणना</span>
+                <div class="bg-gray-50 p-6 md:p-8 rounded-3xl shadow-inner border border-gray-200">
+                    <h4 class="text-sm md:text-base font-bold text-gray-900 border-b-2 border-gray-200 pb-4 mb-5 flex justify-between items-center">
+                        <span><i class="fa-solid fa-earth-asia text-saffron-500 mr-2 text-lg"></i> भारत: राज्यनिहाय जनगणना</span>
                     </h4>
-                    <div id="state-dashboard-container" class="space-y-4 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
-                        <div class="text-center text-xs text-gray-500 py-4"><i class="fa-solid fa-spinner animate-spin"></i> डेटा लोड होत आहे...</div>
+                    <div id="state-dashboard-container" class="space-y-5 max-h-[350px] overflow-y-auto pr-3 custom-scrollbar">
+                        <div class="text-center text-xs text-gray-500 py-6"><i class="fa-solid fa-spinner animate-spin text-xl mb-2 block"></i> डेटा लोड होत आहे...</div>
                     </div>
                 </div>
 
                 <!-- Maharashtra Dashboard District-wise -->
-                <div class="bg-white p-6 rounded-2xl shadow-md border border-orange-100">
-                    <h4 class="text-sm md:text-base font-bold text-gray-900 border-b pb-3 mb-4 flex justify-between items-center">
-                        <span><i class="fa-solid fa-map-location-dot text-saffron-500 mr-1"></i> महाराष्ट्र: जिल्हानिहाय नोंदी</span>
-                        <span class="bg-orange-100 text-saffron-700 text-[10px] px-2 py-0.5 rounded font-bold">एकूण ३६ जिल्हे</span>
+                <div class="bg-gray-50 p-6 md:p-8 rounded-3xl shadow-inner border border-gray-200">
+                    <h4 class="text-sm md:text-base font-bold text-gray-900 border-b-2 border-gray-200 pb-4 mb-5 flex justify-between items-center">
+                        <span><i class="fa-solid fa-map-location-dot text-saffron-500 mr-2 text-lg"></i> महाराष्ट्र: जिल्हानिहाय नोंदी</span>
+                        <span class="bg-orange-100 text-saffron-700 text-[10px] px-3 py-1 rounded-full font-bold shadow-sm">एकूण ३६ जिल्हे</span>
                     </h4>
-                    <div id="district-dashboard-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
-                        <div class="text-center text-xs text-gray-500 py-4 col-span-full"><i class="fa-solid fa-spinner animate-spin"></i> डेटा लोड होत आहे...</div>
+                    <div id="district-dashboard-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[350px] overflow-y-auto pr-3 custom-scrollbar">
+                        <div class="text-center text-xs text-gray-500 py-6 col-span-full"><i class="fa-solid fa-spinner animate-spin text-xl mb-2 block"></i> डेटा लोड होत आहे...</div>
                     </div>
                 </div>
             </div>
@@ -418,18 +420,19 @@
     </section>
 
     <!-- MATRIMONY SECTION (LIVE) -->
-    <section id="matrimony" class="py-16 px-4 bg-white border-t border-orange-100">
+    <section id="matrimony" class="py-16 px-4 bg-orange-50/30 border-t border-orange-100">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">वधू-वर परिचय</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">सुरक्षित विवाह परिचय मंच</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                <p class="text-xs text-gray-500 mt-2">हे प्रोफाईल्स केवळ ॲडमिनद्वारे पडताळणी करूनच प्रसिद्ध केले जातात.</p>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">सुरक्षित विवाह परिचय मंच</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
+                <p class="text-xs md:text-sm text-gray-500 mt-3">हे प्रोफाईल्स केवळ ॲडमिनद्वारे पडताळणी करूनच प्रसिद्ध केले जातात.</p>
             </div>
 
             <div id="matrimony-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Dynamically populated from DB -->
-                <div class="col-span-full py-6 text-center text-xs text-gray-500 bg-orange-50 rounded-xl border border-orange-100">
+                <div class="col-span-full py-10 text-center text-sm text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                    <i class="fa-solid fa-rings-wedding text-4xl text-gray-300 mb-3 block"></i>
                     नवीन प्रोफाईल्स लवकरच अपडेट केले जातील.
                 </div>
             </div>
@@ -437,18 +440,18 @@
     </section>
 
     <!-- COMMITTEE / LEADERSHIP (LIVE) -->
-    <section id="committee" class="py-16 px-4 bg-orange-50/20 border-t border-orange-100">
+    <section id="committee" class="py-16 px-4 bg-white border-t border-orange-100">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">संघटनेचे खांब</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">राष्ट्रीय व राज्य प्रमुख पदाधिकारी</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                <p class="text-xs text-gray-500 mt-2">ॲडमिनद्वारे नियुक्त अधिकृत पदाधिकाऱ्यांची यादी.</p>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">राष्ट्रीय व राज्य प्रमुख पदाधिकारी</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
+                <p class="text-xs md:text-sm text-gray-500 mt-3">ॲडमिनद्वारे नियुक्त अधिकृत पदाधिकाऱ्यांची यादी.</p>
             </div>
 
             <div id="committee-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Dynamically populated from DB -->
-                <div class="col-span-full py-6 text-center text-xs text-gray-500 bg-white rounded-xl border border-orange-100">
+                <div class="col-span-full py-10 text-center text-sm text-gray-500 bg-gray-50 rounded-2xl border border-gray-200 shadow-sm">
                     नवीन पदाधिकारी माहिती लवकरच अपडेट केली जाईल.
                 </div>
             </div>
@@ -456,163 +459,182 @@
     </section>
 
     <!-- UPCOMING EVENTS SECTION (LIVE) -->
-    <section id="events" class="py-16 px-4 bg-white border-t border-orange-100">
+    <section id="events" class="py-16 px-4 bg-orange-50/30 border-t border-orange-100">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">नियोजित उपक्रम</span>
-                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">आगामी अधिकृत कार्यक्रम व उपक्रम</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">आगामी अधिकृत कार्यक्रम व उपक्रम</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
             </div>
 
             <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Dynamically populated from DB -->
-                <div class="col-span-full py-6 text-center text-xs text-gray-500 bg-orange-50 rounded-xl border border-orange-100">
+                <div class="col-span-full py-10 text-center text-sm text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm">
                     सध्या कोणतेही नवीन कार्यक्रम नियोजित नाहीत.
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DONATION / DEENAGI SECTION -->
-    <section id="donation" class="py-16 px-4 bg-orange-50/20 border-t border-orange-100">
-        <div class="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-3xl border border-orange-100 shadow-md">
-            <div class="text-center mb-8">
+    <!-- ==================== REVISED DONATION / DEENAGI SECTION ==================== -->
+    <section id="donation" class="py-16 px-4 bg-white border-t border-orange-100">
+        <div class="max-w-4xl mx-auto bg-gray-50 p-8 md:p-12 rounded-3xl border border-gray-200 shadow-lg relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-saffron-100 rounded-full blur-3xl opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-yellow-100 rounded-full blur-3xl opacity-50"></div>
+            
+            <div class="text-center mb-10 relative z-10">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">मदत निधी</span>
-                <h3 class="text-2xl font-bold text-gray-900 mt-1">समाज विकास निधी देणगी</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                <p class="text-xs text-gray-500 mt-2">तुमचे योगदान समाजातील गरीब विद्यार्थ्यांच्या शिक्षणासाठी वापरले जाईल.</p>
+                <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mt-2">समाज विकास निधी देणगी</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
+                <p class="text-xs md:text-sm text-gray-500 mt-3">तुमचे योगदान समाजातील गरीब विद्यार्थ्यांच्या शिक्षणासाठी वापरले जाईल.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="text-xs space-y-2.5">
-                    <p class="text-saffron-600 font-bold flex items-center gap-1"><i class="fa-solid fa-building-columns"></i> बँक खाते तपशील</p>
-                    <div class="p-4 bg-orange-50/50 rounded-xl border border-orange-100 space-y-1">
-                        <p><strong>बँक नाव:</strong> State Bank of India (SBI)</p>
-                        <p><strong>खाते नाव:</strong> अखिल भारतीय गोपाळ समाज उत्कर्ष संघ</p>
-                        <p><strong>खाते क्रमांक:</strong> 1234567890123</p>
-                        <p><strong>IFSC कोड:</strong> SBIN0001234</p>
-                        <p class="text-[10px] text-gray-500">शाखा: मुख्य शाखा, नाशिक रोड</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center relative z-10">
+                <!-- Placeholder for Bank Details -->
+                <div class="text-sm space-y-3">
+                    <p class="text-saffron-600 font-bold flex items-center gap-2 text-base"><i class="fa-solid fa-building-columns"></i> बँक खाते तपशील</p>
+                    <div class="p-6 bg-white rounded-2xl border border-gray-200 shadow-sm text-center">
+                        <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 text-2xl mx-auto mb-3 border border-gray-100"><i class="fa-solid fa-lock"></i></div>
+                        <p class="text-gray-600 font-semibold mb-2">अधिकृत बँक तपशील</p>
+                        <p class="text-xs text-gray-500 leading-relaxed italic bg-gray-50 p-3 rounded-lg border border-dashed border-gray-300">
+                            लवकरच बँकेचे नाव, खाते क्रमांक आणि IFSC कोड येथे उपलब्ध करून दिला जाईल.
+                        </p>
                     </div>
                 </div>
-                <div class="text-center p-6 bg-orange-50/30 rounded-2xl border-2 border-dashed border-orange-200">
-                    <p class="text-xs font-bold text-gray-700 mb-2">UPI द्वारे देणगी पाठवण्यासाठी स्कॅन करा</p>
-                    <div class="w-32 h-32 bg-white border border-gray-200 mx-auto p-2 rounded-lg flex items-center justify-center">
-                        <svg viewBox="0 0 100 100" class="w-full h-full text-gray-800">
-                            <rect x="10" y="10" width="25" height="25" fill="none" stroke="currentColor" stroke-width="6"/>
-                            <rect x="15" y="15" width="15" height="15" fill="currentColor"/>
-                            <rect x="65" y="10" width="25" height="25" fill="none" stroke="currentColor" stroke-width="6"/>
-                            <rect x="70" y="15" width="15" height="15" fill="currentColor"/>
-                            <rect x="10" y="65" width="25" height="25" fill="none" stroke="currentColor" stroke-width="6"/>
-                            <rect x="15" y="70" width="15" height="15" fill="currentColor"/>
-                            <rect x="45" y="10" width="10" height="10" fill="currentColor"/>
-                            <rect x="45" y="30" width="15" height="10" fill="currentColor"/>
-                            <rect x="10" y="45" width="15" height="10" fill="currentColor"/>
-                            <rect x="45" y="65" width="10" height="20" fill="currentColor"/>
-                            <rect x="65" y="45" width="20" height="10" fill="currentColor"/>
-                            <rect x="75" y="65" width="15" height="15" fill="currentColor"/>
-                            <rect x="43" y="43" width="14" height="14" fill="#EA580C" rx="2"/>
-                            <line x1="45" y1="52" x2="55" y2="48" stroke="#FFFFFF" stroke-width="1.5"/>
-                        </svg>
+                
+                <!-- Placeholder for UPI QR Code -->
+                <div class="text-center p-6 bg-white rounded-2xl border border-gray-200 shadow-sm">
+                    <p class="text-sm font-bold text-gray-700 mb-4 flex items-center justify-center gap-2"><i class="fa-solid fa-qrcode text-saffron-500"></i> UPI द्वारे देणगी (QR Code)</p>
+                    <div class="w-36 h-36 bg-gray-50 border-2 border-dashed border-gray-300 mx-auto p-2 rounded-xl flex flex-col items-center justify-center text-gray-400">
+                        <i class="fa-solid fa-image text-3xl mb-2 opacity-50"></i>
+                        <span class="text-[10px] font-bold uppercase tracking-wider">QR Code</span>
+                        <span class="text-[9px] mt-1">लवकरच उपलब्ध</span>
                     </div>
-                    <p class="text-[10px] text-gray-500 mt-2 font-bold">UPI ID: gopalsamaj@upi</p>
+                    <p class="text-xs text-gray-500 mt-4 font-semibold italic">डिजिटल पेमेंटची सुविधा लवकरच सुरू होत आहे.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SPECIAL UTILITIES (Original Design Preserved) -->
-    <section class="py-12 px-4 bg-white border-t border-orange-100">
+    <!-- SPECIAL UTILITIES -->
+    <section class="py-16 px-4 bg-orange-50/30 border-t border-orange-100">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center max-w-3xl mx-auto mb-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">डिजिटल सुविधा</span>
-                <h3 class="text-2xl font-extrabold text-gray-900 mt-1">विशेष डिजिटल सभासदत्व ओळखपत्र</h3>
-                <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
+                <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-2">विशेष डिजिटल सभासदत्व ओळखपत्र</h3>
+                <div class="w-20 h-1.5 bg-saffron-500 mx-auto mt-3 rounded-full"></div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <!-- Utility 1 -->
-                <div class="bg-orange-50/30 p-6 rounded-2xl border border-orange-100 text-center">
-                    <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-md mx-auto mb-3 font-bold"><i class="fa-solid fa-address-card"></i></div>
-                    <h5 class="font-bold text-gray-900 text-xs md:text-sm mb-1">डिजिटल ओळखपत्र</h5>
-                    <p class="text-[10px] text-gray-500 mb-3">तुमचे अधिकृत ओळखपत्र त्वरित प्राप्त करा.</p>
-                    <button onclick="generateDigitalCard()" class="px-4 py-1 bg-saffron-500 text-white text-[10px] font-bold rounded-lg hover:bg-saffron-600 transition">तयार करा</button>
+                <div class="bg-white p-6 rounded-2xl border border-orange-100 text-center shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-xl mx-auto mb-4 font-bold"><i class="fa-solid fa-address-card"></i></div>
+                    <h5 class="font-bold text-gray-900 text-sm mb-1.5">डिजिटल ओळखपत्र</h5>
+                    <p class="text-xs text-gray-500 mb-4">तुमचे अधिकृत ओळखपत्र त्वरित प्राप्त करा.</p>
+                    <button onclick="generateDigitalCard()" class="px-5 py-1.5 bg-saffron-500 text-white text-xs font-bold rounded-lg hover:bg-saffron-600 transition shadow-sm">तयार करा</button>
                 </div>
                 <!-- Utility 2 -->
-                <div class="bg-orange-50/30 p-6 rounded-2xl border border-orange-100 text-center">
-                    <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-md mx-auto mb-3 font-bold"><i class="fa-solid fa-qrcode"></i></div>
-                    <h5 class="font-bold text-gray-900 text-xs md:text-sm mb-1">QR आधारित सदस्यता</h5>
-                    <p class="text-[10px] text-gray-500 mb-3">स्कॅन करून थेट सभासदत्व पडताळणी करा.</p>
-                    <button onclick="showModal('माहिती', 'QR सदस्यता पडताळणी लवकरच उपलब्ध होईल!', 'info')" class="px-4 py-1 bg-saffron-500 text-white text-[10px] font-bold rounded-lg hover:bg-saffron-600 transition">तपासा</button>
+                <div class="bg-white p-6 rounded-2xl border border-orange-100 text-center shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-xl mx-auto mb-4 font-bold"><i class="fa-solid fa-qrcode"></i></div>
+                    <h5 class="font-bold text-gray-900 text-sm mb-1.5">QR आधारित सदस्यता</h5>
+                    <p class="text-xs text-gray-500 mb-4">स्कॅन करून थेट सभासदत्व पडताळणी करा.</p>
+                    <button onclick="showModal('माहिती', 'QR सदस्यता पडताळणी लवकरच उपलब्ध होईल!', 'info')" class="px-5 py-1.5 bg-saffron-500 text-white text-xs font-bold rounded-lg hover:bg-saffron-600 transition shadow-sm">तपासा</button>
                 </div>
                 <!-- Utility 3 -->
-                <div class="bg-orange-50/30 p-6 rounded-2xl border border-orange-100 text-center">
-                    <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-md mx-auto mb-3 font-bold"><i class="fa-solid fa-check-to-slot"></i></div>
-                    <h5 class="font-bold text-gray-900 text-xs md:text-sm mb-1">ऑनलाइन मतदान</h5>
-                    <p class="text-[10px] text-gray-500 mb-3">कार्यकारिणी निवडीत मतदानाचा हक्क बजवा.</p>
-                    <button onclick="showModal('माहिती', 'मतदान प्रक्रिया निवडणूक घोषणेनंतर सुरू होईल.', 'info')" class="px-4 py-1 bg-saffron-500 text-white text-[10px] font-bold rounded-lg hover:bg-saffron-600 transition">प्रवेश करा</button>
+                <div class="bg-white p-6 rounded-2xl border border-orange-100 text-center shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-xl mx-auto mb-4 font-bold"><i class="fa-solid fa-check-to-slot"></i></div>
+                    <h5 class="font-bold text-gray-900 text-sm mb-1.5">ऑनलाइन मतदान</h5>
+                    <p class="text-xs text-gray-500 mb-4">कार्यकारिणी निवडीत मतदानाचा हक्क बजवा.</p>
+                    <button onclick="showModal('माहिती', 'मतदान प्रक्रिया निवडणूक घोषणेनंतर सुरू होईल.', 'info')" class="px-5 py-1.5 bg-saffron-500 text-white text-xs font-bold rounded-lg hover:bg-saffron-600 transition shadow-sm">प्रवेश करा</button>
                 </div>
                 <!-- Utility 4 -->
-                <div class="bg-orange-50/30 p-6 rounded-2xl border border-orange-100 text-center">
-                    <div class="w-10 h-10 rounded-xl bg-orange-100 text-saffron-500 flex items-center justify-center text-md mx-auto mb-3 font-bold"><i class="fa-brands fa-whatsapp"></i></div>
-                    <h5 class="font-bold text-gray-900 text-xs md:text-sm mb-1">WhatsApp चॅनेल</h5>
-                    <p class="text-[10px] text-gray-500 mb-3">थेट मोबाईलवर जलद अपडेट मिळवा.</p>
-                    <a href="https://wa.me/919623558719" target="_blank" class="px-4 py-1 bg-saffron-500 text-white text-[10px] font-bold rounded-lg hover:bg-saffron-600 transition inline-block">जॉईन व्हा</a>
+                <div class="bg-white p-6 rounded-2xl border border-orange-100 text-center shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center text-xl mx-auto mb-4 font-bold"><i class="fa-brands fa-whatsapp"></i></div>
+                    <h5 class="font-bold text-gray-900 text-sm mb-1.5">WhatsApp चॅनेल</h5>
+                    <p class="text-xs text-gray-500 mb-4">थेट मोबाईलवर जलद अपडेट मिळवा.</p>
+                    <a href="https://wa.me/919623558719" target="_blank" class="px-5 py-1.5 bg-green-500 text-white text-xs font-bold rounded-lg hover:bg-green-600 transition shadow-sm inline-block">जॉईन व्हा</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-gray-950 text-white pt-12 pb-6 px-4 border-t border-gray-900">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-gray-500">
+    <footer class="bg-gray-950 text-white pt-14 pb-8 px-4 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-500">
             <p>© २०२६ अखिल भारतीय गोपाळ समाज उत्कर्ष संघ. सर्व हक्क सुरक्षित.</p>
-            <p>डिजिटल डिझाइन व विकास: <span class="text-saffron-500 font-bold">अखिल भारतीय गोपाळ समाज उत्कर्ष संघ आयटी सेल</span></p>
+            <p class="bg-gray-900 px-4 py-2 rounded-lg border border-gray-800">डिजिटल डिझाइन व विकास: <span class="text-saffron-500 font-bold">अखिल भारतीय गोपाळ समाज उत्कर्ष संघ आयटी सेल</span></p>
         </div>
     </footer>
 
-    <!-- ==================== SECURE ADMIN PANEL MODAL (Beautiful Design Restored) ==================== -->
-    <div id="admin-modal" class="hidden fixed inset-0 bg-black/75 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-5xl w-full p-6 shadow-2xl border border-orange-100 flex flex-col max-h-[95vh]">
-            <div class="flex justify-between items-center border-b border-orange-100 pb-3 shrink-0">
-                <h4 class="font-bold text-base md:text-lg text-gray-900 flex items-center gap-2">
+    <!-- ==================== SECURE ADMIN PANEL MODAL ==================== -->
+    <div id="admin-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+        <div class="bg-white rounded-3xl max-w-5xl w-full p-6 md:p-8 shadow-2xl flex flex-col max-h-[95vh] relative overflow-hidden">
+            
+            <div class="flex justify-between items-center border-b border-gray-100 pb-4 shrink-0 relative z-10">
+                <h4 class="font-bold text-lg md:text-xl text-gray-900 flex items-center gap-2">
                     <i class="fa-solid fa-user-shield text-saffron-500"></i> सुरक्षित ॲडमिन कंट्रोल पॅनल
                 </h4>
-                <button onclick="closeAdminModal()" class="text-gray-500 hover:text-gray-800 text-lg font-bold">×</button>
+                <button onclick="closeAdminModal()" class="text-gray-400 hover:text-red-500 hover:bg-red-50 w-8 h-8 rounded-full flex items-center justify-center text-xl transition-colors">×</button>
             </div>
 
             <!-- Login View -->
-            <div id="admin-login-view" class="py-10 max-w-sm mx-auto text-center flex-1">
-                <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center text-saffron-500 text-2xl mx-auto mb-4 border border-saffron-200"><i class="fa-solid fa-lock"></i></div>
-                <p class="text-xs text-gray-500 mb-4">संपूर्ण डेटाबेसचे अधिकार मिळवण्यासाठी कृपया प्रशासक पासवर्ड प्रविष्ट करा.</p>
-                <div class="space-y-3">
-                    <input type="password" id="admin-password" placeholder="प्रशासक पासवर्ड" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500 text-center font-bold tracking-widest">
-                    <p class="text-[10px] text-orange-600 font-semibold bg-orange-50 p-1.5 rounded">पासवर्ड: <span class="font-mono">gopaladmin2026</span></p>
-                    <button onclick="authenticateAdmin()" class="w-full py-2 bg-saffron-500 text-white text-xs font-bold rounded-lg hover:bg-saffron-600 transition">लॉगिन करा</button>
+            <div id="admin-login-view" class="py-12 max-w-sm mx-auto text-center flex-1 w-full relative z-10">
+                <div class="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center text-saffron-500 text-3xl mx-auto mb-6 border-2 border-saffron-100 shadow-inner"><i class="fa-solid fa-lock"></i></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">ॲडमिन लॉगिन</h3>
+                <p class="text-xs text-gray-500 mb-6">संपूर्ण डेटाबेसचे अधिकार मिळवण्यासाठी प्रशासक पासवर्ड टाका.</p>
+                
+                <div class="space-y-4">
+                    <input type="password" id="admin-password" placeholder="प्रशासक पासवर्ड" class="w-full px-5 py-3 text-sm border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-saffron-500 text-center font-bold tracking-widest bg-gray-50 focus:bg-white transition-colors">
+                    
+                    <div class="flex justify-between items-center px-2">
+                        <button onclick="showForgotPassword()" class="text-[11px] text-saffron-600 hover:text-saffron-700 hover:underline font-bold transition-colors">पासवर्ड विसरलात?</button>
+                    </div>
+
+                    <button onclick="authenticateAdmin()" class="w-full py-3 bg-gradient-to-r from-saffron-500 to-orange-600 text-white text-sm font-bold rounded-xl hover:shadow-lg hover:from-saffron-600 hover:to-orange-700 transition-all">लॉगिन करा</button>
+                </div>
+            </div>
+
+            <!-- Forgot Password View -->
+            <div id="forgot-password-view" class="hidden py-12 max-w-sm mx-auto text-center flex-1 w-full relative z-10">
+                <div class="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center text-red-500 text-3xl mx-auto mb-6 border-2 border-red-100 shadow-inner"><i class="fa-solid fa-key"></i></div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">पासवर्ड रिसेट करा</h3>
+                <p class="text-[11px] text-gray-500 mb-6 leading-relaxed bg-gray-50 p-3 rounded-lg border border-gray-100">पासवर्ड रिसेट करण्यासाठी मुख्य कार्यालयाकडून मिळालेली <span class="font-bold text-red-500">मास्टर की (Master Key)</span> खाली टाका.</p>
+                <div class="space-y-4">
+                    <input type="password" id="master-key" placeholder="मास्टर की (Master Key)" class="w-full px-5 py-3 text-sm border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-red-500 text-center font-bold tracking-widest bg-gray-50 focus:bg-white transition-colors">
+                    <input type="password" id="new-reset-password" placeholder="नवीन पासवर्ड तयार करा" class="w-full px-5 py-3 text-sm border border-gray-300 rounded-xl outline-none focus:ring-2 focus:ring-green-500 text-center font-bold tracking-widest bg-gray-50 focus:bg-white transition-colors">
+                    
+                    <button onclick="resetAdminPassword()" class="w-full py-3 bg-red-500 text-white text-sm font-bold rounded-xl hover:bg-red-600 transition-colors shadow-md mt-2">रिसेट करा</button>
+                    <button onclick="backToLogin()" class="text-xs text-gray-500 hover:text-gray-800 hover:underline mt-4 block mx-auto"><i class="fa-solid fa-arrow-left mr-1"></i> मागे जा (लॉगिन)</button>
                 </div>
             </div>
 
             <!-- Authenticated Admin Panel -->
-            <div id="admin-dashboard-view" class="hidden flex-col flex-1 overflow-hidden mt-4">
+            <div id="admin-dashboard-view" class="hidden flex-col flex-1 overflow-hidden mt-6 relative z-10">
                 <!-- Action Tabs -->
-                <div class="flex border-b border-gray-200 overflow-x-auto shrink-0 hide-scrollbar">
-                    <button id="tab-census" onclick="switchAdminTab('census')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-saffron-600 border-b-2 border-saffron-500">जनगणना (Census)</button>
-                    <button id="tab-matrimony" onclick="switchAdminTab('matrimony')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-gray-500 hover:text-saffron-600 transition">वधू-वर (Matrimony)</button>
-                    <button id="tab-committee" onclick="switchAdminTab('committee')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-gray-500 hover:text-saffron-600 transition">पदाधिकारी (Committee)</button>
-                    <button id="tab-events" onclick="switchAdminTab('events')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-gray-500 hover:text-saffron-600 transition">कार्यक्रम (Events)</button>
+                <div class="flex border-b border-gray-200 overflow-x-auto shrink-0 hide-scrollbar gap-2 pb-2">
+                    <button id="tab-census" onclick="switchAdminTab('census')" class="admin-tab whitespace-nowrap py-2 px-5 text-sm font-bold text-white bg-saffron-500 rounded-lg shadow-sm transition-all">जनगणना (Census)</button>
+                    <button id="tab-matrimony" onclick="switchAdminTab('matrimony')" class="admin-tab whitespace-nowrap py-2 px-5 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">वधू-वर (Matrimony)</button>
+                    <button id="tab-committee" onclick="switchAdminTab('committee')" class="admin-tab whitespace-nowrap py-2 px-5 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">पदाधिकारी (Committee)</button>
+                    <button id="tab-events" onclick="switchAdminTab('events')" class="admin-tab whitespace-nowrap py-2 px-5 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all">कार्यक्रम (Events)</button>
+                    <button id="tab-settings" onclick="switchAdminTab('settings')" class="admin-tab whitespace-nowrap py-2 px-5 text-sm font-bold text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all ml-auto"><i class="fa-solid fa-gear"></i> सेटिंग्ज</button>
                 </div>
 
                 <!-- Panels Container -->
-                <div class="flex-1 overflow-y-auto pt-4 custom-scrollbar">
+                <div class="flex-1 overflow-y-auto pt-6 custom-scrollbar pr-2">
                     
                     <!-- Tab 1: Census Data Table -->
-                    <div id="admin-panel-census" class="admin-panel-content space-y-3 block">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600">सर्व नोंदणीकृत बांधवांची यादी (Unmasked Data)</span>
-                            <button onclick="exportCensusToCSV()" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5">
+                    <div id="admin-panel-census" class="admin-panel-content space-y-4 block">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                            <div>
+                                <span class="text-sm font-bold text-gray-800 block">सर्व नोंदणीकृत बांधवांची यादी</span>
+                                <span class="text-[10px] text-gray-500">Unmasked Private Data. Do not share externally.</span>
+                            </div>
+                            <button onclick="exportCensusToCSV()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2 shadow-sm transition-colors">
                                 <i class="fa-solid fa-file-excel"></i> Excel डाउनलोड करा
                             </button>
                         </div>
-                        <div class="overflow-x-auto border border-orange-100 rounded-xl max-h-[400px] overflow-y-auto custom-scrollbar">
+                        <div class="overflow-x-auto border border-gray-200 rounded-xl max-h-[400px] overflow-y-auto custom-scrollbar shadow-sm">
                             <table class="min-w-full text-xs text-left whitespace-nowrap">
-                                <thead class="bg-orange-50 text-gray-700 font-bold sticky top-0">
+                                <thead class="bg-gray-100 text-gray-700 font-bold sticky top-0 z-10 shadow-sm">
                                     <tr><th class="p-3">नाव</th><th class="p-3">मोबाईल</th><th class="p-3">लिंग/वय</th><th class="p-3">राज्य/जिल्हा</th><th class="p-3 text-center">क्रिया</th></tr>
                                 </thead>
                                 <tbody id="admin-table-census" class="divide-y divide-gray-100 bg-white"></tbody>
@@ -621,58 +643,73 @@
                     </div>
 
                     <!-- Tab 2: Matrimony Control -->
-                    <div id="admin-panel-matrimony" class="admin-panel-content hidden space-y-4">
-                        <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                            <h5 class="text-xs font-bold text-gray-700 mb-3">नवीन वधू-वर प्रोफाईल जोडा</h5>
-                            <form onsubmit="adminSubmitMatrimony(event)" class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
-                                <input type="text" id="m_name" required placeholder="संपूर्ण नाव" class="border px-3 py-2 rounded outline-none col-span-2">
-                                <select id="m_gender" required class="border px-3 py-2 rounded outline-none"><option value="वधू">वधू (Bride)</option><option value="वर">वर (Groom)</option></select>
-                                <input type="number" id="m_age" required placeholder="वय" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="m_height" required placeholder="उंची (उदा. ५'२'')" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="m_edu" required placeholder="शिक्षण" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="m_job" required placeholder="व्यवसाय" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="m_loc" required placeholder="शहर/जिल्हा" class="border px-3 py-2 rounded outline-none">
-                                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded p-2 sm:col-span-4">प्रोफाईल प्रसिद्ध करा</button>
+                    <div id="admin-panel-matrimony" class="admin-panel-content hidden space-y-6">
+                        <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-inner">
+                            <h5 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-saffron-500"></i> नवीन वधू-वर प्रोफाईल जोडा</h5>
+                            <form onsubmit="adminSubmitMatrimony(event)" class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
+                                <input type="text" id="m_name" required placeholder="संपूर्ण नाव" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500 col-span-2">
+                                <select id="m_gender" required class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500"><option value="वधू">वधू (Bride)</option><option value="वर">वर (Groom)</option></select>
+                                <input type="number" id="m_age" required placeholder="वय" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="m_height" required placeholder="उंची (उदा. ५'२'')" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="m_edu" required placeholder="शिक्षण" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="m_job" required placeholder="व्यवसाय" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="m_loc" required placeholder="शहर/जिल्हा" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded-lg p-2.5 sm:col-span-4 transition-colors">प्रोफाईल प्रसिद्ध करा</button>
                             </form>
                         </div>
-                        <div class="overflow-x-auto border border-orange-100 rounded-xl">
-                            <table class="min-w-full text-xs text-left whitespace-nowrap"><thead class="bg-gray-50"><tr><th class="p-2">प्रकार</th><th class="p-2">नाव (वय)</th><th class="p-2">शिक्षण/व्यवसाय</th><th class="p-2 text-center">क्रिया</th></tr></thead><tbody id="admin-table-matrimony" class="divide-y divide-gray-100 bg-white"></tbody></table>
+                        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+                            <table class="min-w-full text-xs text-left whitespace-nowrap"><thead class="bg-gray-100"><tr><th class="p-3 font-bold text-gray-700">प्रकार</th><th class="p-3 font-bold text-gray-700">नाव (वय)</th><th class="p-3 font-bold text-gray-700">शिक्षण/व्यवसाय</th><th class="p-3 font-bold text-gray-700 text-center">क्रिया</th></tr></thead><tbody id="admin-table-matrimony" class="divide-y divide-gray-100 bg-white"></tbody></table>
                         </div>
                     </div>
 
                     <!-- Tab 3: Committee Control -->
-                    <div id="admin-panel-committee" class="admin-panel-content hidden space-y-4">
-                        <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                            <h5 class="text-xs font-bold text-gray-700 mb-3">नवीन पदाधिकारी नियुक्त करा</h5>
-                            <form onsubmit="adminSubmitCommittee(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                                <input type="text" id="com_name" required placeholder="पदाधिकाऱ्याचे नाव" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="com_role" required placeholder="पद (उदा. प्रदेशाध्यक्ष)" class="border px-3 py-2 rounded outline-none">
-                                <select id="com_level" required class="border px-3 py-2 rounded outline-none">
+                    <div id="admin-panel-committee" class="admin-panel-content hidden space-y-6">
+                        <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-inner">
+                            <h5 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-saffron-500"></i> नवीन पदाधिकारी नियुक्त करा</h5>
+                            <form onsubmit="adminSubmitCommittee(event)" class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                                <input type="text" id="com_name" required placeholder="पदाधिकाऱ्याचे नाव" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="com_role" required placeholder="पद (उदा. प्रदेशाध्यक्ष)" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <select id="com_level" required class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
                                     <option value="राष्ट्रीय">राष्ट्रीय स्तर</option><option value="राज्य">राज्य स्तर</option><option value="जिल्हा">जिल्हा स्तर</option><option value="महिला आघाडी">महिला आघाडी</option>
                                 </select>
-                                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded p-2 sm:col-span-3">पदाधिकारी जोडा</button>
+                                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded-lg p-2.5 sm:col-span-3 transition-colors">पदाधिकारी जोडा</button>
                             </form>
                         </div>
-                        <div class="overflow-x-auto border border-orange-100 rounded-xl">
-                            <table class="min-w-full text-xs text-left whitespace-nowrap"><thead class="bg-gray-50"><tr><th class="p-2">स्तर</th><th class="p-2">नाव</th><th class="p-2">पद</th><th class="p-2 text-center">क्रिया</th></tr></thead><tbody id="admin-table-committee" class="divide-y divide-gray-100 bg-white"></tbody></table>
+                        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+                            <table class="min-w-full text-xs text-left whitespace-nowrap"><thead class="bg-gray-100"><tr><th class="p-3 font-bold text-gray-700">स्तर</th><th class="p-3 font-bold text-gray-700">नाव</th><th class="p-3 font-bold text-gray-700">पद</th><th class="p-3 font-bold text-gray-700 text-center">क्रिया</th></tr></thead><tbody id="admin-table-committee" class="divide-y divide-gray-100 bg-white"></tbody></table>
                         </div>
                     </div>
 
                     <!-- Tab 4: Events Control -->
-                    <div id="admin-panel-events" class="admin-panel-content hidden space-y-4">
-                        <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                            <h5 class="text-xs font-bold text-gray-700 mb-3">नवीन कार्यक्रम प्रसिद्ध करा</h5>
-                            <form onsubmit="adminSubmitEvent(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                                <input type="text" id="ev_title" required placeholder="कार्यक्रमाचे नाव" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="ev_date" required placeholder="दिनांक" class="border px-3 py-2 rounded outline-none">
-                                <input type="text" id="ev_loc" required placeholder="स्थळ" class="border px-3 py-2 rounded outline-none">
-                                <input type="tel" id="ev_contact" required placeholder="संपर्क क्रमांक" class="border px-3 py-2 rounded outline-none">
-                                <textarea id="ev_desc" required placeholder="तपशीलवार माहिती..." rows="2" class="border px-3 py-2 rounded outline-none col-span-full"></textarea>
-                                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded p-2 col-span-full">कार्यक्रम प्रसिद्ध करा</button>
+                    <div id="admin-panel-events" class="admin-panel-content hidden space-y-6">
+                        <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-inner">
+                            <h5 class="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-plus-circle text-saffron-500"></i> नवीन कार्यक्रम प्रसिद्ध करा</h5>
+                            <form onsubmit="adminSubmitEvent(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                                <input type="text" id="ev_title" required placeholder="कार्यक्रमाचे नाव" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="ev_date" required placeholder="दिनांक" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="text" id="ev_loc" required placeholder="स्थळ" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <input type="tel" id="ev_contact" required placeholder="संपर्क क्रमांक" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500">
+                                <textarea id="ev_desc" required placeholder="तपशीलवार माहिती..." rows="3" class="border border-gray-300 px-4 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-saffron-500 col-span-full resize-none"></textarea>
+                                <button type="submit" class="bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded-lg p-2.5 col-span-full transition-colors">कार्यक्रम प्रसिद्ध करा</button>
                             </form>
                         </div>
-                        <div class="overflow-x-auto border border-orange-100 rounded-xl">
-                            <table class="min-w-full text-xs text-left whitespace-nowrap"><thead class="bg-gray-50"><tr><th class="p-2">कार्यक्रम</th><th class="p-2">दिनांक</th><th class="p-2">स्थळ</th><th class="p-2 text-center">क्रिया</th></tr></thead><tbody id="admin-table-events" class="divide-y divide-gray-100 bg-white"></tbody></table>
+                        <div class="overflow-x-auto border border-gray-200 rounded-xl shadow-sm">
+                            <table class="min-w-full text-xs text-left whitespace-nowrap"><thead class="bg-gray-100"><tr><th class="p-3 font-bold text-gray-700">कार्यक्रम</th><th class="p-3 font-bold text-gray-700">दिनांक</th><th class="p-3 font-bold text-gray-700">स्थळ</th><th class="p-3 font-bold text-gray-700 text-center">क्रिया</th></tr></thead><tbody id="admin-table-events" class="divide-y divide-gray-100 bg-white"></tbody></table>
+                        </div>
+                    </div>
+
+                    <!-- Tab 5: Settings (Change Password) -->
+                    <div id="admin-panel-settings" class="admin-panel-content hidden space-y-4">
+                        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200 max-w-md mx-auto mt-4 shadow-sm text-center">
+                            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-gray-800 text-2xl mx-auto mb-4 border border-gray-200 shadow-sm"><i class="fa-solid fa-key"></i></div>
+                            <h5 class="text-base font-bold text-gray-800 mb-1">प्रशासक पासवर्ड बदला</h5>
+                            <p class="text-xs text-gray-500 mb-6 bg-white py-2 rounded-lg border border-gray-100">तुमच्या ॲडमिन पॅनेलचा पासवर्ड अत्यंत सुरक्षित ठेवा.</p>
+                            
+                            <form onsubmit="adminChangePassword(event)" class="space-y-4 text-sm">
+                                <input type="password" id="set_old_pwd" required placeholder="सध्याचा पासवर्ड टाका" class="w-full border border-gray-300 px-4 py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-gray-800 text-center tracking-widest font-bold">
+                                <input type="password" id="set_new_pwd" required placeholder="नवीन पासवर्ड टाका" class="w-full border border-gray-300 px-4 py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-saffron-500 text-center tracking-widest font-bold">
+                                <button type="submit" class="w-full bg-gray-900 hover:bg-black text-white font-bold rounded-xl py-3 mt-2 transition-colors shadow-md">पासवर्ड अपडेट करा</button>
+                            </form>
                         </div>
                     </div>
 
@@ -682,45 +719,53 @@
     </div>
 
     <!-- DIGITAL ID CARD GENERATOR MODAL -->
-    <div id="card-modal" class="hidden fixed inset-0 bg-black/60 z-[105] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl relative">
-            <button onclick="document.getElementById('card-modal').classList.add('hidden')" class="absolute right-4 top-4 text-gray-500 hover:text-gray-800"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h4 class="font-bold text-xs text-gray-900 text-center uppercase tracking-widest text-saffron-600">डिजिटल सभासद ओळखपत्र</h4>
-            <div class="border-2 border-saffron-500 rounded-2xl p-4 bg-gradient-to-br from-orange-50 to-amber-100 shadow-md relative overflow-hidden" id="card-preview">
-                <div class="absolute right-2 bottom-2 text-[80px] text-orange-200/20 pointer-events-none select-none">🚩</div>
-                <div class="flex items-center gap-2 border-b border-saffron-300 pb-2 mb-3">
-                    <span class="text-sm">🚩</span>
+    <div id="card-modal" class="hidden fixed inset-0 bg-black/80 z-[105] flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-5 shadow-2xl relative">
+            <button onclick="document.getElementById('card-modal').classList.add('hidden')" class="absolute right-4 top-4 text-gray-400 hover:text-gray-800 hover:bg-gray-100 w-8 h-8 rounded-full flex items-center justify-center transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <h4 class="font-bold text-xs text-gray-900 text-center uppercase tracking-widest text-saffron-600 bg-orange-50 py-1.5 rounded-full border border-orange-100">डिजिटल सभासद ओळखपत्र</h4>
+            
+            <div class="border-[3px] border-saffron-500 rounded-2xl p-5 bg-gradient-to-br from-orange-50 via-white to-amber-100 shadow-lg relative overflow-hidden" id="card-preview">
+                <div class="absolute -right-4 -bottom-4 text-[100px] text-orange-500/10 pointer-events-none select-none transform -rotate-12"><i class="fa-solid fa-sun"></i></div>
+                
+                <div class="flex items-center gap-3 border-b-2 border-saffron-200 pb-3 mb-4 relative z-10">
+                    <div class="w-8 h-8 bg-saffron-500 rounded-full flex items-center justify-center text-white text-xs shadow-sm">🚩</div>
                     <div>
-                        <h5 class="text-[9px] font-black text-red-600">अखिल भारतीय</h5>
-                        <h6 class="text-[10px] font-black text-saffron-700 leading-none">गोपाळ समाज उत्कर्ष संघ</h6>
+                        <h5 class="text-[10px] font-black text-red-600 tracking-wider">अखिल भारतीय</h5>
+                        <h6 class="text-[11px] font-black text-saffron-700 leading-tight">गोपाळ समाज उत्कर्ष संघ</h6>
                     </div>
                 </div>
-                <div class="flex gap-3">
-                    <div class="w-14 h-14 bg-orange-200 rounded-lg flex items-center justify-center text-orange-600 border border-saffron-300">
-                        <i class="fa-solid fa-user text-3xl"></i>
+                
+                <div class="flex gap-4 relative z-10">
+                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-saffron-500 border-2 border-saffron-200 shadow-sm shrink-0">
+                        <i class="fa-solid fa-user-check text-3xl"></i>
                     </div>
-                    <div class="text-[9px] space-y-1 text-gray-700">
-                        <p><strong>नाव:</strong> <span id="card-name-val">-</span></p>
-                        <p><strong>पद:</strong> अधिकृत सभासद</p>
-                        <p><strong>मोबाईल:</strong> <span id="card-phone-val">-</span></p>
-                        <p><strong>राज्य:</strong> <span id="card-state-val">-</span></p>
+                    <div class="text-[10px] space-y-1.5 text-gray-800 w-full">
+                        <p class="flex justify-between border-b border-gray-200/50 pb-0.5"><strong class="text-gray-500">नाव:</strong> <span id="card-name-val" class="font-bold truncate max-w-[120px]">-</span></p>
+                        <p class="flex justify-between border-b border-gray-200/50 pb-0.5"><strong class="text-gray-500">पद:</strong> <span class="font-bold text-green-600">अधिकृत सभासद</span></p>
+                        <p class="flex justify-between border-b border-gray-200/50 pb-0.5"><strong class="text-gray-500">मोबाईल:</strong> <span id="card-phone-val" class="font-bold font-mono">-</span></p>
+                        <p class="flex justify-between"><strong class="text-gray-500">राज्य:</strong> <span id="card-state-val" class="font-bold">-</span></p>
                     </div>
                 </div>
-                <div class="mt-3 border-t border-dashed border-saffron-300 pt-2 flex justify-between items-center text-[7px] text-gray-500">
-                    <span>ID: ABGS-2026</span><span class="font-bold text-red-600">🚩 एक समाज एक विचार</span>
+                
+                <div class="mt-4 border-t-2 border-dashed border-saffron-200 pt-2 flex justify-between items-center text-[8px] text-gray-500 relative z-10">
+                    <span class="font-mono bg-white px-1.5 rounded border border-gray-200">ID: ABGS-2026</span>
+                    <span class="font-bold text-red-600">🚩 एक समाज एक विचार</span>
                 </div>
             </div>
-            <button onclick="showModal('यशस्वी', 'तुमचे ओळखपत्र डाऊनलोड झाले आहे.', 'success'); document.getElementById('card-modal').classList.add('hidden');" class="w-full py-2 bg-saffron-500 text-white font-bold text-xs rounded-lg hover:bg-saffron-600 transition flex items-center justify-center gap-2"><i class="fa-solid fa-download"></i> ओळखपत्र डाऊनलोड करा</button>
+            
+            <button onclick="showModal('यशस्वी', 'तुमचे ओळखपत्र डाऊनलोड झाले आहे. गॅलरीत तपासा.', 'success'); document.getElementById('card-modal').classList.add('hidden');" class="w-full py-3 bg-gray-900 text-white font-bold text-xs rounded-xl hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-md"><i class="fa-solid fa-download"></i> ओळखपत्र डाऊनलोड करा</button>
         </div>
     </div>
 
     <!-- BEAUTIFUL NOTIFICATION MODAL -->
-    <div id="custom-modal" class="hidden fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4 animate-fade-in">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl border border-orange-100">
-            <div id="modal-icon" class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto"><i class="fa-solid fa-circle-check"></i></div>
-            <h4 id="modal-title" class="font-bold text-base md:text-lg text-gray-900">यशस्वी!</h4>
-            <p id="modal-desc" class="text-xs text-gray-500 leading-relaxed">माहिती अचूक साठवली गेली आहे.</p>
-            <button onclick="document.getElementById('custom-modal').classList.add('hidden')" class="w-full py-2 bg-saffron-500 text-white font-bold text-xs rounded-lg hover:bg-saffron-600 transition shadow-sm">बंद करा</button>
+    <div id="custom-modal" class="hidden fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4 animate-fade-in backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-8 text-center space-y-5 shadow-2xl border border-gray-100 transform scale-100 transition-transform">
+            <div id="modal-icon" class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+                <h4 id="modal-title" class="font-bold text-lg md:text-xl text-gray-900 mb-1">यशस्वी!</h4>
+                <p id="modal-desc" class="text-xs md:text-sm text-gray-500 leading-relaxed bg-gray-50 p-2 rounded-lg border border-gray-100">माहिती अचूक साठवली गेली आहे.</p>
+            </div>
+            <button onclick="document.getElementById('custom-modal').classList.add('hidden')" class="w-full py-3 bg-gray-900 text-white font-bold text-sm rounded-xl hover:bg-black transition-colors shadow-md">ठीक आहे</button>
         </div>
     </div>
 
@@ -728,7 +773,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase Init
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'gopal-samaj-utkarsh';
@@ -743,6 +788,10 @@
         // Data Stores
         let censusData = [], matrimonyData = [], committeeData = [], eventsData = [];
         let isAdminLoggedIn = false;
+        
+        // Admin Password Logic
+        let currentAdminPassword = 'gopaladmin2026'; // Default Fallback
+        const MASTER_KEY = 'SUPERADMIN26'; // Secret Key for Reset
 
         // Indian States & 36 MH Districts Location Logic
         const locationDB = {
@@ -771,13 +820,11 @@
         };
 
         window.addEventListener('load', async () => {
-            // Populate State Dropdown
             const stateEl = document.getElementById('c_state');
             if(stateEl) {
                 Object.keys(locationDB).forEach(s => stateEl.innerHTML += `<option value="${s}">${s}</option>`);
             }
 
-            // Init Firebase Auth (Crucial for Firestore)
             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                 await signInWithCustomToken(auth, __initial_auth_token);
             } else {
@@ -792,41 +839,45 @@
         });
 
         function startRealTimeListeners() {
-            // 1. Census
+            // Census
             onSnapshot(collection(db, `artifacts/${appId}/public/data/census`), (snap) => {
                 censusData = [];
                 snap.forEach(d => censusData.push({ id: d.id, ...d.data() }));
-                renderLiveDashboards();
-                renderLiveFeed();
+                renderLiveDashboards(); renderLiveFeed();
                 if(isAdminLoggedIn) renderAdminTable('census');
             });
-            // 2. Matrimony
+            // Matrimony
             onSnapshot(collection(db, `artifacts/${appId}/public/data/matrimony`), (snap) => {
                 matrimonyData = [];
                 snap.forEach(d => matrimonyData.push({ id: d.id, ...d.data() }));
                 renderPublicMatrimony();
                 if(isAdminLoggedIn) renderAdminTable('matrimony');
             });
-            // 3. Committee
+            // Committee
             onSnapshot(collection(db, `artifacts/${appId}/public/data/committee`), (snap) => {
                 committeeData = [];
                 snap.forEach(d => committeeData.push({ id: d.id, ...d.data() }));
                 renderPublicCommittee();
                 if(isAdminLoggedIn) renderAdminTable('committee');
             });
-            // 4. Events
+            // Events
             onSnapshot(collection(db, `artifacts/${appId}/public/data/events`), (snap) => {
                 eventsData = [];
                 snap.forEach(d => eventsData.push({ id: d.id, ...d.data() }));
                 renderPublicEvents();
                 if(isAdminLoggedIn) renderAdminTable('events');
             });
+            // Admin Settings
+            onSnapshot(doc(db, `artifacts/${appId}/public/data/settings`, 'adminAuth'), (docSnap) => {
+                if(docSnap.exists() && docSnap.data().password) {
+                    currentAdminPassword = docSnap.data().password;
+                }
+            });
         }
 
         // --- PUBLIC RENDERING LOGIC ---
         function renderLiveDashboards() {
             document.getElementById('live-census-counter').innerText = censusData.length;
-            
             let stateMap = {}, mhDistMap = {};
             censusData.forEach(r => {
                 if(r.state) stateMap[r.state] = (stateMap[r.state] || 0) + 1;
@@ -834,41 +885,36 @@
             });
 
             document.getElementById('live-states-counter').innerText = Object.keys(stateMap).length;
-            
             if(censusData.length > 0) {
                 const latest = [...censusData].sort((a,b)=>b.timestamp-a.timestamp)[0];
                 const dt = new Date(latest.timestamp);
                 document.getElementById('last-reg-time').innerText = dt.toLocaleTimeString('mr-IN', {hour: '2-digit', minute:'2-digit'});
             }
 
-            // State UI
             const stateDash = document.getElementById('state-dashboard-container');
-            if(Object.keys(stateMap).length === 0) stateDash.innerHTML = '<div class="text-center text-xs text-gray-500 py-4">अद्याप नोंदणी नाही.</div>';
+            if(Object.keys(stateMap).length === 0) stateDash.innerHTML = '<div class="text-center text-xs text-gray-500 py-6">अद्याप नोंदणी नाही.</div>';
             else {
                 stateDash.innerHTML = '';
                 Object.entries(stateMap).sort((a,b)=>b[1]-a[1]).forEach(([st, cnt]) => {
                     const pct = Math.round((cnt / censusData.length) * 100);
                     stateDash.innerHTML += `
                     <div>
-                        <div class="flex justify-between text-xs font-semibold mb-1"><span>${st}</span><span class="font-bold text-saffron-600">${cnt} (${pct}%)</span></div>
-                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden"><div class="bg-saffron-500 h-full rounded-full" style="width: ${pct}%"></div></div>
+                        <div class="flex justify-between text-xs font-bold mb-1.5 text-gray-700"><span>${st}</span><span class="text-saffron-600">${cnt} (${pct}%)</span></div>
+                        <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden shadow-inner"><div class="bg-gradient-to-r from-saffron-400 to-saffron-600 h-full rounded-full" style="width: ${pct}%"></div></div>
                     </div>`;
                 });
             }
 
-            // MH District UI
             const distDash = document.getElementById('district-dashboard-container');
-            if(Object.keys(mhDistMap).length === 0) distDash.innerHTML = '<div class="text-center text-xs text-gray-500 py-4 col-span-full">अद्याप नोंदणी नाही.</div>';
+            if(Object.keys(mhDistMap).length === 0) distDash.innerHTML = '<div class="text-center text-xs text-gray-500 py-6 col-span-full">अद्याप नोंदणी नाही.</div>';
             else {
                 distDash.innerHTML = '';
-                // Ensure all 36 districts show at least 0 if empty, but logic dictates only showing registered to keep it clean, let's show all registered + fill missing if needed, or just registered. Prompt asks for LIVE tracking of registered. So just registered.
-                // Or let's seed all 36 with 0 initially to make it look full.
                 locationDB['महाराष्ट्र'].forEach(d => {
                     const cnt = mhDistMap[d] || 0;
                     distDash.innerHTML += `
-                    <div class="bg-orange-50/50 p-2.5 rounded-lg border border-orange-100 flex justify-between items-center text-xs">
-                        <span class="font-bold text-gray-800">${d}</span>
-                        <span class="bg-orange-100 text-saffron-700 px-2 py-0.5 rounded-full font-bold">${cnt}</span>
+                    <div class="bg-white p-3 rounded-xl border border-gray-100 flex justify-between items-center text-xs shadow-sm hover:border-saffron-200 transition-colors">
+                        <span class="font-bold text-gray-700">${d}</span>
+                        <span class="bg-orange-50 text-saffron-700 px-2.5 py-1 rounded-md font-bold border border-orange-100">${cnt}</span>
                     </div>`;
                 });
             }
@@ -877,19 +923,19 @@
         function renderLiveFeed() {
             const feed = document.getElementById('recent-registrations-container');
             if(censusData.length === 0) {
-                feed.innerHTML = '<div class="col-span-full py-4 text-center text-xs text-gray-500 bg-white rounded-xl border border-orange-50">पहिली नोंदणी करा!</div>';
+                feed.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-gray-500 bg-white rounded-xl border border-orange-100 shadow-sm">पहिली नोंदणी करा!</div>';
                 return;
             }
             feed.innerHTML = '';
             censusData.sort((a,b) => b.timestamp - a.timestamp).slice(0, 4).forEach(r => {
                 const phone = r.phone ? r.phone.substring(0,4) + "***" + r.phone.substring(7) : "-";
                 feed.innerHTML += `
-                <div class="bg-white p-3.5 rounded-xl shadow-sm border border-orange-100 flex items-start gap-2.5">
-                    <div class="w-7 h-7 rounded-full saffron-gradient text-white flex items-center justify-center shrink-0 text-xs font-bold shadow-inner">🚩</div>
-                    <div class="text-[11px] space-y-0.5">
-                        <h4 class="font-bold text-gray-900">${r.name}</h4>
-                        <p class="text-[9px] text-gray-500">${r.district}, ${r.state}</p>
-                        <span class="inline-block bg-orange-100 text-saffron-700 text-[9px] font-bold px-1.5 py-0.5 rounded-full"><i class="fa-solid fa-phone text-[8px] mr-0.5"></i> ${phone}</span>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-orange-100 flex items-start gap-3 hover:shadow-md transition-shadow">
+                    <div class="w-8 h-8 rounded-full saffron-gradient text-white flex items-center justify-center shrink-0 text-xs font-bold shadow-inner">🚩</div>
+                    <div class="text-[11px] space-y-1 w-full">
+                        <h4 class="font-bold text-gray-900 text-sm truncate">${r.name}</h4>
+                        <p class="text-[10px] text-gray-500 truncate">${r.district}, ${r.state}</p>
+                        <div class="bg-gray-50 border border-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 w-fit mt-1"><i class="fa-solid fa-phone text-[9px] text-saffron-500"></i> ${phone}</div>
                     </div>
                 </div>`;
             });
@@ -897,22 +943,24 @@
 
         function renderPublicMatrimony() {
             const con = document.getElementById('matrimony-container');
-            if(matrimonyData.length === 0) { con.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-gray-500 bg-orange-50 rounded-xl border">नवीन प्रोफाईल्स लवकरच अपडेट केले जातील.</div>'; return; }
+            if(matrimonyData.length === 0) { con.innerHTML = '<div class="col-span-full py-10 text-center text-sm text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm"><i class="fa-solid fa-rings-wedding text-4xl text-gray-300 mb-3 block"></i>नवीन प्रोफाईल्स लवकरच अपडेट केले जातील.</div>'; return; }
             con.innerHTML = '';
             matrimonyData.forEach(m => {
                 const isBride = m.gender === 'वधू';
                 const icon = isBride ? 'fa-person-dress text-pink-500' : 'fa-user-tie text-blue-500';
-                const badge = isBride ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700';
-                const bgIcon = isBride ? 'bg-pink-100 border-pink-200' : 'bg-blue-100 border-blue-200';
-                
+                const badge = isBride ? 'bg-pink-100 text-pink-700 border-pink-200' : 'bg-blue-100 text-blue-700 border-blue-200';
+                const bgIcon = isBride ? 'bg-pink-50 border-pink-100' : 'bg-blue-50 border-blue-100';
                 con.innerHTML += `
-                <div class="bg-white p-5 rounded-xl border border-orange-100 text-center flex flex-col justify-between">
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 text-center flex flex-col justify-between shadow-sm hover:shadow-lg transition-shadow">
                     <div>
-                        <div class="w-16 h-16 ${bgIcon} rounded-full flex items-center justify-center mx-auto mb-3 border"><i class="fa-solid ${icon} text-2xl"></i></div>
-                        <span class="${badge} text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">${m.gender}</span>
-                        <h4 class="font-bold text-gray-900 text-sm mt-2">${m.name}</h4>
-                        <p class="text-[11px] text-gray-500">${m.age} वर्षे • ${m.height} • ${m.edu}</p>
-                        <p class="text-[11px] text-gray-700 font-semibold mt-1">व्यवसाय: ${m.job} <br> ${m.loc}</p>
+                        <div class="w-16 h-16 ${bgIcon} rounded-full flex items-center justify-center mx-auto mb-4 border"><i class="fa-solid ${icon} text-3xl"></i></div>
+                        <span class="${badge} border text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">${m.gender}</span>
+                        <h4 class="font-bold text-gray-900 text-base mt-3 mb-1 truncate">${m.name}</h4>
+                        <p class="text-xs text-gray-500 font-medium">${m.age} वर्षे • ${m.height} • ${m.edu}</p>
+                        <div class="mt-3 pt-3 border-t border-gray-100">
+                            <p class="text-xs text-gray-700 font-bold mb-1 truncate"><i class="fa-solid fa-briefcase text-gray-400 mr-1"></i> ${m.job}</p>
+                            <p class="text-[11px] text-gray-500 truncate"><i class="fa-solid fa-location-dot text-gray-400 mr-1"></i> ${m.loc}</p>
+                        </div>
                     </div>
                 </div>`;
             });
@@ -920,40 +968,42 @@
 
         function renderPublicCommittee() {
             const con = document.getElementById('committee-container');
-            if(committeeData.length === 0) { con.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-gray-500 bg-white rounded-xl border">नवीन पदाधिकारी माहिती लवकरच अपडेट केली जाईल.</div>'; return; }
+            if(committeeData.length === 0) { con.innerHTML = '<div class="col-span-full py-10 text-center text-sm text-gray-500 bg-gray-50 rounded-2xl border border-gray-200 shadow-sm">नवीन पदाधिकारी माहिती लवकरच अपडेट केली जाईल.</div>'; return; }
             con.innerHTML = '';
             committeeData.forEach(c => {
-                let badge = 'bg-gray-100 text-gray-700';
-                if(c.level==='राष्ट्रीय') badge = 'bg-red-100 text-red-700';
-                else if(c.level==='राज्य') badge = 'bg-saffron-100 text-saffron-700';
-                else if(c.level==='महिला आघाडी') badge = 'bg-pink-100 text-pink-700';
-                
+                let badge = 'bg-gray-100 text-gray-700 border-gray-200';
+                if(c.level==='राष्ट्रीय') badge = 'bg-red-100 text-red-700 border-red-200';
+                else if(c.level==='राज्य') badge = 'bg-saffron-100 text-saffron-700 border-saffron-200';
+                else if(c.level==='महिला आघाडी') badge = 'bg-pink-100 text-pink-700 border-pink-200';
                 con.innerHTML += `
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 text-center">
-                    <div class="w-20 h-20 bg-orange-100 rounded-full mx-auto mb-3 border-2 border-saffron-500 flex items-center justify-center"><i class="fa-solid fa-user-tie text-3xl text-saffron-500"></i></div>
-                    <span class="${badge} text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">${c.level}</span>
-                    <h5 class="font-bold text-gray-900 text-xs md:text-sm mt-2">${c.name}</h5>
-                    <p class="text-[11px] text-gray-500">${c.role}</p>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 text-center hover:shadow-lg transition-shadow">
+                    <div class="w-20 h-20 bg-orange-50 rounded-full mx-auto mb-4 border-2 border-saffron-400 flex items-center justify-center shadow-inner"><i class="fa-solid fa-user-tie text-3xl text-saffron-500"></i></div>
+                    <span class="${badge} border text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">${c.level}</span>
+                    <h5 class="font-bold text-gray-900 text-sm md:text-base mt-3 mb-1 truncate">${c.name}</h5>
+                    <p class="text-xs text-gray-500 font-medium truncate">${c.role}</p>
                 </div>`;
             });
         }
 
         function renderPublicEvents() {
             const con = document.getElementById('events-container');
-            if(eventsData.length === 0) { con.innerHTML = '<div class="col-span-full py-6 text-center text-xs text-gray-500 bg-orange-50 rounded-xl border">सध्या कोणतेही नवीन कार्यक्रम नियोजित नाहीत.</div>'; return; }
+            if(eventsData.length === 0) { con.innerHTML = '<div class="col-span-full py-10 text-center text-sm text-gray-500 bg-white rounded-2xl border border-gray-200 shadow-sm">सध्या कोणतेही नवीन कार्यक्रम नियोजित नाहीत.</div>'; return; }
             con.innerHTML = '';
             eventsData.forEach(e => {
                 con.innerHTML += `
-                <div class="bg-white p-5 rounded-2xl shadow-md border border-orange-100 flex flex-col justify-between">
-                    <div>
-                        <span class="bg-red-100 text-red-700 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">आगामी कार्यक्रम</span>
-                        <h4 class="text-xs md:text-sm font-bold text-gray-900 mt-2">${e.title}</h4>
-                        <p class="text-[10px] text-gray-500 mt-1"><i class="fa-solid fa-calendar text-saffron-500 mr-1.5"></i> ${e.date}</p>
-                        <p class="text-[10px] text-gray-500 mt-0.5"><i class="fa-solid fa-map-pin text-saffron-500 mr-1.5"></i> ${e.loc}</p>
-                        <p class="text-[11px] text-gray-600 mt-2.5 leading-relaxed">${e.desc}</p>
+                <div class="bg-white p-6 rounded-3xl shadow-md border border-gray-200 flex flex-col justify-between hover:shadow-xl transition-shadow relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-saffron-50 rounded-bl-full z-0"></div>
+                    <div class="relative z-10">
+                        <span class="bg-red-50 text-red-600 border border-red-100 text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-wider"><i class="fa-regular fa-bell mr-1"></i> आगामी कार्यक्रम</span>
+                        <h4 class="text-base font-bold text-gray-900 mt-3 mb-2 leading-snug">${e.title}</h4>
+                        <div class="space-y-1 mb-3">
+                            <p class="text-xs text-gray-600 font-medium"><i class="fa-solid fa-calendar-day text-saffron-500 w-4 text-center mr-1"></i> ${e.date}</p>
+                            <p class="text-xs text-gray-600 font-medium"><i class="fa-solid fa-map-location-dot text-saffron-500 w-4 text-center mr-1"></i> ${e.loc}</p>
+                        </div>
+                        <p class="text-xs text-gray-500 leading-relaxed bg-gray-50 p-2.5 rounded-lg border border-gray-100">${e.desc}</p>
                     </div>
-                    <div class="border-t border-orange-50 pt-3 mt-3 flex items-center justify-between text-[11px]">
-                        <span class="font-bold text-gray-700">📞 ${e.contact}</span>
+                    <div class="border-t border-gray-100 pt-3 mt-4 flex items-center justify-between relative z-10">
+                        <span class="text-xs font-bold text-gray-700 bg-gray-100 px-3 py-1.5 rounded-lg"><i class="fa-solid fa-phone text-saffron-500 mr-1"></i> ${e.contact}</span>
                     </div>
                 </div>`;
             });
@@ -965,7 +1015,6 @@
             const name = document.getElementById('c_name').value;
             const phone = document.getElementById('c_phone').value;
             const state = document.getElementById('c_state').value;
-            
             const data = {
                 name: name, phone: phone, age: document.getElementById('c_age').value,
                 gender: document.getElementById('c_gender').value, education: document.getElementById('c_education').value,
@@ -976,23 +1025,36 @@
             };
             try {
                 await addDoc(collection(db, `artifacts/${appId}/public/data/census`), data);
-                
-                // Pre-fill Digital Card
                 document.getElementById('card-name-val').textContent = name;
                 document.getElementById('card-phone-val').textContent = phone;
                 document.getElementById('card-state-val').textContent = state;
-
                 showModal('नोंदणी यशस्वी!', 'आपली सुरक्षित नोंदणी राष्ट्रीय डेटाबेसमध्ये यशस्वीरीत्या जतन झाली आहे.', 'success');
                 e.target.reset();
-            } catch(err) { console.error(err); showModal('त्रुटी', 'नोंदणी करता आली नाही.', 'error'); }
+            } catch(err) { console.error(err); showModal('त्रुटी', 'नोंदणी करता आली नाही. पुन्हा प्रयत्न करा.', 'error'); }
         };
 
         // --- ADMIN SECURE LOGIC ---
         window.openAdminModal = () => document.getElementById('admin-modal').classList.remove('hidden');
-        window.closeAdminModal = () => document.getElementById('admin-modal').classList.add('hidden');
-        
+        window.closeAdminModal = () => {
+            document.getElementById('admin-modal').classList.add('hidden');
+            if(!isAdminLoggedIn) backToLogin(); 
+        };
+
+        // UI Toggles for Password
+        window.showForgotPassword = () => {
+            document.getElementById('admin-login-view').classList.add('hidden');
+            document.getElementById('forgot-password-view').classList.remove('hidden');
+        };
+        window.backToLogin = () => {
+            document.getElementById('forgot-password-view').classList.add('hidden');
+            document.getElementById('admin-login-view').classList.remove('hidden');
+            document.getElementById('master-key').value = '';
+            document.getElementById('new-reset-password').value = '';
+        };
+
+        // Admin Auth
         window.authenticateAdmin = () => {
-            if(document.getElementById('admin-password').value === 'gopaladmin2026') {
+            if(document.getElementById('admin-password').value === currentAdminPassword) {
                 isAdminLoggedIn = true;
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
@@ -1000,21 +1062,60 @@
                 
                 renderAdminTable('census'); renderAdminTable('matrimony'); renderAdminTable('committee'); renderAdminTable('events');
                 switchAdminTab('census');
+                document.getElementById('admin-password').value = ''; 
             } else {
-                showModal('अयशस्वी', 'चुकीचा प्रशासक पासवर्ड!', 'error');
+                showModal('अयशस्वी', 'चुकीचा प्रशासक पासवर्ड! कृपया पुन्हा प्रयत्न करा.', 'error');
             }
         };
 
+        // Password Reset via Master Key
+        window.resetAdminPassword = async () => {
+            const masterKey = document.getElementById('master-key').value;
+            const newPwd = document.getElementById('new-reset-password').value;
+
+            if(masterKey === MASTER_KEY && newPwd.length >= 6) {
+                try {
+                    await setDoc(doc(db, `artifacts/${appId}/public/data/settings`, 'adminAuth'), { password: newPwd });
+                    showModal('पासवर्ड बदलला', 'तुमचा प्रशासक पासवर्ड यशस्वीरित्या बदलला आहे. आता नवीन पासवर्डने लॉगिन करा.', 'success');
+                    backToLogin();
+                } catch(e) {
+                    showModal('त्रुटी', 'सर्व्हर एरर!', 'error');
+                }
+            } else {
+                showModal('अयशस्वी', 'मास्टर की चुकीची आहे किंवा नवीन पासवर्ड खूप लहान आहे (किमान ६ अक्षरे हवीत).', 'error');
+            }
+        };
+
+        // Password Change via Admin Panel Settings
+        window.adminChangePassword = async (e) => {
+            e.preventDefault();
+            const oldPwd = document.getElementById('set_old_pwd').value;
+            const newPwd = document.getElementById('set_new_pwd').value;
+
+            if(oldPwd === currentAdminPassword && newPwd.length >= 6) {
+                try {
+                    await setDoc(doc(db, `artifacts/${appId}/public/data/settings`, 'adminAuth'), { password: newPwd });
+                    showModal('यशस्वी', 'पासवर्ड सुरक्षितपणे अपडेट झाला आहे!', 'success');
+                    e.target.reset();
+                } catch(err) {
+                    showModal('त्रुटी', 'पासवर्ड अपडेट करता आला नाही.', 'error');
+                }
+            } else {
+                showModal('अयशस्वी', 'सध्याचा पासवर्ड चुकीचा आहे किंवा नवीन पासवर्ड लहान आहे.', 'error');
+            }
+        };
+
+        // Tabs
         window.switchAdminTab = (tab) => {
             document.querySelectorAll('.admin-panel-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.admin-tab').forEach(el => {
-                el.classList.remove('text-saffron-600', 'border-b-2', 'border-saffron-500');
-                el.classList.add('text-gray-500');
+                el.classList.remove('text-white', 'bg-saffron-500');
+                el.classList.add('text-gray-600', 'bg-gray-100');
             });
             document.getElementById(`admin-panel-${tab}`).classList.remove('hidden');
             document.getElementById(`admin-panel-${tab}`).classList.add('block');
-            document.getElementById(`tab-${tab}`).classList.add('text-saffron-600', 'border-b-2', 'border-saffron-500');
-            document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
+            document.getElementById(`tab-${tab}`).classList.add('text-white', 'bg-saffron-500');
+            document.getElementById(`tab-${tab}`).classList.remove('text-gray-600', 'bg-gray-100');
         };
 
         // Admin Create Form Submit Handlers
@@ -1026,7 +1127,7 @@
                 edu: document.getElementById('m_edu').value, job: document.getElementById('m_job').value,
                 loc: document.getElementById('m_loc').value, timestamp: Date.now()
             };
-            try { await addDoc(collection(db, `artifacts/${appId}/public/data/matrimony`), data); e.target.reset(); } catch(err) { console.error(err); }
+            try { await addDoc(collection(db, `artifacts/${appId}/public/data/matrimony`), data); showModal('यशस्वी', 'प्रोफाईल डेटाबेसमध्ये जोडले गेले.', 'success'); e.target.reset(); } catch(err) { console.error(err); }
         };
         window.adminSubmitCommittee = async (e) => {
             e.preventDefault();
@@ -1034,7 +1135,7 @@
                 name: document.getElementById('com_name').value, role: document.getElementById('com_role').value,
                 level: document.getElementById('com_level').value, timestamp: Date.now()
             };
-            try { await addDoc(collection(db, `artifacts/${appId}/public/data/committee`), data); e.target.reset(); } catch(err) { console.error(err); }
+            try { await addDoc(collection(db, `artifacts/${appId}/public/data/committee`), data); showModal('यशस्वी', 'नवीन पदाधिकारी जोडले गेले.', 'success'); e.target.reset(); } catch(err) { console.error(err); }
         };
         window.adminSubmitEvent = async (e) => {
             e.preventDefault();
@@ -1043,13 +1144,13 @@
                 loc: document.getElementById('ev_loc').value, contact: document.getElementById('ev_contact').value,
                 desc: document.getElementById('ev_desc').value, timestamp: Date.now()
             };
-            try { await addDoc(collection(db, `artifacts/${appId}/public/data/events`), data); e.target.reset(); } catch(err) { console.error(err); }
+            try { await addDoc(collection(db, `artifacts/${appId}/public/data/events`), data); showModal('यशस्वी', 'कार्यक्रम यशस्वीरीत्या प्रसिद्ध झाला.', 'success'); e.target.reset(); } catch(err) { console.error(err); }
         };
 
         // Admin Delete Logic
         window.adminDelete = async (colName, id) => {
-            if(!confirm("नक्की रेकॉर्ड हटवायचे आहे का?")) return;
-            try { await deleteDoc(doc(db, `artifacts/${appId}/public/data/${colName}`, id)); } catch(err) { console.error(err); }
+            if(!confirm("तुम्हाला खात्री आहे की तुम्हाला हा रेकॉर्ड कायमचा हटवायचा आहे?")) return;
+            try { await deleteDoc(doc(db, `artifacts/${appId}/public/data/${colName}`, id)); showModal('हटवले', 'रेकॉर्ड सुरक्षितपणे हटवले गेले.', 'success'); } catch(err) { console.error(err); }
         };
 
         // Admin Table Rendering
@@ -1059,19 +1160,19 @@
             tbody.innerHTML = '';
             
             if(tab === 'census') {
-                censusData.forEach(r => tbody.innerHTML += `<tr><td class="p-3 font-bold">${r.name}</td><td class="p-3 font-mono">${r.phone}</td><td class="p-3">${r.gender}/${r.age}</td><td class="p-3">${r.state}/${r.district}</td><td class="p-3 text-center"><button onclick="adminDelete('census', '${r.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button></td></tr>`);
+                censusData.forEach(r => tbody.innerHTML += `<tr class="hover:bg-gray-50 transition-colors"><td class="p-3 font-bold text-gray-800">${r.name}</td><td class="p-3 font-mono text-gray-600">${r.phone}</td><td class="p-3 text-gray-600">${r.gender}/${r.age}</td><td class="p-3 text-gray-600">${r.state}/${r.district}</td><td class="p-3 text-center"><button onclick="adminDelete('census', '${r.id}')" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-red-100 transition-colors">हटवा</button></td></tr>`);
             } else if(tab === 'matrimony') {
-                matrimonyData.forEach(r => tbody.innerHTML += `<tr><td class="p-2 font-bold">${r.gender}</td><td class="p-2">${r.name} (${r.age})</td><td class="p-2">${r.edu}, ${r.job}</td><td class="p-2 text-center"><button onclick="adminDelete('matrimony', '${r.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button></td></tr>`);
+                matrimonyData.forEach(r => tbody.innerHTML += `<tr class="hover:bg-gray-50 transition-colors"><td class="p-3 font-bold text-gray-800">${r.gender}</td><td class="p-3 text-gray-600">${r.name} (${r.age})</td><td class="p-3 text-gray-600">${r.edu}, ${r.job}</td><td class="p-3 text-center"><button onclick="adminDelete('matrimony', '${r.id}')" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-red-100 transition-colors">हटवा</button></td></tr>`);
             } else if(tab === 'committee') {
-                committeeData.forEach(r => tbody.innerHTML += `<tr><td class="p-2 font-bold">${r.level}</td><td class="p-2">${r.name}</td><td class="p-2">${r.role}</td><td class="p-2 text-center"><button onclick="adminDelete('committee', '${r.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button></td></tr>`);
+                committeeData.forEach(r => tbody.innerHTML += `<tr class="hover:bg-gray-50 transition-colors"><td class="p-3 font-bold text-gray-800">${r.level}</td><td class="p-3 text-gray-600">${r.name}</td><td class="p-3 text-gray-600">${r.role}</td><td class="p-3 text-center"><button onclick="adminDelete('committee', '${r.id}')" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-red-100 transition-colors">हटवा</button></td></tr>`);
             } else if(tab === 'events') {
-                eventsData.forEach(r => tbody.innerHTML += `<tr><td class="p-2 font-bold">${r.title}</td><td class="p-2">${r.date}</td><td class="p-2">${r.loc}</td><td class="p-2 text-center"><button onclick="adminDelete('events', '${r.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button></td></tr>`);
+                eventsData.forEach(r => tbody.innerHTML += `<tr class="hover:bg-gray-50 transition-colors"><td class="p-3 font-bold text-gray-800">${r.title}</td><td class="p-3 text-gray-600">${r.date}</td><td class="p-3 text-gray-600">${r.loc}</td><td class="p-3 text-center"><button onclick="adminDelete('events', '${r.id}')" class="bg-red-50 text-red-600 border border-red-200 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-red-100 transition-colors">हटवा</button></td></tr>`);
             }
         }
 
         // --- UTILS ---
         window.exportCensusToCSV = () => {
-            if(censusData.length === 0) return;
+            if(censusData.length === 0) { showModal('माहिती', 'निर्यात करण्यासाठी डेटा उपलब्ध नाही.', 'info'); return; }
             const ws = XLSX.utils.json_to_sheet(censusData);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, "Gopal_Census");
@@ -1082,7 +1183,6 @@
         
         window.generateDigitalCard = () => {
             if(document.getElementById('card-name-val').textContent === "-") {
-                // mock prefill if user just clicked button without registering
                 document.getElementById('card-name-val').textContent = "रामेश गोपाळ (प्रात्यक्षिक)";
                 document.getElementById('card-phone-val').textContent = "९६२३५५८७१९";
                 document.getElementById('card-state-val').textContent = "महाराष्ट्र";
@@ -1097,13 +1197,13 @@
             
             const icon = document.getElementById('modal-icon');
             if(type === "success") {
-                icon.className = "w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto shadow-inner";
+                icon.className = "w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner";
                 icon.innerHTML = '<i class="fa-solid fa-circle-check animate-bounce"></i>';
             } else if (type === "error") {
-                icon.className = "w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl mx-auto shadow-inner";
+                icon.className = "w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner";
                 icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation animate-pulse"></i>';
             } else {
-                icon.className = "w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mx-auto shadow-inner";
+                icon.className = "w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner";
                 icon.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
             }
             m.classList.remove('hidden');
