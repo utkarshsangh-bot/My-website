@@ -1208,5 +1208,24 @@
             m.classList.remove('hidden');
         };
     </script>
+    // firebase.js
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-analytics.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBVxJSZ_Fpljc6i2xLIATruLyRcCoAV0D4",
+  authDomain: "gopalsamaj-utkarsh-sangh.firebaseapp.com",
+  projectId: "gopalsamaj-utkarsh-sangh",
+  storageBucket: "gopalsamaj-utkarsh-sangh.firebasestorage.app",
+  messagingSenderId: "474884202995",
+  appId: "1:474884202995:web:7b8f1830b80e4d9993b286",
+  measurementId: "G-HT8GL9Q556"
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+export { app };
 </body>
 </html>
