@@ -1,11 +1,15 @@
+```html
 <!DOCTYPE html>
 <html lang="mr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>अखिल भारतीय गोपाळ समाज उत्कर्ष संघ - डिजिटल महा-व्यासपीठ</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
@@ -13,70 +17,31 @@
             theme: {
                 extend: {
                     colors: {
-                        saffron: {
-                            50: '#fffbf0',
-                            100: '#fffae0',
-                            500: '#F97316', 
-                            600: '#EA580C',
-                            700: '#C2410C',
-                        },
+                        saffron: { 50: '#fffbf0', 100: '#fffae0', 500: '#F97316', 600: '#EA580C', 700: '#C2410C' },
                         gold: '#FBBF24',
                     },
-                    fontFamily: {
-                        sans: ['Mukta', 'Poppins', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Mukta', 'Poppins', 'sans-serif'] }
                 }
             }
         }
     </script>
     <style>
-        .saffron-gradient {
-            background: linear-gradient(135deg, #FF7E00 0%, #FF5100 100%);
-        }
-        .gold-gradient {
-            background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%);
-        }
-        .glassmorphism {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #F97316;
-            border-radius: 10px;
-        }
-        @keyframes ticker-vertical {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-        .ticker-container {
-            height: 220px;
-            overflow: hidden;
-            position: relative;
-        }
-        .ticker-scroll {
-            display: flex;
-            flex-direction: column;
-            animation: ticker-vertical 25s linear infinite;
-        }
-        .ticker-scroll:hover {
-            animation-play-state: paused;
-        }
+        .saffron-gradient { background: linear-gradient(135deg, #FF7E00 0%, #FF5100 100%); }
+        .gold-gradient { background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); }
+        .glassmorphism { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        html { scroll-behavior: smooth; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #F97316; border-radius: 10px; }
+        @keyframes ticker-vertical { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+        .ticker-container { height: 220px; overflow: hidden; position: relative; }
+        .ticker-scroll { display: flex; flex-direction: column; animation: ticker-vertical 25s linear infinite; }
+        .ticker-scroll:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="bg-orange-50/20 text-gray-800 font-sans overflow-hidden" id="main-body">
 
+    <!-- स्वागत स्क्रीन -->
     <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-b from-amber-950 via-amber-900 to-amber-950 flex flex-col items-center justify-center p-4 text-center overflow-y-auto">
         <div class="relative max-w-lg w-full bg-orange-950/85 border-2 border-yellow-500/40 p-6 md:p-8 rounded-3xl shadow-2xl space-y-6 backdrop-blur-md">
             <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-yellow-500 to-saffron-500 opacity-20 blur-xl"></div>
@@ -115,7 +80,37 @@
         </div>
     </div>
 
-    <div id="portal-content" class="opacity-0 transition-opacity duration-1000">
+    <!-- नोंदणी / लॉगिन मोडल (Registration Modal) -->
+    <div id="auth-modal" class="hidden fixed inset-0 z-[10000] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
+            <div class="saffron-gradient p-6 text-center text-white relative">
+                <i class="fa-solid fa-user-shield text-4xl mb-2"></i>
+                <h2 class="text-2xl font-bold">समाज बांधव नोंदणी</h2>
+                <p class="text-xs text-orange-100 mt-1">डिजिटल व्यासपीठाचा वापर करण्यासाठी नोंदणी अनिवार्य आहे.</p>
+            </div>
+            <form id="loginForm" onsubmit="handleUserRegistration(event)" class="p-6 space-y-4 text-sm">
+                <div>
+                    <label class="text-xs font-bold text-gray-600 mb-1 block">तुमचे पूर्ण नाव <span class="text-red-500">*</span></label>
+                    <input type="text" id="auth_name" required placeholder="उदा. राम पाटील गोपाळ" class="w-full px-4 py-2 border border-gray-300 rounded-xl outline-none focus:border-saffron-500 bg-gray-50">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-600 mb-1 block">मोबाईल नंबर (१० अंकी) <span class="text-red-500">*</span></label>
+                    <input type="tel" id="auth_phone" required pattern="[0-9]{10}" placeholder="उदा. 9876543210" class="w-full px-4 py-2 border border-gray-300 rounded-xl outline-none focus:border-saffron-500 bg-gray-50">
+                </div>
+                <div>
+                    <label class="text-xs font-bold text-gray-600 mb-1 block">जिल्हा <span class="text-red-500">*</span></label>
+                    <input type="text" id="auth_district" required placeholder="तुमचा जिल्हा" class="w-full px-4 py-2 border border-gray-300 rounded-xl outline-none focus:border-saffron-500 bg-gray-50">
+                </div>
+                <button type="submit" id="btn_auth_submit" class="w-full py-3 mt-2 saffron-gradient text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition flex justify-center items-center gap-2">
+                    सुरक्षित प्रवेश करा <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- मुख्य पोर्टल -->
+    <div id="portal-content" class="opacity-0 transition-opacity duration-1000 hidden">
+        <!-- टॉप हेडर -->
         <div class="saffron-gradient text-white py-2 px-4 text-center text-xs md:text-sm font-semibold shadow-md flex justify-between items-center flex-wrap gap-2">
             <div class="mx-auto flex items-center gap-2">
                 <span>🚩 "एक समाज • एक विचार • एक दिशा • यदुवंश गौरव" 🚩</span>
@@ -127,6 +122,7 @@
             </div>
         </div>
 
+        <!-- नेव्हिगेशन -->
         <nav class="bg-white shadow-lg sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between h-20">
@@ -149,7 +145,7 @@
 
                     <div class="hidden xl:flex items-center space-x-1 font-medium text-xs">
                         <a href="#home" class="py-2 px-2 text-saffron-600 border-b-2 border-saffron-500 font-bold">मुख्यपृष्ठ</a>
-                        <a href="#history" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-monument text-amber-700 mr-0.5"></i> इतिहास व वारसा</a>
+                        <a href="#history" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-monument text-amber-700 mr-0.5"></i> इतिहास</a>
                         <a href="#market" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-wheat-awn text-green-600 mr-0.5"></i> कृषी-व्यापार</a>
                         <a href="#study-hub" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-book-open text-blue-600 mr-0.5"></i> ज्ञान भांडार</a>
                         <a href="#political-hall" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-gavel text-purple-600 mr-0.5"></i> हक्क जागृती</a>
@@ -161,9 +157,18 @@
                         <button onclick="openAdminModal()" class="py-1.5 px-3 bg-gray-950 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-1 font-bold">
                             <i class="fa-solid fa-lock text-[9px]"></i> ॲडमिन
                         </button>
+                        <!-- युझर प्रोफाईल चिप (लॉगिन झाल्यावर दिसेल) -->
+                        <div id="user-profile-chip" class="hidden items-center gap-2 bg-orange-50 px-3 py-1.5 rounded-full border border-orange-200 cursor-pointer hover:bg-orange-100 ml-2" onclick="logoutUser()">
+                            <i class="fa-solid fa-circle-user text-saffron-600 text-base"></i>
+                            <span id="display_user_name" class="text-xs font-bold text-gray-700">प्रोफाईल</span>
+                            <i class="fa-solid fa-sign-out-alt text-gray-400 text-[9px] ml-1"></i>
+                        </div>
                     </div>
 
                     <div class="xl:hidden flex items-center gap-2">
+                        <div id="mobile-user-chip" class="hidden items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-saffron-600 border border-saffron-500" onclick="logoutUser()">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
                         <button onclick="openAdminModal()" class="py-1 px-2.5 bg-gray-900 text-white text-xs rounded hover:bg-gray-800 transition flex items-center gap-1 font-bold">
                             <i class="fa-solid fa-lock text-[8px]"></i> ॲडमिन
                         </button>
@@ -190,6 +195,7 @@
             </div>
         </nav>
 
+        <!-- हेरो सेक्शन -->
         <section id="home" class="relative bg-amber-950 text-white overflow-hidden py-12 md:py-16 px-4">
             <div class="absolute inset-0 opacity-15 bg-cover bg-center mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1590050752117-238cb0612b1b?auto=format&fit=crop&q=80&w=1920');"></div>
             <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
@@ -230,6 +236,7 @@
             </div>
         </section>
 
+        <!-- इतिहास सेक्शन -->
         <section id="history" class="py-12 px-4 bg-white">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-10">
@@ -274,6 +281,7 @@
             </div>
         </section>
 
+        <!-- कृषी-व्यापार (Marketplace) -->
         <section id="market" class="py-12 px-4 bg-orange-50/10 border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
@@ -288,16 +296,17 @@
                         <form id="createMarketForm" onsubmit="handleCreateMarket(event)" class="space-y-3 text-xs">
                             <div>
                                 <label class="block font-bold text-gray-700 mb-0.5">तुमचे नाव <span class="text-red-500">*</span></label>
-                                <input type="text" id="m_author" required placeholder="उदा. अमोल विष्णू गोपाळ" class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                <!-- Auto-filled via JS -->
+                                <input type="text" id="m_author" required class="w-full px-3 py-1.5 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-0.5">जिल्हा <span class="text-red-500">*</span></label>
-                                    <input type="text" id="m_district" required placeholder="उदा. नाशिक" class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                    <input type="text" id="m_district" required class="w-full px-3 py-1.5 border rounded-lg outline-none">
                                 </div>
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-0.5">मोबाईल नंबर <span class="text-red-500">*</span></label>
-                                    <input type="tel" id="m_phone" required pattern="[0-9]{10}" placeholder="१० अंकी फोन" class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                    <input type="tel" id="m_phone" required pattern="[0-9]{10}" class="w-full px-3 py-1.5 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
@@ -315,16 +324,11 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="flex justify-between items-end mb-0.5">
-                                    <label class="block font-bold text-gray-700">मालाचा तपशील <span class="text-red-500">*</span></label>
-                                    <button type="button" id="btn_generate_desc" onclick="generateMarketDesc()" class="text-[9px] bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold py-1 px-2 rounded flex items-center gap-1 transition">
-                                        ✨ आकर्षक जाहिरात तयार करा
-                                    </button>
-                                </div>
+                                <label class="block font-bold text-gray-700 mb-0.5">मालाचा तपशील <span class="text-red-500">*</span></label>
                                 <textarea id="m_desc" rows="3" required placeholder="उदा. गीर गाय विक्रीसाठी उपलब्ध आहे..." class="w-full px-3 py-1.5 border rounded-lg outline-none"></textarea>
                             </div>
                             <div>
-                                <label class="block font-bold text-gray-700 mb-0.5">फोटो अपलोड करा</label>
+                                <label class="block font-bold text-gray-700 mb-0.5">फोटो अपलोड करा (पर्यायी)</label>
                                 <input type="file" id="m_photo_file" accept="image/*" class="w-full px-3 py-1.5 border rounded-lg outline-none bg-gray-50">
                             </div>
                             <button type="submit" id="btn_market_submit" class="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition shadow">जाहिरात प्रसिद्ध करा</button>
@@ -341,7 +345,9 @@
             </div>
         </section>
 
+        <!-- ज्ञान भांडार व स्पर्धा परीक्षा -->
         <section id="study-hub" class="py-12 px-4 bg-white border-t border-orange-100">
+            <!-- (Content remains same as provided in User Code for UI sections) -->
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
                     <span class="text-blue-600 font-bold uppercase tracking-widest text-xs">📖 उज्ज्वल भविष्य व करिअर 📖</span>
@@ -373,15 +379,15 @@
                         <form onsubmit="handleNotificationSubmit(event)" class="space-y-3 text-xs">
                             <div>
                                 <label class="block font-bold text-gray-700 mb-0.5">पूर्ण नाव</label>
-                                <input type="text" id="n_name" required placeholder="उदा. सागर गोपाळ" class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                <input type="text" required placeholder="उदा. सागर गोपाळ" class="w-full px-3 py-1.5 border rounded-lg outline-none">
                             </div>
                             <div>
                                 <label class="block font-bold text-gray-700 mb-0.5">मोबाईल नंबर (WhatsApp)</label>
-                                <input type="tel" id="n_phone" required pattern="[0-9]{10}" placeholder="१० अंकी फोन" class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                <input type="tel" required pattern="[0-9]{10}" placeholder="१० अंकी फोन" class="w-full px-3 py-1.5 border rounded-lg outline-none">
                             </div>
                             <div>
                                 <label class="block font-bold text-gray-700 mb-0.5">कोणत्या परीक्षेची तयारी करताय?</label>
-                                <select id="n_exam" required class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                <select required class="w-full px-3 py-1.5 border rounded-lg outline-none">
                                     <option value="पोलीस भरती / सैन्य भरती">पोलीस भरती / सैन्य भरती</option>
                                     <option value="MPSC / UPSC">MPSC / UPSC</option>
                                     <option value="सरळसेवा भरती परीक्षा">सरळसेवा भरती परीक्षा</option>
@@ -394,6 +400,7 @@
             </div>
         </section>
 
+        <!-- राजकीय व हक्क जागृती -->
         <section id="political-hall" class="py-12 px-4 bg-purple-50/10 border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-10">
@@ -433,6 +440,7 @@
             </div>
         </section>
 
+        <!-- गौरव गाथा -->
         <section id="glorious-blog" class="py-12 px-4 bg-orange-50/20 border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
@@ -449,6 +457,7 @@
             </div>
         </section>
 
+        <!-- सोशल वॉल -->
         <section id="social-feed" class="py-12 px-4 bg-white border-t border-orange-100">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
@@ -463,12 +472,12 @@
                         <form id="createPostForm" onsubmit="handleCreatePost(event)" class="space-y-3 text-xs">
                             <div>
                                 <label class="block font-bold text-gray-700 mb-1">तुमचे नाव <span class="text-red-500">*</span></label>
-                                <input type="text" id="p_author" required placeholder="उदा. किरण विष्णू गोपाळ" class="w-full px-3 py-2 border rounded-lg outline-none">
+                                <input type="text" id="p_author" required class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-1">जिल्हा <span class="text-red-500">*</span></label>
-                                    <input type="text" id="p_district" required placeholder="उदा. नाशिक" class="w-full px-3 py-2 border rounded-lg outline-none">
+                                    <input type="text" id="p_district" required class="w-full px-3 py-2 border rounded-lg outline-none">
                                 </div>
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-1">गाव / शहर <span class="text-red-500">*</span></label>
@@ -476,12 +485,7 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="flex justify-between items-end mb-1">
-                                    <label class="block font-bold text-gray-700">तुमचा संदेश <span class="text-red-500">*</span></label>
-                                    <button type="button" id="btn_enhance_post" onclick="enhanceSocialPost()" class="text-[9px] bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-1 px-2 rounded flex items-center gap-1 transition">
-                                        ✨ पोस्ट अधिक प्रभावी करा
-                                    </button>
-                                </div>
+                                <label class="block font-bold text-gray-700 mb-1">तुमचा संदेश <span class="text-red-500">*</span></label>
                                 <textarea id="p_text" rows="3" required placeholder="तुमचे विचार लिहा..." class="w-full px-3 py-2 border rounded-lg outline-none"></textarea>
                             </div>
                             <div>
@@ -504,6 +508,7 @@
             </div>
         </section>
 
+        <!-- डिजिटल जनगणना -->
         <section id="census" class="py-12 px-4 bg-orange-50/10">
             <div class="max-w-4xl mx-auto bg-white border border-orange-100 p-6 md:p-10 rounded-3xl shadow-xl">
                 <div class="text-center mb-8">
@@ -516,11 +521,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">पूर्ण नाव (मराठीत) <span class="text-red-500">*</span></label>
-                            <input type="text" id="c_name" required placeholder="उदा. रामेश सुदाम गोपाळ" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
+                            <input type="text" id="c_name" required class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed outline-none" readonly>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">मोबाईल क्रमांक <span class="text-red-500">*</span></label>
-                            <input type="tel" id="c_phone" required pattern="[0-9]{10}" placeholder="१० अंकी मोबाईल नंबर" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
+                            <input type="tel" id="c_phone" required pattern="[0-9]{10}" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed outline-none" readonly>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -573,6 +578,7 @@
             </div>
         </section>
 
+        <!-- वधू-वर परिचय -->
         <section id="matrimony" class="py-12 px-4 bg-white border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-10">
@@ -598,6 +604,7 @@
             </div>
         </section>
 
+        <!-- पदाधिकारी -->
         <section id="committee" class="py-12 px-4 bg-orange-50/20 border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-10">
@@ -609,12 +616,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="committee-container">
                     <div class="col-span-full py-8 text-center text-xs text-gray-500 bg-white rounded-2xl border">
                         <i class="fa-solid fa-user-tie text-3xl text-gray-300 mb-1.5 block"></i>
-                        सध्या कोणतीही कार्यकारिणी यादी सर्व्हरवर प्रसिद्ध नाही. ॲडमिन पॅनलद्वारे नवीन पदाधिकारी जोडा.
+                        सध्या कोणतीही कार्यकारिणी यादी सर्व्हरवर प्रसिद्ध नाही.
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- देणगी / Donation -->
         <section id="donation" class="py-12 px-4 bg-white border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
@@ -683,6 +691,8 @@
         </footer>
     </div>
 
+    <!-- Modals: Donor, Matrimony, Admin, Alert -->
+
     <div id="donor-declare-modal" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl relative">
             <button onclick="closeDonorDeclareModal()" class="absolute right-4 top-4 text-gray-500 hover:text-gray-800"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -691,12 +701,12 @@
             <form id="donorForm" onsubmit="handleDonorSubmit(event)" class="space-y-3 text-xs">
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">आपले नाव <span class="text-red-500">*</span></label>
-                    <input type="text" id="dn_name" required placeholder="उदा. अमोल गोपाळ" class="w-full px-3 py-2 border rounded-lg outline-none">
+                    <input type="text" id="dn_name" required class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">गाव / शहर <span class="text-red-500">*</span></label>
-                        <input type="text" id="dn_city" required placeholder="उदा. नाशिक" class="w-full px-3 py-2 border rounded-lg outline-none">
+                        <input type="text" id="dn_city" required class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">देणगी रक्कम (रु.) <span class="text-red-500">*</span></label>
@@ -705,7 +715,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">मोबाईल नंबर (गोपनीय राहील) <span class="text-red-500">*</span></label>
-                    <input type="tel" id="dn_phone" required pattern="[0-9]{10}" placeholder="१० अंकी मोबाईल नंबर" class="w-full px-3 py-2 border rounded-lg outline-none">
+                    <input type="tel" id="dn_phone" required pattern="[0-9]{10}" class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
                 </div>
                 <button type="submit" class="w-full py-2.5 bg-saffron-500 text-white font-bold rounded-lg hover:bg-saffron-600 transition">नोंदणी सबमिट करा</button>
             </form>
@@ -755,7 +765,8 @@
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1">पालकांचा फोन <span class="text-red-500">*</span></label>
-                        <input type="tel" id="m_phone" required placeholder="१० अंकी फोन" class="w-full px-3 py-2 border rounded-lg outline-none">
+                        <!-- Auto-filled if they are registering themselves, but usually parents register so kept editable -->
+                        <input type="tel" id="m_mat_phone" required pattern="[0-9]{10}" placeholder="१० अंकी फोन" class="w-full px-3 py-2 border rounded-lg outline-none">
                     </div>
                 </div>
                 <button type="submit" class="w-full py-2.5 bg-pink-600 text-white font-bold rounded-lg hover:bg-pink-700 transition">नोंदणी सबमिट करा</button>
@@ -764,6 +775,7 @@
     </div>
 
     <div id="admin-modal" class="hidden fixed inset-0 bg-black/75 z-[100] flex items-center justify-center p-4">
+        <!-- Admin Code from Original File 2 -->
         <div class="bg-white rounded-2xl max-w-5xl w-full p-6 space-y-4 shadow-2xl border border-orange-100 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b border-orange-100 pb-3">
                 <h4 class="font-bold text-base md:text-lg text-gray-900 flex items-center gap-2">
@@ -910,7 +922,8 @@
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-1">नवीन क्यूआर कोड (QR Image)</label>
                                     <input type="file" id="cfg_qr_file" accept="image/*" class="w-full px-3 py-2 border rounded-lg outline-none bg-white">
-                                    <input type="hidden" id="cfg_qrurl"> </div>
+                                    <input type="hidden" id="cfg_qrurl"> 
+                                </div>
                             </div>
                             <button type="submit" id="btn_cfg_submit" class="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition">अधिकृत बँक/क्यूआर माहिती अद्ययावत करा</button>
                         </form>
@@ -947,6 +960,7 @@
         </div>
     </div>
 
+    <!-- Custom Alert Modal -->
     <div id="custom-modal" class="hidden fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl">
             <div id="modal-icon" class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto">
@@ -964,7 +978,6 @@
         import { getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, addDoc, onSnapshot, collection, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
-        // नवीन Firebase Config जो तुम्ही दिला आहे 
         const firebaseConfig = {
             apiKey: "AIzaSyBVxJSZ_Fpljc6i2xLIATruLyRcCoAV0D4",
             authDomain: "gopalsamaj-utkarsh-sangh.firebaseapp.com",
@@ -980,7 +993,7 @@
         const auth = getAuth(app);
         const storage = getStorage(app);
 
-        // Live States
+        // State Variables
         let localCensusData = [];
         let localMatrimonyData = [];
         let localMarketData = [];
@@ -990,14 +1003,95 @@
         let localDonationConfig = null;
         let localDonorsData = [];
         let isAdminLoggedIn = false;
+        
+        // --- Session / Registration Logic Integration ---
+        let currentUser = JSON.parse(localStorage.getItem('gopalSamajUser'));
 
-        // Placeholder for Gemini AI Key 
-        const apiKey = ""; 
+        function checkAuthAndInit() {
+            if (!currentUser) {
+                document.getElementById('auth-modal').classList.remove('hidden');
+                document.getElementById('portal-content').classList.add('hidden');
+            } else {
+                document.getElementById('auth-modal').classList.add('hidden');
+                document.getElementById('portal-content').classList.remove('hidden');
+                document.getElementById('portal-content').classList.remove('opacity-0');
+                
+                // Set Navbar User Chip
+                document.getElementById('user-profile-chip').classList.remove('hidden');
+                document.getElementById('user-profile-chip').classList.add('flex');
+                document.getElementById('mobile-user-chip').classList.remove('hidden');
+                document.getElementById('mobile-user-chip').classList.add('flex');
+                document.getElementById('display_user_name').innerText = currentUser.name.split(' ')[0];
 
-        // XSS Protection Filter
+                // Auto-fill all forms with read-only restriction for data security
+                if(document.getElementById('m_author')) {
+                    // Market
+                    document.getElementById('m_author').value = currentUser.name;
+                    document.getElementById('m_phone').value = currentUser.phone;
+                    document.getElementById('m_district').value = currentUser.district;
+                    // Post
+                    document.getElementById('p_author').value = currentUser.name;
+                    document.getElementById('p_district').value = currentUser.district;
+                    // Census
+                    document.getElementById('c_name').value = currentUser.name;
+                    document.getElementById('c_phone').value = currentUser.phone;
+                    // Donor
+                    document.getElementById('dn_name').value = currentUser.name;
+                    document.getElementById('dn_ phone').value = currentUser.phone;
+                    document.getElementById('dn_city').value = currentUser.district;
+                }
+            }
+        }
+
+        window.dismissWelcomeAndVoice = function() {
+            document.getElementById('welcome-overlay').classList.add('hidden');
+            document.getElementById('main-body').classList.remove('overflow-hidden');
+            checkAuthAndInit(); // Only proceed if logged in/registered
+        };
+
+        window.handleUserRegistration = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn_auth_submit');
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> कृपया प्रतीक्षा करा...`;
+            btn.disabled = true;
+
+            const userObj = {
+                name: document.getElementById('auth_name').value,
+                phone: document.getElementById('auth_phone').value,
+                district: document.getElementById('auth_district').value,
+                timestamp: Date.now()
+            };
+            
+            try {
+                // Save to Firebase for record
+                await addDoc(collection(db, `public_data/registeredUsers`), userObj);
+            } catch(e) { console.log("Silent Error Auth:", e); }
+            
+            localStorage.setItem('gopalSamajUser', JSON.stringify(userObj));
+            currentUser = userObj;
+            
+            showModal("यशस्वी!", "नोंदणी यशस्वी झाली आहे. डिजिटल मंचावर आपले स्वागत आहे.", "success");
+            btn.innerHTML = `सुरक्षित प्रवेश करा <i class="fa-solid fa-arrow-right"></i>`;
+            btn.disabled = false;
+            
+            checkAuthAndInit();
+        };
+
+        window.logoutUser = function() {
+            if(confirm("तुम्हाला लॉग आउट करायचे आहे का?")) {
+                localStorage.removeItem('gopalSamajUser');
+                currentUser = null;
+                document.getElementById('user-profile-chip').classList.add('hidden');
+                document.getElementById('mobile-user-chip').classList.add('hidden');
+                document.getElementById('portal-content').classList.add('hidden');
+                checkAuthAndInit();
+            }
+        };
+
+        // Utility: XSS Protection
         function sanitizeInput(str) {
             if (!str) return "";
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;").replace(/\//g, "&#x2F;");
+            return str.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;").replace(/\//g, "&#x2F;");
         }
 
         const locationDB = {
@@ -1013,14 +1107,6 @@
             "राजस्थान": ["जयपूर", "जोधपूर", "उदयपूर", "कोटा", "अजमेर", "बिकानेर", "इतर"]
         };
 
-        // Welcome overlay dismiss
-        window.dismissWelcomeAndVoice = function() {
-            document.getElementById('welcome-overlay').classList.add('hidden');
-            document.getElementById('portal-content').classList.remove('opacity-0');
-            document.getElementById('main-body').classList.remove('overflow-hidden');
-        };
-
-        // Init and Listeners
         window.addEventListener('load', async () => {
             const stateSelect = document.getElementById('c_state');
             if (stateSelect) {
@@ -1051,7 +1137,6 @@
             }
         };
 
-        // Firebase Firestore Sync (Open read for public data)
         function startRealtimeSync() {
             subscribeCollection('census', (data) => { localCensusData = data; updateCounters(); });
             subscribeCollection('matrimony', (data) => { localMatrimonyData = data; renderMatrimony(); });
@@ -1083,7 +1168,6 @@
             }, (err) => console.error("Sync Error:", err));
         }
 
-        // Firebase Storage File Upload Helper
         async function uploadFileAndGetURL(file, folder) {
             if (!file) return "";
             const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
@@ -1096,7 +1180,6 @@
             document.getElementById('live-census-counter-hero').textContent = localCensusData.length.toLocaleString('mr-IN');
         }
 
-        // Rendering logic (same structure as original)
         function applyDonationConfigToUI() {
             if (!localDonationConfig) return;
             document.getElementById('db-bank').textContent = sanitizeInput(localDonationConfig.bank);
@@ -1145,7 +1228,7 @@
                 });
             };
             appendDonorCards(localDonorsData);
-            appendDonorCards(localDonorsData); // Double for loop effect
+            appendDonorCards(localDonorsData);
             container.appendChild(tickerWrapper);
             tickerWrapper.className = "ticker-scroll";
         }
@@ -1312,7 +1395,8 @@
                 await addDoc(collection(db, `public_data/census`), data);
                 showModal("नोंदणी यशस्वी!", "आपली माहिती सुरक्षित प्रणालीत जतन झाली आहे.", "success");
                 e.target.reset();
-            } catch(e) {
+                checkAuthAndInit(); // Re-apply read-only values
+            } catch(err) {
                 showModal("त्रुटी", "माहिती जतन करू शकलो नाही.", "error");
             }
         };
@@ -1339,6 +1423,7 @@
                 });
                 showModal("प्रसिद्ध झाले!", "तुमची खरेदी-विक्री जाहिरात यशस्वीरित्या प्रकाशित झाली आहे.", "success");
                 e.target.reset();
+                checkAuthAndInit();
             } catch(err) {
                 showModal("त्रुटी", "जाहिरात टाकताना एरर आली.", "error");
             } finally {
@@ -1367,6 +1452,7 @@
                 });
                 showModal("प्रसारित झाले!", "तुमचा संदेश संपूर्ण महाराष्ट्रात सोशल वॉलवर प्रसारित झाला आहे.", "success");
                 e.target.reset();
+                checkAuthAndInit();
             } catch(err) {
                 showModal("त्रुटी", "मजकूर टाकण्यात अडचण आली.", "error");
             } finally {
@@ -1385,7 +1471,7 @@
                 education: document.getElementById('m_edu').value,
                 job: document.getElementById('m_job').value,
                 location: document.getElementById('m_loc').value,
-                phone: document.getElementById('m_phone').value,
+                phone: document.getElementById('m_mat_phone').value,
                 timestamp: Date.now()
             };
             try {
@@ -1411,6 +1497,7 @@
                 showModal("खूप खूप धन्यवाद!", `आपली नोंद यशस्वी झाली आहे. पडताळणी पूर्ण झाल्यावर आपले नाव कृतज्ञता फलकावर स्क्रोल होईल!`, "success");
                 closeDonorDeclareModal();
                 e.target.reset();
+                checkAuthAndInit();
             } catch (err) {
                 showModal("त्रुटी", "देणगी नोंदणी अपूर्ण राहिली.", "error");
             }
@@ -1442,8 +1529,7 @@
             
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-                // AuthState listener will handle the UI switch
-                console.log("Ant Asti Prarambh - Secure Admin Login Success");
+                btn.textContent = "सुरक्षित लॉगिन";
             } catch (error) {
                 showModal("लॉगिन अयशस्वी", "ईमेल किंवा पासवर्ड चुकीचा आहे.", "error");
                 btn.textContent = "सुरक्षित लॉगिन";
@@ -1513,7 +1599,7 @@
             btn.textContent = "अपडेट करत आहे...";
             
             const file = document.getElementById('cfg_qr_file').files[0];
-            let qrUrl = document.getElementById('cfg_qrurl').value; // जुना url
+            let qrUrl = document.getElementById('cfg_qrurl').value;
             try {
                 if (file) {
                     qrUrl = await uploadFileAndGetURL(file, "config_images");
@@ -1672,3 +1758,6 @@
     </script>
 </body>
 </html>
+
+
+```
