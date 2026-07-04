@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SheetJS for Admin Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -27,22 +29,20 @@
     </script>
     <style>
         .saffron-gradient { background: linear-gradient(135deg, #FF7E00 0%, #FF5100 100%); }
-        .gold-gradient { background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); }
-        .glassmorphism { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         html { scroll-behavior: smooth; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #F97316; border-radius: 10px; }
         @keyframes ticker-vertical { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
         .ticker-container { height: 220px; overflow: hidden; position: relative; }
-        .ticker-scroll { display: flex; flex-direction: column; animation: ticker-vertical 25s linear infinite; }
+        .ticker-scroll { display: flex; flex-direction: column; animation: ticker-vertical 15s linear infinite; }
         .ticker-scroll:hover { animation-play-state: paused; }
     </style>
 </head>
 <body class="bg-orange-50/20 text-gray-800 font-sans overflow-hidden" id="main-body">
 
     <!-- स्वागत स्क्रीन -->
-    <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-b from-amber-950 via-amber-900 to-amber-950 flex flex-col items-center justify-center p-4 text-center overflow-y-auto">
+    <div id="welcome-overlay" class="fixed inset-0 z-[9999] bg-gradient-to-b from-amber-950 via-amber-900 to-amber-950 flex flex-col items-center justify-center p-4 text-center overflow-y-auto transition-opacity duration-700">
         <div class="relative max-w-lg w-full bg-orange-950/85 border-2 border-yellow-500/40 p-6 md:p-8 rounded-3xl shadow-2xl space-y-6 backdrop-blur-md">
             <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-yellow-500 to-saffron-500 opacity-20 blur-xl"></div>
             
@@ -52,10 +52,7 @@
 
             <div class="relative w-44 h-44 md:w-52 md:h-52 mx-auto rounded-full p-2 bg-gradient-to-tr from-yellow-500 to-saffron-500 shadow-xl overflow-hidden border-4 border-yellow-400">
                 <img src="https://images.unsplash.com/photo-1609137144813-7d7b218408a2?auto=format&fit=crop&q=80&w=400" 
-                     alt="[श्रीकृष्ण बालरूपात]" 
-                     class="w-full h-full object-cover rounded-full"
-                     onerror="this.src='https://images.unsplash.com/photo-1590050752117-238cb0612b1b?auto=format&fit=crop&q=80&w=400'">
-                <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent animate-pulse"></div>
+                     alt="[श्रीकृष्ण बालरूपात]" class="w-full h-full object-cover rounded-full">
             </div>
 
             <div class="space-y-1">
@@ -63,48 +60,15 @@
                 <h2 class="text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-200 leading-tight">
                     गोपाळ समाज उत्कर्ष संघ
                 </h2>
-                <div class="w-24 h-0.5 bg-yellow-400 mx-auto rounded-full"></div>
+                <div class="w-24 h-0.5 bg-yellow-400 mx-auto rounded-full mt-2"></div>
                 <p class="text-[11px] md:text-xs text-orange-100 font-medium italic mt-2">
-                    "सामाजिक • आर्थिक • राजकीय • शैक्षणिक आणि ऐतिहासिक क्रांती"
+                    "सामाजिक • आर्थिक • राजकीय • शैक्षणिक क्रांती"
                 </p>
             </div>
 
-            <p class="text-[10px] md:text-xs text-gray-300 max-w-sm mx-auto leading-relaxed">
-                गोपाळ समाजाच्या इतिहास व उज्ज्वल भविष्याला जोडणाऱ्या अधिकृत सुरक्षित डिजिटल महा-व्यासपीठात आपले हार्दिक स्वागत आहे.
-            </p>
-
-            <button onclick="dismissWelcomeAndVoice()" 
-                    class="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-yellow-400 via-saffron-500 to-orange-600 hover:from-yellow-500 hover:to-orange-700 text-white font-extrabold text-sm md:text-base rounded-full shadow-lg hover:shadow-orange-500/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2 mx-auto border border-yellow-300/30">
-                <i class="fa-solid fa-play animate-ping text-xs"></i> 🚩 प्रवेश करा व स्वागत ऐका
+            <button onclick="enterPortal()" class="w-full sm:w-auto px-10 py-3.5 bg-gradient-to-r from-yellow-400 via-saffron-500 to-orange-600 text-white font-extrabold text-sm md:text-base rounded-full shadow-lg hover:shadow-orange-500/50 transition-all transform hover:scale-105 flex items-center justify-center gap-2 mx-auto border border-yellow-300/30">
+                <i class="fa-solid fa-play animate-ping text-xs"></i> 🚩 मंचावर प्रवेश करा
             </button>
-        </div>
-    </div>
-
-    <!-- नोंदणी / लॉगिन मोडल (Registration Modal) -->
-    <div id="auth-modal" class="hidden fixed inset-0 z-[10000] bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl">
-            <div class="saffron-gradient p-6 text-center text-white relative">
-                <i class="fa-solid fa-user-shield text-4xl mb-2"></i>
-                <h2 class="text-2xl font-bold">समाज बांधव नोंदणी</h2>
-                <p class="text-xs text-orange-100 mt-1">डिजिटल व्यासपीठाचा वापर करण्यासाठी नोंदणी अनिवार्य आहे.</p>
-            </div>
-            <form id="loginForm" onsubmit="handleUserRegistration(event)" class="p-6 space-y-4 text-sm">
-                <div>
-                    <label class="text-xs font-bold text-gray-600 mb-1 block">तुमचे पूर्ण नाव <span class="text-red-500">*</span></label>
-                    <input type="text" id="auth_name" required placeholder="उदा. राम पाटील गोपाळ" class="w-full px-4 py-2 border border-gray-300 rounded-xl outline-none focus:border-saffron-500 bg-gray-50">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-gray-600 mb-1 block">मोबाईल नंबर (१० अंकी) <span class="text-red-500">*</span></label>
-                    <input type="tel" id="auth_phone" required pattern="[0-9]{10}" placeholder="उदा. 9876543210" class="w-full px-4 py-2 border border-gray-300 rounded-xl outline-none focus:border-saffron-500 bg-gray-50">
-                </div>
-                <div>
-                    <label class="text-xs font-bold text-gray-600 mb-1 block">जिल्हा <span class="text-red-500">*</span></label>
-                    <input type="text" id="auth_district" required placeholder="तुमचा जिल्हा" class="w-full px-4 py-2 border border-gray-300 rounded-xl outline-none focus:border-saffron-500 bg-gray-50">
-                </div>
-                <button type="submit" id="btn_auth_submit" class="w-full py-3 mt-2 saffron-gradient text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition flex justify-center items-center gap-2">
-                    सुरक्षित प्रवेश करा <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </form>
         </div>
     </div>
 
@@ -113,12 +77,10 @@
         <!-- टॉप हेडर -->
         <div class="saffron-gradient text-white py-2 px-4 text-center text-xs md:text-sm font-semibold shadow-md flex justify-between items-center flex-wrap gap-2">
             <div class="mx-auto flex items-center gap-2">
-                <span>🚩 "एक समाज • एक विचार • एक दिशा • यदुवंश गौरव" 🚩</span>
-                <span class="bg-yellow-400 text-amber-950 px-2 py-0.5 rounded text-[10px] font-bold">स्थापना: १ मे २०२६</span>
+                <span>🚩 "एक समाज • एक विचार • एक दिशा" 🚩</span>
             </div>
             <div class="hidden lg:flex items-center gap-4 text-xs">
-                <span><i class="fa-solid fa-phone mr-1"></i> हेल्पलाईन: +91 9623558719</span>
-                <span><i class="fa-solid fa-shield-halved mr-1"></i> SSL कूटबद्ध सुरक्षित सर्व्हर</span>
+                <span><i class="fa-solid fa-shield-halved mr-1"></i> सुरक्षित डेटाबेस</span>
             </div>
         </div>
 
@@ -126,72 +88,47 @@
         <nav class="bg-white shadow-lg sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between h-20">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-3">
                         <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center border-2 border-saffron-500 shrink-0">
-                            <svg viewBox="0 0 100 100" class="w-10 h-10">
-                                <rect x="15" y="48" width="70" height="4" rx="2" fill="#D97706" transform="rotate(-15 50 50)"></rect>
-                                <circle cx="30" cy="44" r="1" fill="#fff"></circle>
-                                <path d="M 52,22 C 45,10 65,5 65,15 C 65,25 55,32 52,42" stroke="#047857" stroke-width="2" fill="none"></path>
-                                <circle cx="56" cy="16" r="3" fill="#fbbf24"></circle>
-                                <path d="M 47,38 Q 50,25 53,38 Q 50,45 47,38 Z" fill="#dc2626"></path>
-                            </svg>
+                            <i class="fa-solid fa-om text-2xl text-saffron-600"></i>
                         </div>
                         <div>
                             <span class="text-[10px] font-bold text-red-600 block leading-none">🚩 अखिल भारतीय 🚩</span>
                             <h1 class="text-sm md:text-lg font-extrabold text-saffron-600 tracking-wide leading-tight">गोपाळ समाज उत्कर्ष संघ</h1>
-                            <span class="text-[8px] text-gray-500 block leading-none">अधिकृत राष्ट्रीय महा-व्यासपीठ</span>
                         </div>
                     </div>
 
-                    <div class="hidden xl:flex items-center space-x-1 font-medium text-xs">
+                    <div class="hidden xl:flex items-center space-x-2 font-medium text-xs">
                         <a href="#home" class="py-2 px-2 text-saffron-600 border-b-2 border-saffron-500 font-bold">मुख्यपृष्ठ</a>
-                        <a href="#history" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-monument text-amber-700 mr-0.5"></i> इतिहास</a>
-                        <a href="#market" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-wheat-awn text-green-600 mr-0.5"></i> कृषी-व्यापार</a>
-                        <a href="#study-hub" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-book-open text-blue-600 mr-0.5"></i> ज्ञान भांडार</a>
-                        <a href="#political-hall" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-gavel text-purple-600 mr-0.5"></i> हक्क जागृती</a>
-                        <a href="#glorious-blog" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition">गौरव गाथा</a>
+                        <a href="#market" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold"><i class="fa-solid fa-wheat-awn text-green-600"></i> कृषी-व्यापार</a>
+                        <a href="#census" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold">डिजिटल जनगणना</a>
+                        <a href="#matrimony" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold text-pink-600"><i class="fa-solid fa-heart"></i> वधू-वर</a>
                         <a href="#social-feed" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition">सोशल वॉल</a>
-                        <a href="#census" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition">जनगणना</a>
-                        <a href="#matrimony" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition font-bold text-pink-600"><i class="fa-solid fa-heart mr-0.5"></i> वधू-वर</a>
-                        <a href="#committee" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition">पदाधिकारी</a>
-                        <button onclick="openAdminModal()" class="py-1.5 px-3 bg-gray-950 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-1 font-bold">
+                        <a href="#donation" class="py-2 px-2 text-gray-700 hover:text-saffron-500 transition">देणगी</a>
+                        <button onclick="openAdminModal()" class="py-1.5 px-3 bg-gray-950 text-white rounded-lg hover:bg-gray-800 transition flex items-center gap-1 font-bold ml-2">
                             <i class="fa-solid fa-lock text-[9px]"></i> ॲडमिन
                         </button>
-                        <!-- युझर प्रोफाईल चिप (लॉगिन झाल्यावर दिसेल) -->
-                        <div id="user-profile-chip" class="hidden items-center gap-2 bg-orange-50 px-3 py-1.5 rounded-full border border-orange-200 cursor-pointer hover:bg-orange-100 ml-2" onclick="logoutUser()">
-                            <i class="fa-solid fa-circle-user text-saffron-600 text-base"></i>
-                            <span id="display_user_name" class="text-xs font-bold text-gray-700">प्रोफाईल</span>
-                            <i class="fa-solid fa-sign-out-alt text-gray-400 text-[9px] ml-1"></i>
-                        </div>
                     </div>
 
                     <div class="xl:hidden flex items-center gap-2">
-                        <div id="mobile-user-chip" class="hidden items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-saffron-600 border border-saffron-500" onclick="logoutUser()">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
                         <button onclick="openAdminModal()" class="py-1 px-2.5 bg-gray-900 text-white text-xs rounded hover:bg-gray-800 transition flex items-center gap-1 font-bold">
-                            <i class="fa-solid fa-lock text-[8px]"></i> ॲडमिन
+                            <i class="fa-solid fa-lock text-[8px]"></i>
                         </button>
-                        <button onclick="toggleMobileMenu()" class="outline-none text-gray-700">
-                            <svg class="w-7 h-7" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M4 6h16M4 12h16M4 18h16"></path>
-                            </svg>
+                        <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="outline-none text-gray-700">
+                            <i class="fa-solid fa-bars text-2xl"></i>
                         </button>
                     </div>
                 </div>
             </div>
 
+            <!-- मोबाईल मेनू -->
             <div id="mobile-menu" class="hidden xl:hidden bg-orange-50 border-t border-orange-100 px-4 py-2 space-y-1 text-xs">
-                <a href="#home" onclick="toggleMobileMenu()" class="block py-2 px-3 text-saffron-600 font-bold bg-orange-100 rounded">मुख्यपृष्ठ</a>
-                <a href="#history" onclick="toggleMobileMenu()" class="block py-2 px-3 text-amber-700 font-bold hover:bg-orange-100 rounded">इतिहास व ऐतिहासिक वारसा</a>
-                <a href="#market" onclick="toggleMobileMenu()" class="block py-2 px-3 text-green-700 font-bold hover:bg-orange-100 rounded">कृषी-व्यापार (खरेदी-विक्री)</a>
-                <a href="#study-hub" onclick="toggleMobileMenu()" class="block py-2 px-3 text-blue-700 font-bold hover:bg-orange-100 rounded">ज्ञान भांडार (अभ्यास केंद्र)</a>
-                <a href="#political-hall" onclick="toggleMobileMenu()" class="block py-2 px-3 text-purple-700 font-bold hover:bg-orange-100 rounded">राजकीय व हक्क जागृती</a>
-                <a href="#glorious-blog" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 hover:bg-orange-100 rounded">गौरव गाथा ब्लॉग</a>
-                <a href="#social-feed" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 hover:bg-orange-100 rounded">सोशल वॉल</a>
-                <a href="#census" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 hover:bg-orange-100 rounded">डिजिटल जनगणना</a>
-                <a href="#matrimony" onclick="toggleMobileMenu()" class="block py-2 px-3 text-pink-600 font-bold hover:bg-orange-100 rounded">वधू-वर परिचय</a>
-                <a href="#committee" onclick="toggleMobileMenu()" class="block py-2 px-3 text-gray-700 hover:bg-orange-100 rounded">पदाधिकारी यादी</a>
+                <a href="#home" class="block py-2 px-3 text-saffron-600 font-bold bg-orange-100 rounded">मुख्यपृष्ठ</a>
+                <a href="#market" class="block py-2 px-3 text-green-700 font-bold hover:bg-orange-100 rounded">कृषी-व्यापार (खरेदी-विक्री)</a>
+                <a href="#census" class="block py-2 px-3 text-gray-700 font-bold hover:bg-orange-100 rounded">डिजिटल जनगणना</a>
+                <a href="#matrimony" class="block py-2 px-3 text-pink-600 font-bold hover:bg-orange-100 rounded">वधू-वर परिचय</a>
+                <a href="#social-feed" class="block py-2 px-3 text-gray-700 font-bold hover:bg-orange-100 rounded">सोशल वॉल</a>
+                <a href="#donation" class="block py-2 px-3 text-gray-700 font-bold hover:bg-orange-100 rounded">समाज विकास निधी</a>
             </div>
         </nav>
 
@@ -201,79 +138,31 @@
             <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
                 <div class="lg:col-span-8 space-y-4 text-center lg:text-left">
                     <span class="inline-flex items-center gap-2 bg-saffron-500/30 text-saffron-300 border border-saffron-500/50 rounded-full px-4 py-1.5 text-xs font-semibold">
-                        🚩 यदुवंशी वारसा • संघटित समाज २०२६
+                        🚩 यदुवंशी वारसा • संघटित समाज
                     </span>
                     <h2 class="text-3xl md:text-5xl font-black leading-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-orange-400 to-yellow-200">
                         गोपाळ समाज डिजिटल महा-मंच
                     </h2>
-                    <p class="text-xs md:text-base text-orange-100 font-medium">
-                        महाराष्ट्रातील प्रत्येक कानाकोपऱ्यातील शेतकरी, पशुपालक, व्यापारी, बुद्धिजीवी आणि तरुणांना जोडणारे अधिकृत व्यासपीठ!
+                    <p class="text-xs md:text-base text-orange-100 font-medium max-w-2xl">
+                        संपूर्ण भारतातील गोपाळ समाज बांधवांना एका धाग्यात आणणारे, शैक्षणिक, राजकीय आणि आर्थिक क्रांतीचे अधिकृत व्यासपीठ!
                     </p>
-                    <div class="flex flex-wrap gap-2.5 justify-center lg:justify-start pt-1">
-                        <a href="#history" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold rounded-lg transition flex items-center gap-1 shadow-lg">
-                            <i class="fa-solid fa-monument"></i> इतिहास जाणून घ्या
-                        </a>
-                        <a href="#market" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-lg transition flex items-center gap-1 shadow-lg">
-                            <i class="fa-solid fa-store"></i> कृषी-व्यापार बाजारपेठ
+                    <div class="flex flex-wrap gap-2.5 justify-center lg:justify-start pt-2">
+                        <a href="#census" class="px-6 py-2.5 bg-saffron-500 hover:bg-saffron-600 text-white text-sm font-bold rounded-full shadow-lg transition">
+                            जनगणनेत नाव नोंदवा
                         </a>
                     </div>
                 </div>
                 <div class="lg:col-span-4 flex justify-center">
-                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10 backdrop-blur-sm text-center space-y-3 max-w-xs w-full">
-                        <h4 class="text-xs font-bold uppercase text-yellow-300 tracking-wider">🚩 थेट आकडेवारी 🚩</h4>
-                        <div class="grid grid-cols-2 gap-2 text-xs">
-                            <div class="bg-white/5 p-2.5 rounded">
-                                <span class="block text-lg font-bold text-saffron-400" id="live-census-counter-hero">०</span>
-                                <span class="text-[9px] text-gray-300">डिजिटल जनगणना</span>
+                    <div class="bg-white/10 p-5 rounded-3xl border border-white/20 backdrop-blur-md text-center w-full max-w-xs shadow-2xl">
+                        <h4 class="text-sm font-bold text-yellow-300 tracking-wider mb-4 border-b border-white/20 pb-2">थेट आकडेवारी (Live Data)</h4>
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="bg-black/30 p-3 rounded-xl border border-white/10">
+                                <span class="block text-2xl font-black text-saffron-400" id="live-census-counter"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                                <span class="text-[9px] text-gray-300 font-medium mt-1">जनगणना नोंदी</span>
                             </div>
-                            <div class="bg-white/5 p-2.5 rounded">
-                                <span class="block text-lg font-bold text-saffron-400" id="live-matrimony-counter-hero">०</span>
-                                <span class="text-[9px] text-gray-300">वधू-वर परिचय</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- इतिहास सेक्शन -->
-        <section id="history" class="py-12 px-4 bg-white">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-amber-700 font-bold uppercase tracking-widest text-xs">📜 प्राचीन वारसा व इतिहास 📜</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">गोपाळ समाजाचा ऐतिहासिक वारसा व ऐतिहासिक नोंदी</h3>
-                    <div class="w-16 h-1 bg-amber-700 mx-auto mt-2 rounded-full"></div>
-                    <p class="text-xs text-gray-500 mt-2">यदुवंशी मुळापासून ते ऐतिहासिक पशुपालन संस्कृती आणि सामाजिक योगदानाचा गौरवशाली अधिकृत इतिहास.</p>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-7 space-y-4 text-xs md:text-sm text-gray-700 leading-relaxed">
-                        <div class="p-4 bg-amber-50/40 rounded-2xl border-l-4 border-amber-700">
-                            <h4 class="font-bold text-gray-950 text-sm mb-1">🚩 यदुवंशी मुळे व गोपालकृष्ण सहवास:</h4>
-                            <p class="text-[11px] md:text-xs">
-                                गोपाळ समाजाचा इतिहास भगवान श्रीकृष्णाच्या यदुवंशाशी अत्यंत जवळून जोडलेला आहे. 'गोपाल' म्हणजेच गाईंचे आणि निसर्गाचे रक्षण करणारे. द्वापरयुगात भगवान गोपालकृष्णाच्या सवंगड्यांच्या रूपात गोपाळ समाजाचा उल्लेख प्राचीन ग्रंथांमध्ये आढळतो. गोपालन आणि कृषी हा या समाजाचा मुख्य आणि पवित्र ऐतिहासिक व्यवसाय राहिला आहे.
-                            </p>
-                        </div>
-                        <div class="p-4 bg-amber-50/40 rounded-2xl border-l-4 border-amber-700">
-                            <h4 class="font-bold text-gray-950 text-sm mb-1">🐎 ऐतिहासिक नोंदी व भटकंतीचा इतिहास:</h4>
-                            <p class="text-[11px] md:text-xs">
-                                मध्ययुगीन काळात गोपाळ समाज हा प्रामुख्याने महाराष्ट्रातील सह्याद्रीच्या डोंगररांगा आणि घाटांवर भटकंती करणारा निसर्गप्रेमी समाज..." शिवकाळात गडांवर दूध व अन्नधान्य पुरवठा करण्यात तसेच स्वराज्य स्थापनेच्या काळात मावळे आणि गुप्तहेर म्हणून मोलाची कामगिरी बजावल्याच्या नोंदी आहेत.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-5 bg-gradient-to-tr from-amber-900 to-amber-950 p-6 rounded-3xl text-white shadow-xl space-y-4">
-                        <div class="flex justify-center">
-                            <svg viewBox="0 0 100 100" class="w-24 h-24 text-yellow-400 drop-shadow-md">
-                                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4"/>
-                                <path d="M 35,50 C 35,35 65,35 65,50 C 65,65 35,65 35,50 Z" fill="none" stroke="currentColor" stroke-width="2"/>
-                                <line x1="50" y1="20" x2="50" y2="80" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="50" cy="50" r="5" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <h4 class="text-center font-bold text-sm text-yellow-300">यदुवंशी गोपाळ समाज ऐतिहासिक संकल्पना</h4>
-                        <div class="space-y-2 text-[10px] text-orange-100">
-                            <div class="flex items-start gap-2">
-                                <span class="text-yellow-400 font-bold">✔</span>
-                                <p><strong>गोपालन संस्कृती:</strong> जगाला दुग्ध व्यवसाय व पशुपालनाची दिशा देणारी पहिली समृद्ध जीवनपद्धती.</p>
+                            <div class="bg-black/30 p-3 rounded-xl border border-white/10">
+                                <span class="block text-2xl font-black text-saffron-400" id="live-matrimony-counter"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                                <span class="text-[9px] text-gray-300 font-medium mt-1">वधू-वर प्रोफाईल्स</span>
                             </div>
                         </div>
                     </div>
@@ -282,37 +171,37 @@
         </section>
 
         <!-- कृषी-व्यापार (Marketplace) -->
-        <section id="market" class="py-12 px-4 bg-orange-50/10 border-t border-orange-100">
+        <section id="market" class="py-12 px-4 bg-orange-50/30 border-t border-orange-100">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
-                    <span class="text-green-600 font-bold uppercase tracking-widest text-xs">🌾 कृषी-व्यापार व पशुपालन स्वावलंबन 🌾</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">गोपाळ समाज खरेदी-विक्री डिजिटल बाजारपेठ</h3>
+                    <span class="text-green-600 font-bold uppercase tracking-widest text-xs">🌾 कृषी-व्यापार व पशुपालन 🌾</span>
+                    <h3 class="text-2xl font-extrabold text-gray-900 mt-1">खरेदी-विक्री डिजिटल बाजारपेठ</h3>
                     <div class="w-16 h-1 bg-green-600 mx-auto mt-2 rounded-full"></div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div class="lg:col-span-4 bg-white p-5 rounded-2xl shadow-md border border-green-100 space-y-3">
-                        <h4 class="text-xs font-bold text-gray-900 flex items-center gap-1.5"><i class="fa-solid fa-plus-circle text-green-600"></i> खरेदी/विक्री नवीन जाहिरात टाका</h4>
-                        <form id="createMarketForm" onsubmit="handleCreateMarket(event)" class="space-y-3 text-xs">
+                    <!-- जाहिरात फॉर्म -->
+                    <div class="lg:col-span-4 bg-white p-5 rounded-2xl shadow-md border border-green-100">
+                        <h4 class="text-xs font-bold text-gray-900 mb-4 border-b pb-2"><i class="fa-solid fa-plus-circle text-green-600"></i> नवीन जाहिरात टाका</h4>
+                        <form id="createMarketForm" onsubmit="handleMarketSubmit(event)" class="space-y-3 text-xs">
                             <div>
                                 <label class="block font-bold text-gray-700 mb-0.5">तुमचे नाव <span class="text-red-500">*</span></label>
-                                <!-- Auto-filled via JS -->
-                                <input type="text" id="m_author" required class="w-full px-3 py-1.5 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
+                                <input type="text" id="m_author" required placeholder="उदा. राम पाटील" class="w-full px-3 py-2 border rounded-lg outline-none focus:border-green-500">
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-0.5">जिल्हा <span class="text-red-500">*</span></label>
-                                    <input type="text" id="m_district" required class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                    <input type="text" id="m_district" required placeholder="जिल्हा" class="w-full px-3 py-2 border rounded-lg outline-none focus:border-green-500">
                                 </div>
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-0.5">मोबाईल नंबर <span class="text-red-500">*</span></label>
-                                    <input type="tel" id="m_phone" required pattern="[0-9]{10}" class="w-full px-3 py-1.5 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
+                                    <input type="tel" id="m_phone" required pattern="[0-9]{10}" placeholder="१० अंकी नंबर" class="w-full px-3 py-2 border rounded-lg outline-none focus:border-green-500">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-0.5">वर्ग निवडा <span class="text-red-500">*</span></label>
-                                    <select id="m_category" required class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                    <select id="m_category" required class="w-full px-3 py-2 border rounded-lg outline-none focus:border-green-500">
                                         <option value="पशुपालन (जनावरे/दूध)">पशुपालन (जनावरे/दूध)</option>
                                         <option value="शेतकरी (कृषी उत्पादन)">शेतकरी (कृषी उत्पादन)</option>
                                         <option value="व्यापारी (उत्पादन/सेवा)">व्यापारी (उत्पादन/सेवा)</option>
@@ -320,188 +209,21 @@
                                 </div>
                                 <div>
                                     <label class="block font-bold text-gray-700 mb-0.5">किंमत (रुपये) <span class="text-red-500">*</span></label>
-                                    <input type="text" id="m_price" required placeholder="उदा. ५०,०००/-" class="w-full px-3 py-1.5 border rounded-lg outline-none">
+                                    <input type="number" id="m_price" required placeholder="उदा. ५००००" class="w-full px-3 py-2 border rounded-lg outline-none focus:border-green-500">
                                 </div>
                             </div>
                             <div>
                                 <label class="block font-bold text-gray-700 mb-0.5">मालाचा तपशील <span class="text-red-500">*</span></label>
-                                <textarea id="m_desc" rows="3" required placeholder="उदा. गीर गाय विक्रीसाठी उपलब्ध आहे..." class="w-full px-3 py-1.5 border rounded-lg outline-none"></textarea>
+                                <textarea id="m_desc" rows="3" required placeholder="उदा. गीर गाय विक्रीसाठी उपलब्ध..." class="w-full px-3 py-2 border rounded-lg outline-none focus:border-green-500 resize-none"></textarea>
                             </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-0.5">फोटो अपलोड करा (पर्यायी)</label>
-                                <input type="file" id="m_photo_file" accept="image/*" class="w-full px-3 py-1.5 border rounded-lg outline-none bg-gray-50">
-                            </div>
-                            <button type="submit" id="btn_market_submit" class="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition shadow">जाहिरात प्रसिद्ध करा</button>
+                            <button type="submit" id="btn_market_submit" class="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition shadow">जाहिरात प्रसिद्ध करा</button>
                         </form>
                     </div>
 
-                    <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[550px] overflow-y-auto pr-2 custom-scrollbar" id="market-listings">
-                        <div class="col-span-full py-12 text-center text-xs text-gray-400 bg-white rounded-2xl border">
-                            <i class="fa-solid fa-circle-notch animate-spin text-green-600 text-lg mb-1 block"></i>
-                            बाजारपेठ जाहिराती लोड होत आहेत...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ज्ञान भांडार व स्पर्धा परीक्षा -->
-        <section id="study-hub" class="py-12 px-4 bg-white border-t border-orange-100">
-            <!-- (Content remains same as provided in User Code for UI sections) -->
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-8">
-                    <span class="text-blue-600 font-bold uppercase tracking-widest text-xs">📖 उज्ज्वल भविष्य व करिअर 📖</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">गोपाळ ज्ञान भांडार व स्पर्धा परीक्षा केंद्र</h3>
-                    <div class="w-16 h-1 bg-blue-600 mx-auto mt-2 rounded-full"></div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div class="lg:col-span-8 space-y-4">
-                        <h4 class="text-sm font-bold text-gray-900 flex items-center gap-1.5"><i class="fa-solid fa-graduation-cap text-blue-600"></i> अभ्यास साहित्य व चालू घडामोडी</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-orange-50/20 p-4 rounded-xl border border-orange-100 space-y-2">
-                                <span class="bg-blue-100 text-blue-700 text-[9px] font-bold px-2 py-0.5 rounded-full">इतिहास व भूगोल</span>
-                                <h5 class="font-bold text-xs text-gray-900">महाराष्ट्राचा इतिहास व भूगोलाचे सखोल विश्लेषण</h5>
-                                <p class="text-[10px] text-gray-600 leading-relaxed">छत्रपती शिवाजी महाराज कालखंड, समाजसुधारकांचे योगदान तसेच महाराष्ट्रातील नद्या, पर्वत आणि वनांविषयी स्पर्धा परीक्षांमध्ये विचारली जाणारी माहिती.</p>
-                                <button onclick="showMockMessage('सविस्तर PDF नोट्स लवकरच तुमच्या व्हॉट्सॲप नंबरवर पाठवली जाईल.')" class="text-[10px] text-blue-600 font-bold hover:underline">Notes PDF डाउनलोड करा</button>
-                            </div>
-                            <div class="bg-orange-50/20 p-4 rounded-xl border border-orange-100 space-y-2">
-                                <span class="bg-green-100 text-green-700 text-[9px] font-bold px-2 py-0.5 rounded-full">चालू घडामोडी २०२६</span>
-                                <h5 class="font-bold text-xs text-gray-900">राष्ट्रीय व आंतरराष्ट्रीय चालू घडामोडी संकलन</h5>
-                                <p class="text-[10px] text-gray-600 leading-relaxed">केंद्रीय अर्थसंकल्प २०२६, महत्त्वाच्या शासकीय नियुक्त्या, राष्ट्रीय व आंतरराष्ट्रीय पुरस्कार आणि स्पर्धा परीक्षांच्या दृष्टीने आवश्यक घडामोडी विश्लेषण.</p>
-                                <button onclick="showMockMessage('चालू घडामोडी PDF नोट्स लवकरच उपलब्ध होतील.')" class="text-[10px] text-blue-600 font-bold hover:underline">Notes PDF डाउनलोड करा</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lg:col-span-4 bg-white p-5 rounded-2xl shadow-md border border-blue-100 space-y-3">
-                        <h4 class="text-xs font-bold text-gray-900 flex items-center gap-1.5"><i class="fa-solid fa-bell text-blue-600"></i> भरती परीक्षा नोटिफिकेशन मिळवा</h4>
-                        <p class="text-[10px] text-gray-500">नवीन नोकरी व भरती परीक्षांचे नोटिफिकेशन थेट मोबाईलवर मिळवण्यासाठी नाव नोंदवा.</p>
-                        <form onsubmit="handleNotificationSubmit(event)" class="space-y-3 text-xs">
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-0.5">पूर्ण नाव</label>
-                                <input type="text" required placeholder="उदा. सागर गोपाळ" class="w-full px-3 py-1.5 border rounded-lg outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-0.5">मोबाईल नंबर (WhatsApp)</label>
-                                <input type="tel" required pattern="[0-9]{10}" placeholder="१० अंकी फोन" class="w-full px-3 py-1.5 border rounded-lg outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-0.5">कोणत्या परीक्षेची तयारी करताय?</label>
-                                <select required class="w-full px-3 py-1.5 border rounded-lg outline-none">
-                                    <option value="पोलीस भरती / सैन्य भरती">पोलीस भरती / सैन्य भरती</option>
-                                    <option value="MPSC / UPSC">MPSC / UPSC</option>
-                                    <option value="सरळसेवा भरती परीक्षा">सरळसेवा भरती परीक्षा</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition shadow">मोफत नोटिफिकेशन नोंदणी करा</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- राजकीय व हक्क जागृती -->
-        <section id="political-hall" class="py-12 px-4 bg-purple-50/10 border-t border-orange-100">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-purple-600 font-bold uppercase tracking-widest text-xs">⚖ राजकीय व शासकीय अधिकार ⚖</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">गोपाळ समाज राजकीय व हक्क जागृती मंच</h3>
-                    <div class="w-16 h-1 bg-purple-600 mx-auto mt-2 rounded-full"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-sm space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-lg font-bold">
-                            <i class="fa-solid fa-gavel"></i>
-                        </div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-sm">आरक्षण व भटके विमुक्त प्रवर्ग (NT-B) हक्क</h4>
-                        <p class="text-[10px] md:text-xs text-gray-600 leading-relaxed">
-                            गोपाळ समाज हा महाराष्ट्रात 'भटके विमुक्त प्रवर्ग - ब' (NT-B) मध्ये समाविष्ट आहे. या प्रवर्गांतर्गत मिळणारे शैक्षणिक व नोकरीमधील हक्क, जात प्रमाणपत्राविषयी शासकीय मार्गदर्शक तत्वे.
-                        </p>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-sm space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-lg font-bold">
-                            <i class="fa-solid fa-landmark"></i>
-                        </div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-sm">वसंतराव नाईक महामंडळ योजना</h4>
-                        <p class="text-[10px] md:text-xs text-gray-600 leading-relaxed">
-                            भटके विमुक्त प्रवर्गातील तरुण-तरुणींना उद्योग, व्यवसाय उभारणीसाठी व व्यवसायासाठी लागणारे खेळते भांडवल मिळवण्यासाठी शासनाचे वसंतराव नाईक विकास महामंडळ कमी व्याजदरात कर्ज पुरवते.
-                        </p>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-sm space-y-2">
-                        <div class="w-10 h-10 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center text-lg font-bold">
-                            <i class="fa-solid fa-users-line"></i>
-                        </div>
-                        <h4 class="font-bold text-gray-900 text-xs md:text-sm">सामाजिक व राजकीय प्रतिनिधित्व</h4>
-                        <p class="text-[10px] md:text-xs text-gray-600 leading-relaxed">
-                            जिल्हा परिषद, पंचायत समिती आणि ग्रामपंचायत निवडणुकीत गोपाळ समाजाचे प्रतिनिधित्व वाढवण्यासाठी समाज बांधवांना संघटन बळ पुरवणे हा या मंचाचा मुख्य उद्देश आहे.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- गौरव गाथा -->
-        <section id="glorious-blog" class="py-12 px-4 bg-orange-50/20 border-t border-orange-100">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-8">
-                    <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">🌟 गोपाळ समाज गौरव गाथा 🌟</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">अभिमानास्पद कारकीर्द व गौरव गाथा</h3>
-                    <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="blog-container">
-                    <div class="col-span-full py-8 text-center text-xs text-gray-400 bg-white rounded-2xl border">
-                        <i class="fa-solid fa-circle-notch animate-spin text-saffron-500 text-lg mb-1 block"></i>
-                        गौरव गाथा ब्लॉग लोड होत आहेत...
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- सोशल वॉल -->
-        <section id="social-feed" class="py-12 px-4 bg-white border-t border-orange-100">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-8">
-                    <span class="text-red-500 font-bold uppercase tracking-widest text-xs">🚩 डिजिटल कट्टा व व्यासपीठ 🚩</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">महाराष्ट्र गोपाळ समाज सोशल मीडिया वॉल</h3>
-                    <div class="w-16 h-1 bg-red-500 mx-auto mt-2 rounded-full"></div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div class="lg:col-span-4 bg-white p-5 rounded-2xl shadow-md border border-orange-100 space-y-4">
-                        <h4 class="text-xs font-bold text-gray-900 flex items-center gap-1.5"><i class="fa-solid fa-pen-to-square text-red-500"></i> नवीन पोस्ट प्रसारित करा</h4>
-                        <form id="createPostForm" onsubmit="handleCreatePost(event)" class="space-y-3 text-xs">
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-1">तुमचे नाव <span class="text-red-500">*</span></label>
-                                <input type="text" id="p_author" required class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">जिल्हा <span class="text-red-500">*</span></label>
-                                    <input type="text" id="p_district" required class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">गाव / शहर <span class="text-red-500">*</span></label>
-                                    <input type="text" id="p_village" required placeholder="उदा. सिन्नर" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-1">तुमचा संदेश <span class="text-red-500">*</span></label>
-                                <textarea id="p_text" rows="3" required placeholder="तुमचे विचार लिहा..." class="w-full px-3 py-2 border rounded-lg outline-none"></textarea>
-                            </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-1">फोटो जोडा (पर्यायी)</label>
-                                <input type="file" id="p_media_file" accept="image/*" class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-50">
-                            </div>
-                            <button type="submit" id="btn_post_submit" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition shadow-md flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-paper-plane"></i> संपूर्ण महाराष्ट्रात प्रसारित करा
-                            </button>
-                        </form>
-                    </div>
-
-                    <div class="lg:col-span-8 space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar" id="posts-container">
-                        <div class="py-12 text-center text-xs text-gray-400">
-                            <i class="fa-solid fa-circle-notch animate-spin text-red-500 text-lg mb-1 block"></i>
-                            पोस्ट्स लोड होत आहेत...
+                    <!-- जाहिरातींची यादी -->
+                    <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[550px] overflow-y-auto pr-2 custom-scrollbar" id="market-container">
+                        <div class="col-span-full py-12 text-center text-gray-400 bg-white rounded-2xl border text-sm">
+                            <i class="fa-solid fa-spinner fa-spin text-green-600 text-2xl mb-2 block"></i> डेटा लोड होत आहे...
                         </div>
                     </div>
                 </div>
@@ -509,1252 +231,567 @@
         </section>
 
         <!-- डिजिटल जनगणना -->
-        <section id="census" class="py-12 px-4 bg-orange-50/10">
-            <div class="max-w-4xl mx-auto bg-white border border-orange-100 p-6 md:p-10 rounded-3xl shadow-xl">
+        <section id="census" class="py-12 px-4 bg-white border-t border-orange-100">
+            <div class="max-w-4xl mx-auto bg-orange-50/20 border border-orange-100 p-6 md:p-8 rounded-3xl shadow-lg">
                 <div class="text-center mb-8">
                     <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">डिजिटल डेटाबेस नोंदणी</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">राष्ट्रीय डिजिटल जनगणना फॉर्म</h3>
+                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">राष्ट्रीय जनगणना फॉर्म</h3>
                     <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
+                    <p class="text-xs text-gray-500 mt-2">तुमची माहिती सुरक्षित ठेवली जाते. कृपया अचूक माहिती नोंदवा.</p>
                 </div>
 
-                <form id="censusForm" onsubmit="handleCensusSubmit(event)" class="space-y-6">
+                <form id="censusForm" onsubmit="handleCensusSubmit(event)" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">पूर्ण नाव (मराठीत) <span class="text-red-500">*</span></label>
-                            <input type="text" id="c_name" required class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed outline-none" readonly>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">पूर्ण नाव (कुटुंब प्रमुख) <span class="text-red-500">*</span></label>
+                            <input type="text" id="c_name" required placeholder="उदा. रामेश सुदाम गोपाळ" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg outline-none focus:border-saffron-500">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">मोबाईल क्रमांक <span class="text-red-500">*</span></label>
-                            <input type="tel" id="c_phone" required pattern="[0-9]{10}" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed outline-none" readonly>
+                            <input type="tel" id="c_phone" required pattern="[0-9]{10}" placeholder="१० अंकी नंबर" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg outline-none focus:border-saffron-500">
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">वय <span class="text-red-500">*</span></label>
-                            <input type="number" id="c_age" required min="1" max="115" placeholder="वय" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
+                            <label class="block text-xs font-bold text-gray-700 mb-1">कुटुंबातील एकूण सदस्य <span class="text-red-500">*</span></label>
+                            <input type="number" id="c_members" required min="1" max="50" placeholder="उदा. ५" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg outline-none focus:border-saffron-500">
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">लिंग <span class="text-red-500">*</span></label>
-                            <select id="c_gender" required class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
-                                <option value="">निवडा</option>
-                                <option value="पुरुष">पुरुष</option>
-                                <option value="महिला">महिला</option>
-                                <option value="इतर">इतर</option>
-                            </select>
-                        </div>
-                        <div class="col-span-2">
-                            <label class="block text-xs font-bold text-gray-700 mb-1">शिक्षण <span class="text-red-500">*</span></label>
-                            <input type="text" id="c_education" required placeholder="उदा. १२ वी / पदवी (B.A)" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">राज्य निवडा <span class="text-red-500">*</span></label>
-                            <select id="c_state" required onchange="populateDistricts(this.value)" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
+                            <select id="c_state" required onchange="populateDistricts(this.value)" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg outline-none focus:border-saffron-500">
                                 <option value="">राज्य निवडा</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">जिल्हा निवडा <span class="text-red-500">*</span></label>
-                            <select id="c_district" required class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
+                            <select id="c_district" required class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg outline-none focus:border-saffron-500">
                                 <option value="">पहिले राज्य निवडा</option>
                             </select>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">तालुका <span class="text-red-500">*</span></label>
-                            <input type="text" id="c_taluka" required placeholder="उदा. संगमनेर" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">गाव / शहर <span class="text-red-500">*</span></label>
-                            <input type="text" id="c_village" required placeholder="उदा. शिर्डी" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 outline-none">
-                        </div>
                     </div>
-                    <div class="text-center pt-2">
-                        <button type="submit" class="px-10 py-3.5 bg-gradient-to-r from-saffron-500 to-orange-600 hover:from-saffron-600 hover:to-orange-700 text-white font-bold text-sm rounded-lg shadow-md hover:shadow-lg transition flex items-center gap-2 mx-auto">
-                            <i class="fa-solid fa-cloud-arrow-up"></i> जनगणनेत सुरक्षित नोंदणी पूर्ण करा
+
+                    <div class="text-center pt-4">
+                        <button type="submit" id="btn_census_submit" class="px-10 py-3 bg-gradient-to-r from-saffron-500 to-orange-600 text-white font-bold text-sm rounded-lg shadow-lg hover:shadow-xl transition">
+                            <i class="fa-solid fa-cloud-arrow-up mr-2"></i> जनगणनेत सुरक्षित नोंदणी पूर्ण करा
                         </button>
                     </div>
                 </form>
             </div>
         </section>
 
-        <!-- वधू-वर परिचय -->
-        <section id="matrimony" class="py-12 px-4 bg-white border-t border-orange-100">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-pink-500 font-bold uppercase tracking-widest text-xs">💖 वधू-वर परिचय मंच 💖</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">लाईव्ह वधू-वर नाव परिचय</h3>
-                    <div class="w-16 h-1 bg-pink-500 mx-auto mt-2 rounded-full"></div>
-                    <p class="text-xs text-gray-500 mt-2">पडताळणीकृत केवळ नाव आणि जिल्हा स्वरूपात प्रसिद्ध झालेली यादी.</p>
-                </div>
-
-                <div class="bg-orange-50/40 p-4 rounded-2xl border border-orange-100 mb-6 flex flex-wrap gap-4 items-center justify-between">
-                    <span class="text-xs font-bold text-gray-700"><i class="fa-solid fa-bell text-pink-500 animate-pulse mr-1.5"></i> अधिक माहितीसाठी पालक वधू-वर संपर्क विनंती पाठवू शकतात.</span>
-                    <button onclick="openRegisterMatrimonyModal()" class="px-4 py-1.5 bg-pink-600 text-white text-xs font-bold rounded-lg hover:bg-pink-700 transition">
-                        विवाह प्रोफाइल नोंदणी +
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="matrimony-profiles-container">
-                    <div class="col-span-full py-8 text-center text-xs text-gray-400 bg-white rounded-2xl border">
-                        <i class="fa-solid fa-circle-notch animate-spin text-pink-500 text-lg mb-1 block"></i>
-                        नोंदणीकृत वधू-वर यादी लोड होत आहे...
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- पदाधिकारी -->
-        <section id="committee" class="py-12 px-4 bg-orange-50/20 border-t border-orange-100">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">संघटनेचे खांब</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">अखिल भारतीय व राज्यस्तरीय कार्यकारिणी पदाधिकारी</h3>
-                    <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
-                    <p class="text-xs text-gray-500 mt-2">प्रशासकाद्वारे प्रमाणित केलेले व फोटो अपलोड केलेले अधिकृत पदाधिकारी.</p>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="committee-container">
-                    <div class="col-span-full py-8 text-center text-xs text-gray-500 bg-white rounded-2xl border">
-                        <i class="fa-solid fa-user-tie text-3xl text-gray-300 mb-1.5 block"></i>
-                        सध्या कोणतीही कार्यकारिणी यादी सर्व्हरवर प्रसिद्ध नाही.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- देणगी / Donation -->
-        <section id="donation" class="py-12 px-4 bg-white border-t border-orange-100">
-            <div class="max-w-7xl mx-auto">
+        <!-- सोशल वॉल / Social Feed -->
+        <section id="social-feed" class="py-12 px-4 bg-orange-50/10 border-t border-orange-100">
+            <div class="max-w-6xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto mb-8">
-                    <span class="text-saffron-500 font-bold uppercase tracking-widest text-xs">🤝 आर्थिक सहकार्य व विकास निधी 🤝</span>
-                    <h3 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">समाज विकास व शिक्षण निधी</h3>
-                    <div class="w-16 h-1 bg-saffron-500 mx-auto mt-2 rounded-full"></div>
+                    <span class="text-red-500 font-bold uppercase tracking-widest text-xs">🚩 डिजिटल कट्टा 🚩</span>
+                    <h3 class="text-2xl font-extrabold text-gray-900 mt-1">समाज सोशल वॉल</h3>
+                    <div class="w-16 h-1 bg-red-500 mx-auto mt-2 rounded-full"></div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-                    <div class="lg:col-span-5 bg-orange-50/40 p-6 rounded-3xl border border-orange-200 flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <h4 class="text-xs font-bold text-gray-900 uppercase tracking-widest border-b pb-2 flex items-center gap-1.5">
-                                <i class="fa-solid fa-building-columns text-saffron-500"></i> बँक व युपीआय अधिकृत तपशील
-                            </h4>
-                            <div class="text-xs space-y-2 text-gray-700" id="donation-details-box">
-                                <p><strong>बँक:</strong> <span id="db-bank">State Bank of India</span></p>
-                                <p><strong>खाते धारक:</strong> <span id="db-accname">अखिल भारतीय गोपाळ समाज उत्कर्ष संघ</span></p>
-                                <p><strong>खाते क्रमांक:</strong> <span id="db-accno">1234567890123</span></p>
-                                <p><strong>IFSC कोड:</strong> <span id="db-ifsc">SBIN0001234</span></p>
-                                <p class="text-[10px] text-gray-500">टीप: देणगीची पावती हवी असल्यास खालील फॉर्ममध्ये किंवा हेल्पलाईनवर संपर्क साधावा.</p>
-                            </div>
-                        </div>
-                        <div class="text-center pt-4 border-t border-dashed mt-4">
-                            <p class="text-[10px] font-bold text-gray-700 mb-2">स्कॅन करून मदत पाठवा</p>
-                            <div class="w-32 h-32 bg-white border border-gray-200 mx-auto p-2 rounded-lg flex items-center justify-center">
-                                <img id="db-qrimg" src="https://images.unsplash.com/photo-1590050752117-238cb0612b1b?auto=format&fit=crop&q=80&w=150" 
-                                     alt="[क्यूआर कोड]" class="w-full h-full object-contain"
-                                     onerror="this.src='https://via.placeholder.com/150?text=QR+CODE'">
-                            </div>
-                            <p class="text-[10px] text-gray-500 mt-2 font-bold">UPI ID: <span id="db-upi">gopalsamaj@upi</span></p>
-                            
-                            <button onclick="openDonorDeclareModal()" class="mt-4 px-4 py-1.5 bg-saffron-500 hover:bg-saffron-600 text-white text-[11px] font-bold rounded-lg transition shadow-md">
-                                <i class="fa-solid fa-hand-holding-dollar"></i> मी देणगी दिली (नोंदणी करा)
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div class="lg:col-span-4 bg-white p-5 rounded-2xl shadow-md border border-orange-100">
+                        <h4 class="text-xs font-bold text-gray-900 mb-4 border-b pb-2"><i class="fa-solid fa-pen-to-square text-red-500"></i> विचार मांडा</h4>
+                        <form id="createPostForm" onsubmit="handlePostSubmit(event)" class="space-y-3 text-xs">
+                            <input type="text" id="p_author" required placeholder="तुमचे नाव" class="w-full px-3 py-2 border rounded-lg outline-none">
+                            <input type="text" id="p_district" required placeholder="तुमचा जिल्हा" class="w-full px-3 py-2 border rounded-lg outline-none">
+                            <textarea id="p_text" rows="3" required placeholder="तुमचे विचार लिहा..." class="w-full px-3 py-2 border rounded-lg outline-none resize-none"></textarea>
+                            <button type="submit" id="btn_post_submit" class="w-full py-2.5 bg-red-600 text-white font-bold rounded-lg transition shadow-md">
+                                <i class="fa-solid fa-paper-plane"></i> पोस्ट करा
                             </button>
-                        </div>
+                        </form>
                     </div>
-                    <div class="lg:col-span-7 bg-gray-950 text-white p-6 rounded-3xl flex flex-col justify-between shadow-2xl relative overflow-hidden">
-                        <div class="absolute -right-16 -top-16 w-36 h-36 bg-saffron-500 rounded-full filter blur-3xl opacity-20"></div>
-                        <div>
-                            <h4 class="text-xs font-bold text-yellow-400 uppercase tracking-widest border-b border-gray-800 pb-2 mb-3 flex items-center justify-between">
-                                <span><i class="fa-solid fa-heart animate-pulse text-red-500"></i> कृतज्ञता फलक (लाईव्ह देणगीदार)</span>
-                                <span class="text-[9px] bg-red-600/30 text-red-400 border border-red-500/20 px-2 py-0.5 rounded-full font-bold">थेट प्रक्षेपण</span>
-                            </h4>
-                            <div class="ticker-container custom-scrollbar">
-                                <div class="ticker-scroll space-y-2.5" id="donors-ticker-box">
-                                    <div class="p-3 bg-white/5 rounded-xl border border-white/5 text-center text-xs text-gray-400 py-12">
-                                        सध्या कोणतीही देणगी नोंदणी उपलब्ध नाही.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border-t border-gray-900 pt-3 mt-3 text-[10px] text-gray-400 flex items-center justify-between">
-                            <span>* देणगीदारांची नावे स्वयंचलित रीतीने स्क्रोल होतात.</span>
-                            <span class="text-yellow-400 font-bold">🚩 एक समाज, एक विचार</span>
-                        </div>
+
+                    <div class="lg:col-span-8 space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar" id="posts-container">
+                        <div class="py-12 text-center text-sm text-gray-400">पोस्ट्स लोड होत आहेत...</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="bg-gray-950 text-white pt-10 pb-6 px-4 border-t border-gray-900">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-                <p>© २०२६ अखिल भारतीय गोपाळ समाज उत्कर्ष संघ. सर्व हक्क सुरक्षित.</p>
-                <p>डिजिटल डिझाईन व विकास: <span class="text-saffron-500 font-bold">आयटी सेल - अखिल भारतीय गोपाळ समाज उत्कर्ष संघ</span></p>
+        <!-- ॲडमिन पॅनेल मोडल (Admin Panel) -->
+        <div id="admin-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+            <div class="bg-white rounded-2xl max-w-5xl w-full p-6 shadow-2xl border border-orange-100 flex flex-col max-h-[90vh]">
+                <div class="flex justify-between items-center border-b border-gray-200 pb-3 shrink-0">
+                    <h4 class="font-bold text-lg text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield text-saffron-500"></i> ॲडमिन कंट्रोल पॅनल
+                    </h4>
+                    <button onclick="closeAdminModal()" class="text-gray-500 hover:text-red-500 text-2xl font-bold leading-none">&times;</button>
+                </div>
+
+                <!-- Admin Login View -->
+                <div id="admin-login-view" class="py-12 max-w-sm mx-auto text-center flex-1">
+                    <div class="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center text-saffron-500 text-2xl mx-auto mb-4 border border-saffron-200"><i class="fa-solid fa-lock"></i></div>
+                    <p class="text-xs text-gray-500 mb-4">संपूर्ण डेटाबेसचे अधिकार मिळवण्यासाठी प्रशासक पासवर्ड प्रविष्ट करा.</p>
+                    <div class="space-y-4 text-left">
+                        <div>
+                            <input type="password" id="admin-password" placeholder="पासवर्ड" class="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:border-saffron-500 text-center tracking-widest font-bold">
+                            <p class="text-[10px] text-center text-gray-500 mt-1">पासवर्ड: <span class="font-mono text-saffron-600 font-bold">gopaladmin2026</span></p>
+                        </div>
+                        <button onclick="authenticateAdmin()" class="w-full py-2 bg-saffron-500 text-white font-bold rounded-lg hover:bg-saffron-600 transition">लॉगिन करा</button>
+                    </div>
+                </div>
+
+                <!-- Admin Dashboard View -->
+                <div id="admin-dashboard-view" class="hidden flex-col flex-1 overflow-hidden mt-4">
+                    <div class="flex border-b border-gray-200 overflow-x-auto shrink-0 custom-scrollbar pb-1">
+                        <button id="tab-census" onclick="switchAdminTab('census')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-saffron-600 border-b-2 border-saffron-500">जनगणना यादी</button>
+                        <button id="tab-market" onclick="switchAdminTab('market')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-gray-500 hover:text-saffron-600">बाजारपेठ (Market)</button>
+                        <button id="tab-social" onclick="switchAdminTab('social')" class="admin-tab whitespace-nowrap py-2 px-4 text-xs font-bold text-gray-500 hover:text-saffron-600">सोशल पोस्ट्स</button>
+                        <button onclick="logoutAdmin()" class="whitespace-nowrap py-2 px-4 text-xs font-bold text-red-500 hover:text-red-700 ml-auto"><i class="fa-solid fa-right-from-bracket"></i> लॉगआउट</button>
+                    </div>
+
+                    <div class="flex-1 overflow-y-auto pt-4 custom-scrollbar">
+                        <!-- Census Table -->
+                        <div id="admin-panel-census" class="admin-panel-content space-y-3 block">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-gray-600">सर्व नोंदणीकृत बांधव</span>
+                                <button onclick="exportToExcel('census')" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold"><i class="fa-solid fa-file-excel"></i> Excel डाउनलोड</button>
+                            </div>
+                            <div class="overflow-x-auto border rounded-xl">
+                                <table class="min-w-full text-xs text-left whitespace-nowrap">
+                                    <thead class="bg-gray-100 text-gray-700 sticky top-0">
+                                        <tr><th class="p-3">नाव</th><th class="p-3">मोबाईल</th><th class="p-3">राज्य/जिल्हा</th><th class="p-3">सदस्य</th><th class="p-3 text-center">क्रिया</th></tr>
+                                    </thead>
+                                    <tbody id="admin-table-census" class="divide-y divide-gray-200 bg-white"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Market Table -->
+                        <div id="admin-panel-market" class="admin-panel-content space-y-3 hidden">
+                            <div class="overflow-x-auto border rounded-xl">
+                                <table class="min-w-full text-xs text-left whitespace-nowrap">
+                                    <thead class="bg-gray-100 text-gray-700 sticky top-0">
+                                        <tr><th class="p-3">विक्रेता</th><th class="p-3">वर्ग</th><th class="p-3">किंमत</th><th class="p-3 text-center">क्रिया</th></tr>
+                                    </thead>
+                                    <tbody id="admin-table-market" class="divide-y divide-gray-200 bg-white"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Social Posts Table -->
+                        <div id="admin-panel-social" class="admin-panel-content space-y-3 hidden">
+                            <div class="overflow-x-auto border rounded-xl">
+                                <table class="min-w-full text-xs text-left">
+                                    <thead class="bg-gray-100 text-gray-700 sticky top-0">
+                                        <tr><th class="p-3">लेखक</th><th class="p-3">संदेश</th><th class="p-3 text-center">क्रिया</th></tr>
+                                    </thead>
+                                    <tbody id="admin-table-social" class="divide-y divide-gray-200 bg-white"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <!-- Notification/Alert Modal -->
+        <div id="alert-modal" class="hidden fixed inset-0 bg-black/60 z-[10000] flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl w-full max-w-sm p-6 text-center space-y-4 shadow-2xl">
+                <div id="alert-icon" class="w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto"></div>
+                <h4 id="alert-title" class="font-bold text-lg text-gray-900"></h4>
+                <p id="alert-desc" class="text-sm text-gray-600"></p>
+                <button onclick="document.getElementById('alert-modal').classList.add('hidden')" class="w-full py-2 bg-gray-900 text-white font-bold rounded-lg mt-2">बंद करा</button>
+            </div>
+        </div>
+
+        <footer class="bg-gray-950 text-white py-8 text-center text-xs border-t border-gray-900">
+            <p>© २०२६ अखिल भारतीय गोपाळ समाज उत्कर्ष संघ. सर्व हक्क सुरक्षित.</p>
+            <p class="text-gray-500 mt-2">डिजिटल महा-व्यासपीठ</p>
         </footer>
     </div>
 
-    <!-- Modals: Donor, Matrimony, Admin, Alert -->
-
-    <div id="donor-declare-modal" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-sm w-full p-6 space-y-4 shadow-2xl relative">
-            <button onclick="closeDonorDeclareModal()" class="absolute right-4 top-4 text-gray-500 hover:text-gray-800"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h4 class="font-bold text-sm text-gray-900 text-center uppercase tracking-widest text-saffron-600">देणगी/मदत जाहीर करा</h4>
-            <p class="text-[10px] text-gray-500 leading-relaxed text-center">आपण केलेली मदत आमच्या समाज निधी खात्यात प्राप्त झाल्यानंतर तपासणी करून आपले नाव कृतज्ञता फलकावर जाहीर केले जाईल.</p>
-            <form id="donorForm" onsubmit="handleDonorSubmit(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">आपले नाव <span class="text-red-500">*</span></label>
-                    <input type="text" id="dn_name" required class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">गाव / शहर <span class="text-red-500">*</span></label>
-                        <input type="text" id="dn_city" required class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">देणगी रक्कम (रु.) <span class="text-red-500">*</span></label>
-                        <input type="text" id="dn_amount" required placeholder="उदा. ५,००१/-" class="w-full px-3 py-2 border rounded-lg outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">मोबाईल नंबर (गोपनीय राहील) <span class="text-red-500">*</span></label>
-                    <input type="tel" id="dn_phone" required pattern="[0-9]{10}" class="w-full px-3 py-2 border rounded-lg outline-none bg-gray-100 cursor-not-allowed" readonly>
-                </div>
-                <button type="submit" class="w-full py-2.5 bg-saffron-500 text-white font-bold rounded-lg hover:bg-saffron-600 transition">नोंदणी सबमिट करा</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="matrimony-register-modal" class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
-            <button onclick="closeRegisterMatrimonyModal()" class="absolute right-4 top-4 text-gray-500 hover:text-gray-800"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <h4 class="font-bold text-sm text-gray-900 text-center uppercase tracking-widest text-pink-600">वधू-वर नवीन प्रोफाइल नोंदणी</h4>
-            <form id="matrimonyForm" onsubmit="handleMatrimonySubmit(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">नाव (वधू/वर) <span class="text-red-500">*</span></label>
-                    <input type="text" id="m_name" required placeholder="उदा. प्रियंका गोपाळ" class="w-full px-3 py-2 border rounded-lg outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">लिंग <span class="text-red-500">*</span></label>
-                        <select id="m_gender" required class="w-full px-3 py-2 border rounded-lg outline-none">
-                            <option value="वधू">वधू (Bride)</option>
-                            <option value="वर">वर (Groom)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">वय <span class="text-red-500">*</span></label>
-                        <input type="number" id="m_age" required min="18" max="70" class="w-full px-3 py-2 border rounded-lg outline-none">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">उंची</label>
-                        <input type="text" id="m_height" placeholder="५' ४\"" class="w-full px-3 py-2 border rounded-lg outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">शिक्षण <span class="text-red-500">*</span></label>
-                        <input type="text" id="m_edu" required placeholder="B.Sc / BE" class="w-full px-3 py-2 border rounded-lg outline-none">
-                    </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-gray-700 mb-1">व्यवसाय व ठिकाण <span class="text-red-500">*</span></label>
-                    <input type="text" id="m_job" required placeholder="पुणे" class="w-full px-3 py-2 border rounded-lg outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">जिल्हा <span class="text-red-500">*</span></label>
-                        <input type="text" id="m_loc" required placeholder="उदा. नाशिक" class="w-full px-3 py-2 border rounded-lg outline-none">
-                    </div>
-                    <div>
-                        <label class="block font-bold text-gray-700 mb-1">पालकांचा फोन <span class="text-red-500">*</span></label>
-                        <!-- Auto-filled if they are registering themselves, but usually parents register so kept editable -->
-                        <input type="tel" id="m_mat_phone" required pattern="[0-9]{10}" placeholder="१० अंकी फोन" class="w-full px-3 py-2 border rounded-lg outline-none">
-                    </div>
-                </div>
-                <button type="submit" class="w-full py-2.5 bg-pink-600 text-white font-bold rounded-lg hover:bg-pink-700 transition">नोंदणी सबमिट करा</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="admin-modal" class="hidden fixed inset-0 bg-black/75 z-[100] flex items-center justify-center p-4">
-        <!-- Admin Code from Original File 2 -->
-        <div class="bg-white rounded-2xl max-w-5xl w-full p-6 space-y-4 shadow-2xl border border-orange-100 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b border-orange-100 pb-3">
-                <h4 class="font-bold text-base md:text-lg text-gray-900 flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield text-saffron-500"></i> सुरक्षित ॲडमिन कंट्रोल पॅनल
-                </h4>
-                <button onclick="closeAdminModal()" class="text-gray-500 hover:text-gray-800 text-lg font-bold">×</button>
-            </div>
-
-            <div id="admin-login-view" class="space-y-4 py-4 max-w-sm mx-auto text-center">
-                <div class="space-y-3">
-                    <input type="email" id="admin-email" placeholder="ॲडमिन ईमेल प्रविष्ट करा" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-saffron-500 text-center">
-                    <input type="password" id="admin-password" placeholder="पासवर्ड प्रविष्ट करा" class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-saffron-500 text-center">
-                </div>
-                <button onclick="authenticateAdmin()" id="btn_admin_login" class="w-full py-2 bg-saffron-500 text-white text-xs font-bold rounded-lg hover:bg-saffron-600 transition">सुरक्षित लॉगिन</button>
-            </div>
-
-            <div id="admin-dashboard-view" class="hidden space-y-4">
-                <div class="flex flex-wrap border-b border-gray-200 text-xs font-bold">
-                    <button id="tab-census" onclick="switchAdminTab('census')" class="py-2 px-3 text-saffron-600 border-b-2 border-saffron-500">जनगणना यादी</button>
-                    <button id="tab-committee" onclick="switchAdminTab('committee')" class="py-2 px-3 text-gray-500 hover:text-saffron-600 transition">कार्यकारिणी जोडा (+)</button>
-                    <button id="tab-blog" onclick="switchAdminTab('blog')" class="py-2 px-3 text-gray-500 hover:text-saffron-600 transition">गौरव ब्लॉग जोडा (+)</button>
-                    <button id="tab-market" onclick="switchAdminTab('market')" class="py-2 px-3 text-gray-500 hover:text-saffron-600 transition">खरेदी-विक्री नियंत्रण</button>
-                    <button id="tab-donation-config" onclick="switchAdminTab('donation-config')" class="py-2 px-3 text-gray-500 hover:text-saffron-600 transition text-green-600 font-bold"><i class="fa-solid fa-coins mr-1"></i> निधी नियंत्रण (+)</button>
-                    <button onclick="logoutAdmin()" class="py-2 px-3 text-red-500 hover:text-red-700 transition ml-auto font-bold"><i class="fa-solid fa-right-from-bracket"></i> लॉगआउट</button>
-                </div>
-
-                <div id="admin-census-panel" class="space-y-3">
-                    <div class="overflow-x-auto border border-orange-100 rounded-xl max-h-[250px] overflow-y-auto custom-scrollbar">
-                        <table class="min-w-full text-xs text-left">
-                            <thead class="bg-orange-50 text-gray-700 font-bold sticky top-0">
-                                <tr>
-                                    <th class="p-3">क्र.</th>
-                                    <th class="p-3">नाव</th>
-                                    <th class="p-3">मोबाईल</th>
-                                    <th class="p-3">पत्ता (जिल्हा/गाव)</th>
-                                    <th class="p-3 text-center">क्रिया</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-census-table-body" class="divide-y divide-gray-100 bg-white">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="admin-committee-panel" class="hidden max-w-xl mx-auto bg-orange-50/50 p-6 rounded-2xl border border-orange-100 space-y-4">
-                    <h5 class="text-xs font-bold text-gray-700">नवीन पदाधिकारी जोडा</h5>
-                    <form id="addCommitteeForm" onsubmit="handleCreateCommittee(event)" class="space-y-3 text-xs">
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">पदाधिकाऱ्याचे नाव <span class="text-red-500">*</span></label>
-                            <input type="text" id="com_name" required placeholder="उदा. मा. श्री. रामभाऊ गोपाळ" class="w-full px-3 py-2 border rounded-lg outline-none">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-1">पद / हुद्दा <span class="text-red-500">*</span></label>
-                                <input type="text" id="com_desig" required placeholder="उदा. जिल्हाध्यक्ष" class="w-full px-3 py-2 border rounded-lg outline-none">
-                            </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-1">कार्यकारिणी स्तर <span class="text-red-500">*</span></label>
-                                <select id="com_level" required class="w-full px-3 py-2 border rounded-lg outline-none">
-                                    <option value="अखिल भारतीय कार्यकारिणी">अखिल भारतीय कार्यकारिणी</option>
-                                    <option value="महाराष्ट्र राज्य कार्यकारिणी">महाराष्ट्र राज्य कार्यकारिणी</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">फोटो अपलोड करा <span class="text-red-500">*</span></label>
-                            <input type="file" id="com_photo_file" required accept="image/*" class="w-full px-3 py-2 border rounded-lg outline-none bg-white">
-                        </div>
-                        <button type="submit" id="btn_com_submit" class="w-full py-2 bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded-lg transition">पदाधिकारी प्रसिद्ध करा</button>
-                    </form>
-                </div>
-
-                <div id="admin-blog-panel" class="hidden max-w-xl mx-auto bg-orange-50/50 p-6 rounded-2xl border border-orange-100 space-y-4">
-                    <h5 class="text-xs font-bold text-gray-700">नवीन प्रेरणादायी यशोगाथा / गौरव गाथा ब्लॉग लिहा</h5>
-                    <form id="addBlogForm" onsubmit="handleCreateBlog(event)" class="space-y-3 text-xs">
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">अधिकारी/पदाधिकाऱ्याचे नाव <span class="text-red-500">*</span></label>
-                            <input type="text" id="b_title" required placeholder="उदा. मा. श्री. किरण गोपाळ (IAS)" class="w-full px-3 py-2 border rounded-lg outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">शिका किंवा प्रेरणादायी संदेश <span class="text-red-500">*</span></label>
-                            <input type="text" id="b_subtitle" required placeholder="उदा. संघर्षातून यशाकडे वाटचाल..." class="w-full px-3 py-2 border rounded-lg outline-none">
-                        </div>
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">फोटो अपलोड करा <span class="text-red-500">*</span></label>
-                            <input type="file" id="b_photo_file" required accept="image/*" class="w-full px-3 py-2 border rounded-lg outline-none bg-white">
-                        </div>
-                        <div>
-                            <label class="block font-bold text-gray-700 mb-1">सविस्तर यशोगाथा व वाटचाल <span class="text-red-500">*</span></label>
-                            <textarea id="b_content" rows="4" required placeholder="सविस्तर प्रवास..." class="w-full px-3 py-2 border rounded-lg outline-none"></textarea>
-                        </div>
-                        <button type="submit" id="btn_blog_submit" class="w-full py-2 bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded-lg transition">ब्लॉग प्रकाशित करा</button>
-                    </form>
-                </div>
-
-                <div id="admin-market-panel" class="hidden space-y-3">
-                    <span class="text-xs font-semibold text-gray-600 block">खरेदी-विक्री जाहिराती नियंत्रण कक्ष</span>
-                    <div class="overflow-x-auto border border-orange-100 rounded-xl max-h-[250px] overflow-y-auto custom-scrollbar">
-                        <table class="min-w-full text-xs text-left">
-                            <thead class="bg-orange-50 text-gray-700 font-bold sticky top-0">
-                                <tr>
-                                    <th class="p-3">विक्रेता</th>
-                                    <th class="p-3">मोबाईल</th>
-                                    <th class="p-3">प्रकार</th>
-                                    <th class="p-3">किंमत</th>
-                                    <th class="p-3 text-center">क्रिया</th>
-                                </tr>
-                            </thead>
-                            <tbody id="admin-market-table-body" class="divide-y divide-gray-100 bg-white">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="admin-donation-config-panel" class="hidden max-w-xl mx-auto bg-orange-50/50 p-6 rounded-2xl border border-orange-100 space-y-6">
-                    <div class="space-y-4">
-                        <h5 class="text-xs font-extrabold text-gray-800 uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-gear"></i> देणगी खाते माहिती सुधारा</h5>
-                        <form id="donationConfigForm" onsubmit="handleDonationConfigSubmit(event)" class="space-y-3 text-xs">
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">बँक नाव</label>
-                                    <input type="text" id="cfg_bank" required placeholder="State Bank of India" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">खाते धारक नाव</label>
-                                    <input type="text" id="cfg_accname" required placeholder="अखिल भारतीय गोपाळ समाज उत्कर्ष संघ" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">खाते क्रमांक</label>
-                                    <input type="text" id="cfg_accno" required placeholder="1234567890123" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">IFSC कोड</label>
-                                    <input type="text" id="cfg_ifsc" required placeholder="SBIN0001234" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">युपीआय आयडी (UPI ID)</label>
-                                    <input type="text" id="cfg_upi" required placeholder="gopalsamaj@upi" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">नवीन क्यूआर कोड (QR Image)</label>
-                                    <input type="file" id="cfg_qr_file" accept="image/*" class="w-full px-3 py-2 border rounded-lg outline-none bg-white">
-                                    <input type="hidden" id="cfg_qrurl"> 
-                                </div>
-                            </div>
-                            <button type="submit" id="btn_cfg_submit" class="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition">अधिकृत बँक/क्यूआर माहिती अद्ययावत करा</button>
-                        </form>
-                    </div>
-
-                    <div class="border-t pt-4 space-y-3">
-                        <h5 class="text-xs font-extrabold text-gray-800 uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-users-line"></i> देणगीदार जोडा / संपादन करा</h5>
-                        <form id="addDonorAdminForm" onsubmit="handleCreateDonorAdmin(event)" class="space-y-3 text-xs">
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">देणगीदाराचे नाव <span class="text-red-500">*</span></label>
-                                    <input type="text" id="adm_dn_name" required placeholder="उदा. नामदेव गोपाळ" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">गाव/जिल्हा <span class="text-red-500">*</span></label>
-                                    <input type="text" id="adm_dn_city" required placeholder="उदा. नाशिक" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">रक्कम / साहाय्य <span class="text-red-500">*</span></label>
-                                    <input type="text" id="adm_dn_amount" required placeholder="उदा. ११,०००/-" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                                <div>
-                                    <label class="block font-bold text-gray-700 mb-1">मोबाईल (वैकल्पिक)</label>
-                                    <input type="tel" id="adm_dn_phone" placeholder="उदा. ९८XXXXXXXX" class="w-full px-3 py-2 border rounded-lg outline-none">
-                                </div>
-                            </div>
-                            <button type="submit" class="w-full py-2 bg-saffron-500 hover:bg-saffron-600 text-white font-bold rounded-lg transition">कृतज्ञता फलकावर नवीन नाव समाविष्ट करा</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Alert Modal -->
-    <div id="custom-modal" class="hidden fixed inset-0 bg-black/60 z-[110] flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl">
-            <div id="modal-icon" class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mx-auto">
-                <i class="fa-solid fa-circle-check"></i>
-            </div>
-            <h4 id="modal-title" class="font-bold text-base text-gray-900">यशस्वी!</h4>
-            <p id="modal-desc" class="text-xs text-gray-500 leading-relaxed"></p>
-            <button onclick="closeModal()" class="w-full py-2 bg-saffron-500 text-white font-bold text-xs rounded-lg hover:bg-saffron-600 transition shadow-sm">बंद करा</button>
-        </div>
-    </div>
-
+    <!-- Firebase Logic (Strict Mode) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, addDoc, onSnapshot, collection, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBVxJSZ_Fpljc6i2xLIATruLyRcCoAV0D4",
-            authDomain: "gopalsamaj-utkarsh-sangh.firebaseapp.com",
-            databaseURL: "https://gopalsamaj-utkarsh-sangh-default-rtdb.firebaseio.com",
-            projectId: "gopalsamaj-utkarsh-sangh",
-            storageBucket: "gopalsamaj-utkarsh-sangh.firebasestorage.app",
-            messagingSenderId: "474884202995",
-            appId: "1:474884202995:web:5d708c3c9751bacf93b286"
-        };
+        // ==========================================
+        // 1. Firebase Initialization & Auth
+        // ==========================================
+        let firebaseConfig;
+        try {
+            firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+                apiKey: "AIzaSyBVxJSZ_Fpljc6i2xLIATruLyRcCoAV0D4",
+                authDomain: "gopalsamaj-utkarsh-sangh.firebaseapp.com",
+                projectId: "gopalsamaj-utkarsh-sangh",
+                appId: "1:474884202995:web:7b8f1830b80e4d9993b286"
+            };
+        } catch(e) { console.error("Config Error"); }
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
         const auth = getAuth(app);
-        const storage = getStorage(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'gopal-samaj-app';
 
-        // State Variables
-        let localCensusData = [];
-        let localMatrimonyData = [];
-        let localMarketData = [];
-        let localCommitteeData = [];
-        let localBlogData = [];
-        let localPostsData = [];
-        let localDonationConfig = null;
-        let localDonorsData = [];
-        let isAdminLoggedIn = false;
-        
-        // --- Session / Registration Logic Integration ---
-        let currentUser = JSON.parse(localStorage.getItem('gopalSamajUser'));
+        // Global Data Arrays for Live UI & Admin
+        let censusData = [];
+        let marketData = [];
+        let postsData = [];
+        let isAdminActive = false;
 
-        function checkAuthAndInit() {
-            if (!currentUser) {
-                document.getElementById('auth-modal').classList.remove('hidden');
-                document.getElementById('portal-content').classList.add('hidden');
-            } else {
-                document.getElementById('auth-modal').classList.add('hidden');
-                document.getElementById('portal-content').classList.remove('hidden');
-                document.getElementById('portal-content').classList.remove('opacity-0');
-                
-                // Set Navbar User Chip
-                document.getElementById('user-profile-chip').classList.remove('hidden');
-                document.getElementById('user-profile-chip').classList.add('flex');
-                document.getElementById('mobile-user-chip').classList.remove('hidden');
-                document.getElementById('mobile-user-chip').classList.add('flex');
-                document.getElementById('display_user_name').innerText = currentUser.name.split(' ')[0];
-
-                // Auto-fill all forms with read-only restriction for data security
-                if(document.getElementById('m_author')) {
-                    // Market
-                    document.getElementById('m_author').value = currentUser.name;
-                    document.getElementById('m_phone').value = currentUser.phone;
-                    document.getElementById('m_district').value = currentUser.district;
-                    // Post
-                    document.getElementById('p_author').value = currentUser.name;
-                    document.getElementById('p_district').value = currentUser.district;
-                    // Census
-                    document.getElementById('c_name').value = currentUser.name;
-                    document.getElementById('c_phone').value = currentUser.phone;
-                    // Donor
-                    document.getElementById('dn_name').value = currentUser.name;
-                    document.getElementById('dn_ phone').value = currentUser.phone;
-                    document.getElementById('dn_city').value = currentUser.district;
-                }
-            }
-        }
-
-        window.dismissWelcomeAndVoice = function() {
-            document.getElementById('welcome-overlay').classList.add('hidden');
-            document.getElementById('main-body').classList.remove('overflow-hidden');
-            checkAuthAndInit(); // Only proceed if logged in/registered
-        };
-
-        window.handleUserRegistration = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn_auth_submit');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> कृपया प्रतीक्षा करा...`;
-            btn.disabled = true;
-
-            const userObj = {
-                name: document.getElementById('auth_name').value,
-                phone: document.getElementById('auth_phone').value,
-                district: document.getElementById('auth_district').value,
-                timestamp: Date.now()
-            };
-            
+        // Strictly follow Rule 3: Auth BEFORE Queries
+        const initAuth = async () => {
             try {
-                // Save to Firebase for record
-                await addDoc(collection(db, `public_data/registeredUsers`), userObj);
-            } catch(e) { console.log("Silent Error Auth:", e); }
-            
-            localStorage.setItem('gopalSamajUser', JSON.stringify(userObj));
-            currentUser = userObj;
-            
-            showModal("यशस्वी!", "नोंदणी यशस्वी झाली आहे. डिजिटल मंचावर आपले स्वागत आहे.", "success");
-            btn.innerHTML = `सुरक्षित प्रवेश करा <i class="fa-solid fa-arrow-right"></i>`;
-            btn.disabled = false;
-            
-            checkAuthAndInit();
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) { console.error("Auth init failed:", err); }
         };
 
-        window.logoutUser = function() {
-            if(confirm("तुम्हाला लॉग आउट करायचे आहे का?")) {
-                localStorage.removeItem('gopalSamajUser');
-                currentUser = null;
-                document.getElementById('user-profile-chip').classList.add('hidden');
-                document.getElementById('mobile-user-chip').classList.add('hidden');
-                document.getElementById('portal-content').classList.add('hidden');
-                checkAuthAndInit();
-            }
+        // ==========================================
+        // 2. UI Helpers & State-District Data
+        // ==========================================
+        const locationData = {
+            "महाराष्ट्र": ["अहमदनगर", "अकोला", "अमरावती", "छत्रपती संभाजीनगर", "बीड", "भंडारा", "बुलढाणा", "चंद्रपूर", "धुळे", "गडचिरोली", "गोंदिया", "हिंगोली", "जळगाव", "जालना", "कोल्हापूर", "लातूर", "मुंबई शहर", "मुंबई उपनगर", "नागपूर", "नांदेड", "नंदुरबार", "नाशिक", "धाराशिव", "पालघर", "परभणी", "पुणे", "रायगड", "रत्नागिरी", "सांगली", "सातारा", "सिंधुदुर्ग", "सोलापूर", "ठाणे", "वर्धा", "वाशिम", "यवतमाळ"],
+            "गुजरात": ["सुरत", "अहमदाबाद", "वडोदरा", "राजकोट"],
+            "कर्नाटक": ["बेळगाव", "बेंगलोर", "बिदर", "विजापूर"],
+            "मध्यप्रदेश": ["भोपाळ", "इंदूर", "ग्वाल्हेर", "उज्जैन"]
         };
 
-        // Utility: XSS Protection
-        function sanitizeInput(str) {
-            if (!str) return "";
-            return str.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;").replace(/\//g, "&#x2F;");
-        }
-
-        const locationDB = {
-            "महाराष्ट्र": [
-                "नाशिक", "अहिल्यानगर", "पुणे", "जळगाव", "धुळे", "बीड", "लातूर", "नांदेड", 
-                "छत्रपती संभाजीनगर", "धाराशिव", "सोलापूर", "कोल्हापूर", "सांगली", "सातारा", 
-                "चंद्रपूर", "नागपूर", "अमरावती", "अकोला", "यवतमाळ", "बुलढाणा", "वाशिम", 
-                "वर्धा", "गोंदिया", "भंडारा", "गडचिरोली", "हिंगोली", "परभणी", "जालना", 
-                "रायगड", "रत्नागिरी", "सिंधुदुर्ग", "ठाणे", "पालघर", "मुंबई शहर", "मुंबई उपनगर", "नंदुरबार"
-            ],
-            "गुजरात": ["सुरत", "अहमदाबाद", "वडोदरा", "राजकोट", "गांधीनगर", "जामनगर", "कच्छ", "इतर"],
-            "मध्यप्रदेश": ["भोपाळ", "इंदूर", "ग्वाल्हेर", "जबलपूर", "उज्जैन", "रतलाम", "इतर"],
-            "राजस्थान": ["जयपूर", "जोधपूर", "उदयपूर", "कोटा", "अजमेर", "बिकानेर", "इतर"]
-        };
-
-        window.addEventListener('load', async () => {
-            const stateSelect = document.getElementById('c_state');
-            if (stateSelect) {
-                stateSelect.innerHTML = `<option value="">राज्य निवडा</option>`;
-                Object.keys(locationDB).sort().forEach(state => {
-                    const opt = document.createElement('option');
-                    opt.value = state;
-                    opt.textContent = state;
-                    stateSelect.appendChild(opt);
+        window.populateDistricts = (stateName) => {
+            const distSelect = document.getElementById('c_district');
+            if(!distSelect) return;
+            distSelect.innerHTML = '<option value="">-- जिल्हा निवडा --</option>';
+            if(locationData[stateName]) {
+                locationData[stateName].sort().forEach(d => {
+                    distSelect.innerHTML += `<option value="${d}">${d}</option>`;
                 });
             }
-            startRealtimeSync();
+        };
+
+        window.showAlert = (title, desc, type="success") => {
+            const modal = document.getElementById('alert-modal');
+            document.getElementById('alert-title').innerText = title;
+            document.getElementById('alert-desc').innerText = desc;
+            const icon = document.getElementById('alert-icon');
+            
+            if(type === 'success') {
+                icon.className = "w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto bg-green-100 text-green-600";
+                icon.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else {
+                icon.className = "w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto bg-red-100 text-red-600";
+                icon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            }
+            modal.classList.remove('hidden');
+        };
+
+        window.enterPortal = () => {
+            document.getElementById('welcome-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('welcome-overlay').classList.add('hidden');
+                document.getElementById('main-body').classList.remove('overflow-hidden');
+                document.getElementById('portal-content').classList.remove('hidden');
+                setTimeout(() => document.getElementById('portal-content').style.opacity = '1', 50);
+                
+                // Populate States on entry
+                const stateSelect = document.getElementById('c_state');
+                Object.keys(locationData).sort().forEach(s => {
+                    stateSelect.innerHTML += `<option value="${s}">${s}</option>`;
+                });
+                
+            }, 700);
+        };
+
+        // ==========================================
+        // 3. Data Fetching (Strict Paths)
+        // ==========================================
+        onAuthStateChanged(auth, (user) => {
+            if (!user) return; // Guard clause (Rule 3)
+            
+            // Paths per Rule 1
+            const censusRef = collection(db, 'artifacts', appId, 'public', 'data', 'census');
+            const marketRef = collection(db, 'artifacts', appId, 'public', 'data', 'market');
+            const postsRef = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+
+            // Census Listener
+            onSnapshot(censusRef, (snap) => {
+                censusData = [];
+                snap.forEach(doc => censusData.push({ id: doc.id, ...doc.data() }));
+                document.getElementById('live-census-counter').innerText = censusData.length;
+                if(isAdminActive) renderAdminTable('census');
+            }, (err) => console.error(err));
+
+            // Market Listener
+            onSnapshot(marketRef, (snap) => {
+                marketData = [];
+                snap.forEach(doc => marketData.push({ id: doc.id, ...doc.data() }));
+                marketData.sort((a,b) => b.timestamp - a.timestamp); // Rule 2: Sort in memory
+                
+                const container = document.getElementById('market-container');
+                if(marketData.length === 0) {
+                    container.innerHTML = '<div class="col-span-full py-10 text-center text-gray-500 text-sm">कोणतीही जाहिरात उपलब्ध नाही.</div>';
+                } else {
+                    container.innerHTML = '';
+                    marketData.forEach(item => {
+                        let badge = item.category.includes('शेतकरी') ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700';
+                        container.innerHTML += `
+                            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <span class="${badge} text-[9px] font-bold px-2 py-0.5 rounded uppercase">${item.category}</span>
+                                        <h5 class="font-bold text-gray-900 text-sm mt-1">${item.author}</h5>
+                                    </div>
+                                    <span class="font-black text-green-700 text-sm">₹ ${item.price}</span>
+                                </div>
+                                <p class="text-xs text-gray-600 mb-3 bg-gray-50 p-2 rounded">${item.desc}</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] text-gray-500"><i class="fa-solid fa-location-dot text-red-500"></i> ${item.district}</span>
+                                    <a href="tel:${item.phone}" class="bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded text-xs font-bold"><i class="fa-solid fa-phone"></i> संपर्क</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                if(isAdminActive) renderAdminTable('market');
+            }, (err) => console.error(err));
+
+            // Social Posts Listener
+            onSnapshot(postsRef, (snap) => {
+                postsData = [];
+                snap.forEach(doc => postsData.push({ id: doc.id, ...doc.data() }));
+                postsData.sort((a,b) => b.timestamp - a.timestamp);
+                
+                const container = document.getElementById('posts-container');
+                if(postsData.length === 0) {
+                    container.innerHTML = '<div class="py-10 text-center text-gray-500 text-sm">कोणीही विचार मांडलेले नाहीत.</div>';
+                } else {
+                    container.innerHTML = '';
+                    postsData.forEach(post => {
+                        container.innerHTML += `
+                            <div class="bg-white p-4 rounded-xl border border-orange-100 shadow-sm">
+                                <div class="flex items-center gap-2 border-b pb-2 mb-2">
+                                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-user"></i></div>
+                                    <div>
+                                        <h5 class="font-bold text-xs text-gray-900">${post.author}</h5>
+                                        <p class="text-[9px] text-gray-500">${post.district}</p>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-700 whitespace-pre-wrap">${post.text}</p>
+                            </div>
+                        `;
+                    });
+                }
+                if(isAdminActive) renderAdminTable('social');
+            }, (err) => console.error(err));
         });
 
-        window.populateDistricts = function(selectedState) {
-            const districtSelect = document.getElementById('c_district');
-            if (!districtSelect) return;
-            districtSelect.innerHTML = `<option value="">जिल्हा निवडा</option>`;
-            if (selectedState && locationDB[selectedState]) {
-                locationDB[selectedState].sort().forEach(dist => {
-                    const opt = document.createElement('option');
-                    opt.value = dist;
-                    opt.textContent = dist;
-                    districtSelect.appendChild(opt);
-                });
-            } else {
-                districtSelect.innerHTML = `<option value="">पहिले राज्य निवडा</option>`;
-            }
-        };
+        // Initialize Auth on load
+        initAuth();
 
-        function startRealtimeSync() {
-            subscribeCollection('census', (data) => { localCensusData = data; updateCounters(); });
-            subscribeCollection('matrimony', (data) => { localMatrimonyData = data; renderMatrimony(); });
-            subscribeCollection('market', (data) => { localMarketData = data; renderMarket(); });
-            subscribeCollection('committee', (data) => { localCommitteeData = data; renderCommittee(); });
-            subscribeCollection('blog', (data) => { localBlogData = data; renderBlog(); });
-            subscribeCollection('posts', (data) => { localPostsData = data; renderPosts(); });
-            subscribeCollection('donors', (data) => { localDonorsData = data; renderDonorsTicker(); });
-
-            onSnapshot(doc(db, "public_data/donation_config/main"), (docSnap) => {
-                if (docSnap.exists()) {
-                    localDonationConfig = docSnap.data();
-                } else {
-                    localDonationConfig = {
-                        bank: "State Bank of India", accname: "अखिल भारतीय गोपाळ समाज उत्कर्ष संघ",
-                        accno: "1234567890123", ifsc: "SBIN0001234", upi: "gopalsamaj@upi",
-                        qrurl: "https://images.unsplash.com/photo-1590050752117-238cb0612b1b?auto=format&fit=crop&q=80&w=150"
-                    };
-                }
-                applyDonationConfigToUI();
-            });
-        }
-
-        function subscribeCollection(colName, callback) {
-            onSnapshot(collection(db, `public_data/${colName}`), (snapshot) => {
-                const list = [];
-                snapshot.forEach(doc => { list.push({ id: doc.id, ...doc.data() }); });
-                callback(list);
-            }, (err) => console.error("Sync Error:", err));
-        }
-
-        async function uploadFileAndGetURL(file, folder) {
-            if (!file) return "";
-            const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
-            const uploadTask = await uploadBytesResumable(storageRef, file);
-            const downloadURL = await getDownloadURL(uploadTask.ref);
-            return downloadURL;
-        }
-
-        function updateCounters() {
-            document.getElementById('live-census-counter-hero').textContent = localCensusData.length.toLocaleString('mr-IN');
-        }
-
-        function applyDonationConfigToUI() {
-            if (!localDonationConfig) return;
-            document.getElementById('db-bank').textContent = sanitizeInput(localDonationConfig.bank);
-            document.getElementById('db-accname').textContent = sanitizeInput(localDonationConfig.accname);
-            document.getElementById('db-accno').textContent = sanitizeInput(localDonationConfig.accno);
-            document.getElementById('db-ifsc').textContent = sanitizeInput(localDonationConfig.ifsc);
-            document.getElementById('db-upi').textContent = sanitizeInput(localDonationConfig.upi);
-            document.getElementById('db-qrimg').src = sanitizeInput(localDonationConfig.qrurl);
-
-            document.getElementById('cfg_bank').value = localDonationConfig.bank || "";
-            document.getElementById('cfg_accname').value = localDonationConfig.accname || "";
-            document.getElementById('cfg_accno').value = localDonationConfig.accno || "";
-            document.getElementById('cfg_ifsc').value = localDonationConfig.ifsc || "";
-            document.getElementById('cfg_upi').value = localDonationConfig.upi || "";
-            document.getElementById('cfg_qrurl').value = localDonationConfig.qrurl || "";
-        }
-
-        function renderDonorsTicker() {
-            const container = document.getElementById('donors-ticker-box');
-            if (!container) return;
-            if (localDonorsData.length === 0) {
-                container.innerHTML = `<div class="p-3 bg-white/5 rounded-xl text-center text-xs text-gray-400 py-12">सध्या कोणतीही देणगी नोंदणी उपलब्ध नाही.</div>`;
-                return;
-            }
-            container.innerHTML = "";
-            const tickerWrapper = document.createElement('div');
-            
-            const appendDonorCards = (donorsList) => {
-                donorsList.forEach(donor => {
-                    const donorCard = document.createElement('div');
-                    donorCard.className = "p-3 bg-white/5 hover:bg-white/10 rounded-xl border border-white/5 transition flex items-center justify-between text-xs mb-2";
-                    donorCard.innerHTML = `
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-7 h-7 rounded-full bg-saffron-500 text-white flex items-center justify-center font-bold text-[10px]">🤝</div>
-                            <div>
-                                <h5 class="font-bold text-yellow-300">${sanitizeInput(donor.name)}</h5>
-                                <p class="text-[9px] text-gray-400">गाव/जिल्हा: ${sanitizeInput(donor.city)}</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <span class="block font-black text-green-400">रु. ${sanitizeInput(donor.amount)}</span>
-                            <span class="text-[8px] bg-green-500/10 text-green-400 px-1.5 rounded-full">सहभाग</span>
-                        </div>
-                    `;
-                    tickerWrapper.appendChild(donorCard);
-                });
-            };
-            appendDonorCards(localDonorsData);
-            appendDonorCards(localDonorsData);
-            container.appendChild(tickerWrapper);
-            tickerWrapper.className = "ticker-scroll";
-        }
-
-        function renderMatrimony() {
-            const container = document.getElementById('matrimony-profiles-container');
-            if (!container) return;
-            if (localMatrimonyData.length === 0) {
-                container.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-gray-500 bg-white rounded-2xl border">नोंदणी उपलब्ध नाही.</div>`;
-                return;
-            }
-            container.innerHTML = "";
-            localMatrimonyData.forEach(m => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-xl border border-pink-100 flex flex-col justify-between items-start";
-                const badge = m.gender === "वधू" ? "bg-pink-100 text-pink-700" : "bg-blue-100 text-blue-700";
-                card.innerHTML = `
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="${badge} text-[8px] font-bold px-1.5 py-0.5 rounded uppercase">${sanitizeInput(m.gender)}</span>
-                            <h4 class="font-bold text-gray-900 text-xs">${sanitizeInput(m.name)}</h4>
-                        </div>
-                        <p class="text-[10px] text-gray-500">${sanitizeInput(m.age)} वर्षे • शिक्षण: ${sanitizeInput(m.education)}</p>
-                        <p class="text-[10px] text-gray-600">पत्ता: ${sanitizeInput(m.location)}</p>
-                    </div>
-                    <button onclick="requestProfileContact('${sanitizeInput(m.name)}')" class="mt-3 w-full py-1 bg-pink-50 text-pink-700 hover:bg-pink-100 text-[10px] font-bold rounded transition">संपर्क विनंती पाठवा</button>
-                `;
-                container.appendChild(card);
-            });
-            document.getElementById('live-matrimony-counter-hero').textContent = localMatrimonyData.length.toLocaleString('mr-IN');
-        }
-
-        function renderMarket() {
-            const container = document.getElementById('market-listings');
-            if (!container) return;
-            if (localMarketData.length === 0) {
-                container.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-gray-400 bg-white rounded-2xl border">जाहिराती लोड होत आहेत...</div>`;
-                return;
-            }
-            container.innerHTML = "";
-            localMarketData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-xl shadow-sm border border-orange-100 flex gap-3 text-xs";
-                const badgeColor = item.category.includes("शेतकरी") ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700";
-                card.innerHTML = `
-                    <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden shrink-0">
-                        <img src="${sanitizeInput(item.photoUrl)}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&q=80&w=200'">
-                    </div>
-                    <div class="space-y-1 flex flex-col justify-between w-full">
-                        <div>
-                            <span class="${badgeColor} text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase">${sanitizeInput(item.category)}</span>
-                            <h5 class="font-bold text-gray-900 mt-1">${sanitizeInput(item.desc)}</h5>
-                            <p class="text-[9px] text-gray-400">विक्रेता: ${sanitizeInput(item.author)} (${sanitizeInput(item.district)})</p>
-                        </div>
-                        <div class="flex justify-between items-center pt-1 border-t border-dashed">
-                            <span class="font-black text-green-700">किंमत: ${sanitizeInput(item.price)}</span>
-                            <a href="tel:${sanitizeInput(item.phone)}" class="bg-green-600 text-white px-2 py-0.5 rounded font-bold text-[9px]">थेट संपर्क</a>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function renderCommittee() {
-            const container = document.getElementById('committee-container');
-            if (!container) return;
-            if (localCommitteeData.length === 0) {
-                container.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-gray-500 bg-white rounded-2xl border">कार्यकारिणी यादी उपलब्ध नाही.</div>`;
-                return;
-            }
-            container.innerHTML = "";
-            localCommitteeData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl shadow-sm border border-orange-100 text-center flex flex-col justify-between";
-                card.innerHTML = `
-                    <div>
-                        <div class="w-20 h-20 bg-orange-100 rounded-full mx-auto mb-3 border-2 border-saffron-500 overflow-hidden">
-                            <img src="${sanitizeInput(item.photoUrl)}" class="w-full h-full object-cover">
-                        </div>
-                        <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase block w-max mx-auto">${sanitizeInput(item.designation)}</span>
-                        <h5 class="font-bold text-gray-900 text-xs mt-2">${sanitizeInput(item.name)}</h5>
-                        <p class="text-[10px] text-gray-500">${sanitizeInput(item.level)}</p>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function renderBlog() {
-            const container = document.getElementById('blog-container');
-            if (!container) return;
-            if (localBlogData.length === 0) {
-                container.innerHTML = `<div class="col-span-full py-8 text-center text-xs text-gray-400 bg-white rounded-2xl border">ब्लॉग लोड होत आहेत...</div>`;
-                return;
-            }
-            container.innerHTML = "";
-            localBlogData.forEach(blog => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-2xl border border-orange-100 shadow-sm space-y-3";
-                card.innerHTML = `
-                    <div class="w-full h-36 rounded-xl overflow-hidden bg-gray-100">
-                        <img src="${sanitizeInput(blog.photoUrl)}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="space-y-1">
-                        <h4 class="font-bold text-xs md:text-sm text-gray-950">${sanitizeInput(blog.title)}</h4>
-                        <p class="text-[10px] text-saffron-600 font-bold">${sanitizeInput(blog.subtitle)}</p>
-                        <p class="text-[10px] text-gray-600 leading-relaxed">${sanitizeInput(blog.content)}</p>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function renderPosts() {
-            const container = document.getElementById('posts-container');
-            if (!container) return;
-            if (localPostsData.length === 0) {
-                container.innerHTML = `<div class="py-12 text-center text-xs text-gray-500 bg-white rounded-2xl border">सध्या कोणतीही पोस्ट नाही.</div>`;
-                return;
-            }
-            container.innerHTML = "";
-            const sorted = [...localPostsData].sort((a,b) => b.timestamp - a.timestamp);
-            sorted.forEach(post => {
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-xl border border-orange-50 space-y-2";
-                const mediaMarkup = post.mediaUrl ? `
-                    <div class="mt-2 rounded-lg overflow-hidden max-h-48 bg-gray-50">
-                        <img src="${sanitizeInput(post.mediaUrl)}" class="w-full h-full object-cover" onerror="this.style.display='none';">
-                    </div>
-                ` : "";
-                card.innerHTML = `
-                    <div class="flex items-center gap-2 border-b pb-1.5">
-                        <div class="w-8 h-8 rounded-full bg-saffron-500 text-white flex items-center justify-center font-bold text-xs">🚩</div>
-                        <div>
-                            <h5 class="font-bold text-xs text-gray-900">${sanitizeInput(post.author)}</h5>
-                            <p class="text-[8px] text-gray-400">जिल्हा: ${sanitizeInput(post.district)} (${sanitizeInput(post.village)})</p>
-                        </div>
-                    </div>
-                    <p class="text-[11px] text-gray-700">${sanitizeInput(post.text)}</p>
-                    ${mediaMarkup}
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // ==================== FORM SUBMITS WITH STORAGE ====================
-
-        window.handleCensusSubmit = async function(e) {
+        // ==========================================
+        // 4. Form Submissions (Create Docs)
+        // ==========================================
+        window.handleCensusSubmit = async (e) => {
             e.preventDefault();
-            const data = {
-                name: document.getElementById('c_name').value,
-                phone: document.getElementById('c_phone').value,
-                age: parseInt(document.getElementById('c_age').value),
-                gender: document.getElementById('c_gender').value,
-                education: document.getElementById('c_education').value,
-                state: document.getElementById('c_state').value,
-                district: document.getElementById('c_district').value,
-                taluka: document.getElementById('c_taluka').value,
-                village: document.getElementById('c_village').value,
-                timestamp: Date.now()
-            };
-            try {
-                await addDoc(collection(db, `public_data/census`), data);
-                showModal("नोंदणी यशस्वी!", "आपली माहिती सुरक्षित प्रणालीत जतन झाली आहे.", "success");
-                e.target.reset();
-                checkAuthAndInit(); // Re-apply read-only values
-            } catch(err) {
-                showModal("त्रुटी", "माहिती जतन करू शकलो नाही.", "error");
-            }
-        };
-
-        window.handleCreateMarket = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn_market_submit');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> अपलोड होत आहे...`;
+            const btn = document.getElementById('btn_census_submit');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> सेव्ह करत आहे...`;
             btn.disabled = true;
 
-            const file = document.getElementById('m_photo_file').files[0];
-            let photoUrl = "";
             try {
-                if(file) photoUrl = await uploadFileAndGetURL(file, "market_images");
-                await addDoc(collection(db, `public_data/market`), {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'census'), {
+                    name: document.getElementById('c_name').value,
+                    phone: document.getElementById('c_phone').value,
+                    members: parseInt(document.getElementById('c_members').value),
+                    state: document.getElementById('c_state').value,
+                    district: document.getElementById('c_district').value,
+                    userId: auth.currentUser?.uid || 'anonymous',
+                    timestamp: Date.now()
+                });
+                showAlert("नोंदणी यशस्वी!", "तुमची माहिती सुरक्षितपणे सेव्ह झाली आहे.");
+                e.target.reset();
+                document.getElementById('c_district').innerHTML = '<option value="">पहिले राज्य निवडा</option>';
+            } catch(err) {
+                showAlert("त्रुटी", "माहिती सेव्ह करताना अडचण आली.", "error");
+            } finally {
+                btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up mr-2"></i> जनगणनेत सुरक्षित नोंदणी पूर्ण करा`;
+                btn.disabled = false;
+            }
+        };
+
+        window.handleMarketSubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn_market_submit');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> जाहिरात टाकत आहे...`;
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'market'), {
                     author: document.getElementById('m_author').value,
                     district: document.getElementById('m_district').value,
                     phone: document.getElementById('m_phone').value,
                     category: document.getElementById('m_category').value,
                     price: document.getElementById('m_price').value,
                     desc: document.getElementById('m_desc').value,
-                    photoUrl: photoUrl,
+                    userId: auth.currentUser?.uid || 'anonymous',
                     timestamp: Date.now()
                 });
-                showModal("प्रसिद्ध झाले!", "तुमची खरेदी-विक्री जाहिरात यशस्वीरित्या प्रकाशित झाली आहे.", "success");
+                showAlert("जाहिरात प्रसिद्ध झाली!", "तुमची जाहिरात बाजारपेठेत लाईव्ह झाली आहे.");
                 e.target.reset();
-                checkAuthAndInit();
             } catch(err) {
-                showModal("त्रुटी", "जाहिरात टाकताना एरर आली.", "error");
+                showAlert("त्रुटी", "जाहिरात टाकताना एरर आली.", "error");
             } finally {
                 btn.innerHTML = `जाहिरात प्रसिद्ध करा`;
                 btn.disabled = false;
             }
         };
 
-        window.handleCreatePost = async function(e) {
+        window.handlePostSubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn_post_submit');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> अपलोड होत आहे...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> पोस्ट करत आहे...`;
             btn.disabled = true;
 
-            const file = document.getElementById('p_media_file').files[0];
-            let photoUrl = "";
             try {
-                if(file) photoUrl = await uploadFileAndGetURL(file, "post_images");
-                await addDoc(collection(db, `public_data/posts`), {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'posts'), {
                     author: document.getElementById('p_author').value,
                     district: document.getElementById('p_district').value,
-                    village: document.getElementById('p_village').value,
                     text: document.getElementById('p_text').value,
-                    mediaUrl: photoUrl,
+                    userId: auth.currentUser?.uid || 'anonymous',
                     timestamp: Date.now()
                 });
-                showModal("प्रसारित झाले!", "तुमचा संदेश संपूर्ण महाराष्ट्रात सोशल वॉलवर प्रसारित झाला आहे.", "success");
+                showAlert("पोस्ट यशस्वी!", "तुमचा संदेश सोशल वॉलवर प्रसिद्ध झाला आहे.");
                 e.target.reset();
-                checkAuthAndInit();
             } catch(err) {
-                showModal("त्रुटी", "मजकूर टाकण्यात अडचण आली.", "error");
+                showAlert("त्रुटी", "पोस्ट करताना एरर आली.", "error");
             } finally {
-                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> संपूर्ण महाराष्ट्रात प्रसारित करा`;
+                btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> पोस्ट करा`;
                 btn.disabled = false;
             }
         };
 
-        window.handleMatrimonySubmit = async function(e) {
-            e.preventDefault();
-            const data = {
-                name: document.getElementById('m_name').value,
-                gender: document.getElementById('m_gender').value,
-                age: parseInt(document.getElementById('m_age').value),
-                height: document.getElementById('m_height').value,
-                education: document.getElementById('m_edu').value,
-                job: document.getElementById('m_job').value,
-                location: document.getElementById('m_loc').value,
-                phone: document.getElementById('m_mat_phone').value,
-                timestamp: Date.now()
-            };
-            try {
-                await addDoc(collection(db, `public_data/matrimony`), data);
-                showModal("विवाह नोंदणी यशस्वी!", "तुमचे नाव सुरक्षित वधू-वर परिचय मंचावर समाविष्ट करण्यात आले आहे.", "success");
-                closeRegisterMatrimonyModal();
-                e.target.reset();
-            } catch(err) {
-                showModal("त्रुटी", "नोंदणी करताना अडचण आली.", "error");
-            }
-        };
-
-        window.handleDonorSubmit = async function(e) {
-            e.preventDefault();
-            try {
-                await addDoc(collection(db, `public_data/donors`), {
-                    name: document.getElementById('dn_name').value,
-                    city: document.getElementById('dn_city').value,
-                    amount: document.getElementById('dn_amount').value,
-                    phone: document.getElementById('dn_phone').value,
-                    timestamp: Date.now()
-                });
-                showModal("खूप खूप धन्यवाद!", `आपली नोंद यशस्वी झाली आहे. पडताळणी पूर्ण झाल्यावर आपले नाव कृतज्ञता फलकावर स्क्रोल होईल!`, "success");
-                closeDonorDeclareModal();
-                e.target.reset();
-                checkAuthAndInit();
-            } catch (err) {
-                showModal("त्रुटी", "देणगी नोंदणी अपूर्ण राहिली.", "error");
-            }
-        };
-
-        // ==================== ADMIN ACTIONS (Auth & Logic) ====================
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                isAdminLoggedIn = true;
-                if (!document.getElementById('admin-modal').classList.contains('hidden')) {
-                    document.getElementById('admin-login-view').classList.add('hidden');
-                    document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                    renderAdminCensusTable();
-                    renderAdminMarketTable();
-                }
-            } else {
-                isAdminLoggedIn = false;
-                document.getElementById('admin-login-view').classList.remove('hidden');
-                document.getElementById('admin-dashboard-view').classList.add('hidden');
-            }
-        });
-
-        window.authenticateAdmin = async function() {
-            const email = document.getElementById('admin-email').value;
+        // ==========================================
+        // 5. Admin Panel Logic
+        // ==========================================
+        window.openAdminModal = () => document.getElementById('admin-modal').classList.remove('hidden');
+        window.closeAdminModal = () => document.getElementById('admin-modal').classList.add('hidden');
+        
+        window.authenticateAdmin = () => {
             const pass = document.getElementById('admin-password').value;
-            const btn = document.getElementById('btn_admin_login');
-            btn.textContent = "तपासत आहे...";
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                btn.textContent = "सुरक्षित लॉगिन";
-            } catch (error) {
-                showModal("लॉगिन अयशस्वी", "ईमेल किंवा पासवर्ड चुकीचा आहे.", "error");
-                btn.textContent = "सुरक्षित लॉगिन";
-            }
-        };
-
-        window.logoutAdmin = async function() {
-            await signOut(auth);
-            showModal("लॉगआउट", "ॲडमिन पॅनेलमधून यशस्वीरीत्या बाहेर पडलात.", "info");
-        };
-
-        window.handleCreateCommittee = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn_com_submit');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> अपलोड होत आहे...`;
-            btn.disabled = true;
-            
-            const file = document.getElementById('com_photo_file').files[0];
-            try {
-                const photoUrl = file ? await uploadFileAndGetURL(file, "committee_images") : "";
-                await addDoc(collection(db, `public_data/committee`), {
-                    name: document.getElementById('com_name').value,
-                    designation: document.getElementById('com_desig').value,
-                    level: document.getElementById('com_level').value,
-                    photoUrl: photoUrl,
-                    timestamp: Date.now()
-                });
-                showModal("यशस्वी!", "नवीन पदाधिकारी यशस्वीरीत्या जोडण्यात आले आहेत.", "success");
-                e.target.reset();
-            } catch(err) {
-                showModal("त्रुटी", "पदाधिकारी जोडताना एरर आली.", "error");
-            } finally {
-                btn.innerHTML = `पदाधिकारी प्रसिद्ध करा`;
-                btn.disabled = false;
-            }
-        };
-
-        window.handleCreateBlog = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn_blog_submit');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> अपलोड होत आहे...`;
-            btn.disabled = true;
-
-            const file = document.getElementById('b_photo_file').files[0];
-            try {
-                const photoUrl = file ? await uploadFileAndGetURL(file, "blog_images") : "";
-                await addDoc(collection(db, `public_data/blog`), {
-                    title: document.getElementById('b_title').value,
-                    subtitle: document.getElementById('b_subtitle').value,
-                    content: document.getElementById('b_content').value,
-                    photoUrl: photoUrl,
-                    timestamp: Date.now()
-                });
-                showModal("ब्लॉग प्रकाशित!", "प्रेरणादायी यशोगाथा यशस्वीरीत्या समाविष्ट करण्यात आली आहे.", "success");
-                e.target.reset();
-            } catch(err) {
-                showModal("त्रुटी", "ब्लॉग प्रकाशित करू शकलो नाही.", "error");
-            } finally {
-                btn.innerHTML = `ब्लॉग प्रकाशित करा`;
-                btn.disabled = false;
-            }
-        };
-
-        window.handleDonationConfigSubmit = async function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn_cfg_submit');
-            btn.textContent = "अपडेट करत आहे...";
-            
-            const file = document.getElementById('cfg_qr_file').files[0];
-            let qrUrl = document.getElementById('cfg_qrurl').value;
-            try {
-                if (file) {
-                    qrUrl = await uploadFileAndGetURL(file, "config_images");
-                }
-                await setDoc(doc(db, `public_data/donation_config/main`), {
-                    bank: document.getElementById('cfg_bank').value,
-                    accname: document.getElementById('cfg_accname').value,
-                    accno: document.getElementById('cfg_accno').value,
-                    ifsc: document.getElementById('cfg_ifsc').value,
-                    upi: document.getElementById('cfg_upi').value,
-                    qrurl: qrUrl
-                });
-                showModal("अद्ययावत झाले!", "समाज निधी खाते व QR तपशील यशस्वीरीत्या बदलण्यात आले आहेत.", "success");
-            } catch (err) {
-                showModal("त्रुटी", "माहिती अद्ययावत करताना एरर आला.", "error");
-            } finally {
-                btn.textContent = "अधिकृत बँक/क्यूआर माहिती अद्ययावत करा";
-            }
-        };
-
-        window.handleCreateDonorAdmin = async function(e) {
-            e.preventDefault();
-            try {
-                await addDoc(collection(db, `public_data/donors`), {
-                    name: document.getElementById('adm_dn_name').value,
-                    city: document.getElementById('adm_dn_city').value,
-                    amount: document.getElementById('adm_dn_amount').value,
-                    phone: document.getElementById('adm_dn_phone').value,
-                    timestamp: Date.now()
-                });
-                showModal("यशस्वी!", "नवीन देणगीदार कृतज्ञता फलकात समाविष्ट झाला आहे.", "success");
-                e.target.reset();
-            } catch (err) {
-                showModal("त्रुटी", "नाव समाविष्ट करताना अडचण आली.", "error");
-            }
-        };
-
-        function renderAdminCensusTable() {
-            const body = document.getElementById('admin-census-table-body');
-            if (!body) return;
-            body.innerHTML = "";
-            if (localCensusData.length === 0) {
-                body.innerHTML = `<tr><td colspan="5" class="p-3 text-center">कोणतीही यादी नाही.</td></tr>`;
-                return;
-            }
-            localCensusData.forEach((rec, idx) => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-orange-50/20";
-                tr.innerHTML = `
-                    <td class="p-3 font-semibold">${idx + 1}</td>
-                    <td class="p-3 font-bold">${sanitizeInput(rec.name)}</td>
-                    <td class="p-3">${sanitizeInput(rec.phone)}</td>
-                    <td class="p-3">${sanitizeInput(rec.state)} / ${sanitizeInput(rec.district)}</td>
-                    <td class="p-3 text-center">
-                        <button onclick="deleteDocRecord('census', '${rec.id}', '${sanitizeInput(rec.name)}')" class="bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold text-[10px]">हटवा</button>
-                    </td>
-                `;
-                body.appendChild(tr);
-            });
-        }
-
-        function renderAdminMarketTable() {
-            const body = document.getElementById('admin-market-table-body');
-            if (!body) return;
-            body.innerHTML = "";
-            if (localMarketData.length === 0) {
-                body.innerHTML = `<tr><td colspan="5" class="p-3 text-center">कोणतीही जाहिरात नाही.</td></tr>`;
-                return;
-            }
-            localMarketData.forEach(item => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-orange-50/20";
-                tr.innerHTML = `
-                    <td class="p-3 font-bold">${sanitizeInput(item.author)}</td>
-                    <td class="p-3">${sanitizeInput(item.phone)}</td>
-                    <td class="p-3">${sanitizeInput(item.category)}</td>
-                    <td class="p-3 font-black">${sanitizeInput(item.price)}</td>
-                    <td class="p-3 text-center">
-                        <button onclick="deleteDocRecord('market', '${item.id}', 'जाहिरात')" class="bg-red-100 text-red-700 px-2 py-0.5 rounded font-bold text-[10px]">हटवा</button>
-                    </td>
-                `;
-                body.appendChild(tr);
-            });
-        }
-
-        window.deleteDocRecord = async function(colName, docId, detail) {
-            if (!confirm(`तुम्हाला नक्कीच "${detail}" हटवायचे आहे का?`)) return;
-            try {
-                await deleteDoc(doc(db, `public_data/${colName}/${docId}`));
-                showModal("यशस्वीपणे हटवले!", `डेटाबेसमधून माहिती यशस्वीरित्या काढून टाकण्यात आली आहे.`, "success");
-            } catch(err) {
-                showModal("त्रुटी", "माहिती हटवताना अडचण आली.", "error");
-            }
-        };
-
-        window.switchAdminTab = function(tabName) {
-            const tabs = ['census', 'committee', 'blog', 'market', 'donation-config'];
-            tabs.forEach(t => {
-                const btn = document.getElementById(`tab-${t}`);
-                const panel = document.getElementById(`admin-${t}-panel`);
-                if (t === tabName) {
-                    btn.className = "py-2 px-3 text-saffron-600 border-b-2 border-saffron-500 font-bold";
-                    panel.classList.remove('hidden');
-                } else {
-                    btn.className = "py-2 px-3 text-gray-500 hover:text-saffron-600 transition font-bold";
-                    panel.classList.add('hidden');
-                }
-            });
-            if (tabName === 'census') renderAdminCensusTable();
-            if (tabName === 'market') renderAdminMarketTable();
-            if (tabName === 'donation-config') applyDonationConfigToUI();
-        };
-
-        // Utility Routes
-        window.openAdminModal = function() {
-            document.getElementById('admin-modal').classList.remove('hidden');
-            if (isAdminLoggedIn) {
+            if (pass === 'gopaladmin2026') {
+                isAdminActive = true;
                 document.getElementById('admin-login-view').classList.add('hidden');
                 document.getElementById('admin-dashboard-view').classList.remove('hidden');
-                renderAdminCensusTable();
-                renderAdminMarketTable();
+                document.getElementById('admin-dashboard-view').classList.add('flex');
+                
+                // Render initial tables
+                renderAdminTable('census');
+                renderAdminTable('market');
+                renderAdminTable('social');
             } else {
-                document.getElementById('admin-login-view').classList.remove('hidden');
-                document.getElementById('admin-dashboard-view').classList.add('hidden');
+                showAlert("लॉगिन अयशस्वी", "पासवर्ड चुकीचा आहे.", "error");
             }
         };
-        window.closeAdminModal = function() { document.getElementById('admin-modal').classList.add('hidden'); };
-        window.openRegisterMatrimonyModal = function() { document.getElementById('matrimony-register-modal').classList.remove('hidden'); };
-        window.closeRegisterMatrimonyModal = function() { document.getElementById('matrimony-register-modal').classList.add('hidden'); };
-        window.openDonorDeclareModal = function() { document.getElementById('donor-declare-modal').classList.remove('hidden'); };
-        window.closeDonorDeclareModal = function() { document.getElementById('donor-declare-modal').classList.add('hidden'); };
-        
-        window.showModal = function(title, desc, iconType = "success") {
-            const modal = document.getElementById('custom-modal');
-            document.getElementById('modal-title').textContent = title;
-            document.getElementById('modal-desc').textContent = desc;
-            const mIcon = document.getElementById('modal-icon');
-            if (iconType === "success") {
-                mIcon.className = "w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl mx-auto shadow-inner animate-bounce";
-                mIcon.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
-            } else if (iconType === "error") {
-                mIcon.className = "w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-xl mx-auto shadow-inner animate-pulse";
-                mIcon.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
-            } else {
-                mIcon.className = "w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl mx-auto shadow-inner";
-                mIcon.innerHTML = `<i class="fa-solid fa-circle-info"></i>`;
-            }
-            modal.classList.remove('hidden');
+
+        window.logoutAdmin = () => {
+            isAdminActive = false;
+            document.getElementById('admin-login-view').classList.remove('hidden');
+            document.getElementById('admin-dashboard-view').classList.add('hidden');
+            document.getElementById('admin-dashboard-view').classList.remove('flex');
+            document.getElementById('admin-password').value = '';
         };
-        
-        window.closeModal = function() { document.getElementById('custom-modal').classList.add('hidden'); };
-        window.showMockMessage = function(text) { showModal("माहिती", text, "info"); };
-        window.toggleMobileMenu = function() { document.getElementById('mobile-menu').classList.toggle('hidden'); };
-        window.requestProfileContact = function(name) { showModal("विनंती प्राप्त!", `आम्ही वैवाहिक शिष्टाचारानुसार "${name}" यांच्या पालकांशी संपर्क साधून २४ तासांत संपर्क घडवून आणू.`, "success"); };
-        window.handleNotificationSubmit = function(e) { e.preventDefault(); showModal("नोंदणी यशस्वी!", `सर्व नवीन परीक्षा व नोकरी अपडेट्सचे नोटिफिकेशन मिळवण्यासाठी तुमची नोंदणी झाली आहे.`, "success"); e.target.reset(); };
+
+        window.switchAdminTab = (tab) => {
+            document.querySelectorAll('.admin-panel-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab').forEach(el => {
+                el.classList.remove('text-saffron-600', 'border-b-2', 'border-saffron-500');
+                el.classList.add('text-gray-500');
+            });
+            document.getElementById(`admin-panel-${tab}`).classList.remove('hidden');
+            document.getElementById(`admin-panel-${tab}`).classList.add('block');
+            document.getElementById(`tab-${tab}`).classList.add('text-saffron-600', 'border-b-2', 'border-saffron-500');
+            document.getElementById(`tab-${tab}`).classList.remove('text-gray-500');
+        };
+
+        window.renderAdminTable = (type) => {
+            const tbody = document.getElementById(`admin-table-${type}`);
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            
+            if(type === 'census') {
+                if(censusData.length === 0) tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center">डेटा नाही</td></tr>';
+                censusData.forEach(row => {
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-bold">${row.name}</td>
+                            <td class="p-3">${row.phone}</td>
+                            <td class="p-3">${row.state}/${row.district}</td>
+                            <td class="p-3 text-center">${row.members}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteRecord('census', '${row.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else if (type === 'market') {
+                if(marketData.length === 0) tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center">डेटा नाही</td></tr>';
+                marketData.forEach(row => {
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-bold">${row.author}</td>
+                            <td class="p-3">${row.category}</td>
+                            <td class="p-3 text-green-600 font-bold">₹ ${row.price}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteRecord('market', '${row.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else if (type === 'social') {
+                if(postsData.length === 0) tbody.innerHTML = '<tr><td colspan="3" class="p-4 text-center">डेटा नाही</td></tr>';
+                postsData.forEach(row => {
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-3 font-bold">${row.author}</td>
+                            <td class="p-3 truncate max-w-[200px]">${row.text}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="deleteRecord('posts', '${row.id}')" class="bg-red-100 text-red-600 px-2 py-1 rounded text-[10px] font-bold">हटवा</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+        };
+
+        window.deleteRecord = async (collectionName, docId) => {
+            if(!confirm("नक्की रेकॉर्ड हटवायचे आहे का?")) return;
+            try {
+                // Strict Path Deletion
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', collectionName, docId));
+                showAlert("हटवले!", "रेकॉर्ड यशस्वीरित्या डेटाबेसमधून हटवले आहे.", "success");
+            } catch(err) {
+                showAlert("त्रुटी", "रेकॉर्ड हटवताना अडचण आली.", "error");
+            }
+        };
+
+        window.exportToExcel = (type) => {
+            let data = [];
+            let filename = '';
+            
+            if (type === 'census') {
+                if (censusData.length === 0) return showAlert("माहिती नाही", "डाउनलोड करण्यासाठी कोणताही डेटा उपलब्ध नाही.", "error");
+                data = censusData.map((item, i) => ({
+                    'अ.क्र.': i + 1,
+                    'कुटुंब प्रमुख': item.name,
+                    'मोबाईल नंबर': item.phone,
+                    'एकूण सदस्य': item.members,
+                    'राज्य': item.state,
+                    'जिल्हा': item.district,
+                    'नोंदणी तारीख': new Date(item.timestamp).toLocaleDateString('mr-IN')
+                }));
+                filename = 'Gopal_Samaj_Census_Report.xlsx';
+            }
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Data");
+            XLSX.writeFile(wb, filename);
+        };
+
     </script>
 </body>
 </html>
