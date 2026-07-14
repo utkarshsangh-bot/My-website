@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polycab Security Daily Headcount - Digital Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --border: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 20px; font-size: 13px; }
+        
+        .dashboard-container { max-width: 1400px; margin: 0 auto; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, #0f172a, #1e3a8a); color: white; padding: 20px 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); margin-bottom: 20px; }
+        .header-title h1 { margin: 0; font-size: 24px; font-weight: 700; }
+        .header-title p { margin: 5px 0 0; color: #93c5fd; font-size: 14px; }
+        
+        .date-picker { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); }
+        .date-picker label { font-weight: 600; color: #fcd34d; }
+        .date-picker input { background: transparent; border: none; color: white; font-size: 16px; font-weight: 600; outline: none; }
+        .date-picker input::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
+        
+        /* Toolbar Grouping */
+        .toolbar { display: flex; justify-content: space-between; background: white; padding: 15px 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .action-group { display: flex; gap: 10px; }
+        .export-group { display: flex; gap: 10px; border-left: 2px solid #e2e8f0; padding-left: 15px; }
+        
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; color: white; }
+        .btn-save { background-color: #10b981; }
+        .btn-reset { background-color: #64748b; }
+        .btn-pdf { background-color: #ef4444; box-shadow: 0 3px 6px rgba(239, 68, 68, 0.3); }
+        .btn-excel { background-color: #059669; box-shadow: 0 3px 6px rgba(5, 150, 105, 0.3); }
+        .btn-wa { background-color: #25D366; }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        
+        .card { background: var(--bg-card); border-radius: 12px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow-x: auto; }
+        
+        table { width: 100%; border-collapse: collapse; min-width: 1200px; margin-bottom: 20px; }
+        th, td { border: 1px solid var(--border); padding: 6px; text-align: center; vertical-align: middle; }
+        .header-row th { background-color: #0f172a; color: white; padding: 12px 6px; font-size: 12px; }
+        
+        .shift-cell { font-weight: 800; background-color: #f1f5f9; color: var(--primary); }
+        .vendor-cell { text-align: left; font-weight: 600; padding-left: 12px; background-color: #f8fafc; }
+        
+        input[type="number"] { width: 100%; min-width: 40px; height: 30px; text-align: center; border: 1px solid #cbd5e1; border-radius: 4px; font-weight: 600; font-family: inherit; }
+        input[type="number"]:focus { outline: 2px solid var(--primary-light); background: #eff6ff; }
+        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Row Colors for better visibility */
+        .row-subtotal { background-color: #fef9c3; font-weight: 700; color: #854d0e; }
+        .row-total-hc { background-color: #e0f2fe; font-weight: 700; color: #0369a1; }
+        .row-ground-total { background-color: #dcfce7; font-weight: 800; border-top: 2px solid #166534; border-bottom: 2px solid #166534; color: #166534; }
+        .row-ot-total { background-color: #fee2e2; font-weight: 700; border-top: 2px solid #b91c1c; color: #b91c1c; }
+        .row-man-total { background-color: #ffedd5; font-weight: 700; border-top: 2px solid #c2410c; color: #c2410c; }
+        
+        .col-total { font-weight: 700; background-color: rgba(37, 99, 235, 0.1); color: #1d4ed8; }
+        .col-gtotal { font-weight: 800; background-color: rgba(245, 158, 11, 0.15); color: #b45309; }
+
+        .summary-box { float: right; width: 350px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .summary-header { background: #0f172a; color: white; padding: 12px; font-weight: 700; text-align: center; }
+        .summary-item { display: flex; justify-content: space-between; padding: 10px 15px; border-bottom: 1px solid #f1f5f9; font-weight: 600; }
+        .summary-item:last-child { background: #dcfce7; color: #166534; font-weight: 800; font-size: 15px; }
+
+        @media print {
+            body { padding: 0; background: white; }
+            .toolbar, .header { display: none !important; }
+            .card { box-shadow: none; border: none; padding: 0; }
+            input[type="number"] { border: none !important; background: transparent !important; }
+        }
+        
+        .pdf-mode input[type="number"] { border: none !important; background: transparent !important; color: black !important; padding: 0; height: auto; font-weight: 700; }
+        .pdf-mode table { font-size: 11px; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        
+        <div class="header">
+            <div class="header-title">
+                <h1>Polycab Security Headcount Portal</h1>
+                <p>Advanced Digital Reporting System</p>
+            </div>
+            <div class="date-picker">
+                <label>Date:</label>
+                <input type="date" id="reportDate" onchange="syncDate()">
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div class="action-group">
+                <button class="btn btn-save" onclick="saveData()">💾 Save Data</button>
+                <button class="btn btn-reset" onclick="resetData()">🔄 Reset Form</button>
+            </div>
+            <div class="export-group">
+                <button class="btn btn-pdf" onclick="downloadPDF()">📄 Download PDF</button>
+                <button class="btn btn-excel" onclick="downloadExcel()">📊 Download Excel</button>
+                <button class="btn btn-wa" onclick="shareWhatsApp()">💬 WhatsApp</button>
+            </div>
+        </div>
+
+        <div class="card" id="printZone">
+            
+            <div id="exportHeader" style="display: none; text-align: center; margin-bottom: 15px;">
+                <h2 style="margin: 0; color: #0f172a;">DAILY SHIFTWISE HEAD COUNT 2026/27</h2>
+                <h3 style="margin: 5px 0 15px; color: #475569;" id="exportDateLabel">Date: </h3>
+            </div>
+
+            <table id="reportTable">
+                <thead>
+                    <tr class="header-row">
+                        <th>Shift</th>
+                        <th>Description</th>
+                        <th>Assly</th><th>Welding</th><th>Rccb</th><th>Rcbo</th><th>Ysm</th>
+                        <th>Quality</th><th>Store</th><th>H/k</th><th>Maintance</th><th>Tool</th>
+                        <th>Solar</th><th>Admin</th>
+                        <th class="col-total">Total</th>
+                        <th>Molding</th>
+                        <th class="col-gtotal">Ground Total</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+
+            <div style="overflow: hidden; margin-top: 20px;">
+                <div class="summary-box">
+                    <div class="summary-header">Vendor Cumulative Summary</div>
+                    <div id="vendorSummaryBox">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const vendors = ["Balaji", "Naps", "Meraqui", "Ayush", "SIS"];
+    const shifts = ["Ist shift", "IInd shift", "IIIrd shift"];
+    const depts = ["assly", "welding", "rccb", "rcbo", "ysm", "quality", "store", "hk", "maint", "tool", "solar", "admin"];
+
+    function buildTable() {
+        const tbody = document.getElementById("tableBody");
+        let html = "";
+        
+        // 1. Shifts
+        shifts.forEach((shift, sIdx) => {
+            vendors.forEach((vendor, vIdx) => {
+                html += `<tr>`;
+                if(vIdx === 0) html += `<td rowspan="5" class="shift-cell">${shift}</td>`;
+                html += `<td class="vendor-cell">${vendor}</td>`;
+                depts.forEach(d => {
+                    html += `<td><input type="number" class="hc-input" data-shift="${sIdx}" data-vendor="${vIdx}" data-dept="${d}" oninput="calcData()"></td>`;
+                });
+                html += `<td class="col-total" id="tot_${sIdx}_${vIdx}">0</td>`;
+                html += `<td><input type="number" class="hc-input" data-shift="${sIdx}" data-vendor="${vIdx}" data-dept="molding" oninput="calcData()"></td>`;
+                html += `<td class="col-gtotal" id="gtot_${sIdx}_${vIdx}">0</td></tr>`;
+            });
+            html += `<tr class="row-subtotal"><td></td><td class="vendor-cell">Total</td>`;
+            depts.forEach(d => html += `<td id="stot_${sIdx}_${d}">0</td>`);
+            html += `<td class="col-total" id="stot_${sIdx}_total">0</td><td id="stot_${sIdx}_molding">0</td><td class="col-gtotal" id="stot_${sIdx}_gtotal">0</td></tr>`;
+        });
+
+        // 2. Total HC
+        vendors.forEach((vendor, vIdx) => {
+            html += `<tr class="row-total-hc"><td></td><td class="vendor-cell">${vendor} Total HC</td>`;
+            depts.forEach(d => html += `<td id="vsum_${vIdx}_${d}">0</td>`);
+            html += `<td class="col-total" id="vsum_${vIdx}_total">0</td><td id="vsum_${vIdx}_molding">0</td><td class="col-gtotal" id="vsum_${vIdx}_gtotal">0</td></tr>`;
+        });
+
+        // 3. Ground Total (HC)
+        html += `<tr class="row-ground-total"><td></td><td class="vendor-cell">Ground Total (HC)</td>`;
+        depts.forEach(d => html += `<td id="gt_hc_${d}">0</td>`);
+        html += `<td class="col-total" id="gt_hc_total">0</td><td id="gt_hc_molding">0</td><td class="col-gtotal" id="gt_hc_gtotal">0</td></tr>`;
+
+        // 4. OT
+        vendors.forEach((vendor, vIdx) => {
+            html += `<tr><td></td><td class="vendor-cell">${vendor} OT Hours</td>`;
+            depts.forEach(d => html += `<td><input type="number" class="ot-input" data-vendor="${vIdx}" data-dept="${d}" oninput="calcData()"></td>`);
+            html += `<td class="col-total" id="ot_tot_${vIdx}">0</td><td><input type="number" class="ot-input" data-vendor="${vIdx}" data-dept="molding" oninput="calcData()"></td><td class="col-gtotal" id="ot_gtot_${vIdx}">0</td></tr>`;
+        });
+        html += `<tr class="row-ot-total"><td></td><td class="vendor-cell">TOTAL OT HOURS</td>`;
+        depts.forEach(d => html += `<td id="ot_sum_${d}">0</td>`);
+        html += `<td class="col-total" id="ot_sum_total">0</td><td id="ot_sum_molding">0</td><td class="col-gtotal" id="ot_sum_gtotal">0</td></tr>`;
+
+        // 5. Mandays
+        vendors.forEach((vendor, vIdx) => {
+            html += `<tr><td></td><td class="vendor-cell">${vendor} Mandays</td>`;
+            depts.forEach(d => html += `<td><input type="number" class="man-input" data-vendor="${vIdx}" data-dept="${d}" oninput="calcData()"></td>`);
+            html += `<td class="col-total" id="man_tot_${vIdx}">0</td><td><input type="number" class="man-input" data-vendor="${vIdx}" data-dept="molding" oninput="calcData()"></td><td class="col-gtotal" id="man_gtot_${vIdx}">0</td></tr>`;
+        });
+        html += `<tr class="row-man-total"><td></td><td class="vendor-cell">TOTAL MANDAYS</td>`;
+        depts.forEach(d => html += `<td id="man_sum_${d}">0</td>`);
+        html += `<td class="col-total" id="man_sum_total">0</td><td id="man_sum_molding">0</td><td class="col-gtotal" id="man_sum_gtotal">0</td></tr>`;
+
+        // 6. FINAL GROUND TOTAL
+        html += `<tr class="row-ground-total"><td></td><td class="vendor-cell">SYSTEM GROUND TOTAL</td>`;
+        depts.forEach(d => html += `<td id="final_gt_${d}">0</td>`);
+        html += `<td class="col-total" id="final_gt_total">0</td><td id="final_gt_molding">0</td><td class="col-gtotal" id="final_gt_gtotal">0</td></tr>`;
+
+        tbody.innerHTML = html;
+        loadData();
+    }
+
+    function calcData() {
+        let gtHcDepts = {}; depts.forEach(d=>gtHcDepts[d]=0);
+        let gtHcMolding = 0; let gtHcTotal = 0; let gtHcGtotal = 0;
+        let vHcDepts = vendors.map(() => { let o={}; depts.forEach(d=>o[d]=0); o.molding=0; o.total=0; o.gtotal=0; return o; });
+
+        shifts.forEach((shift, sIdx) => {
+            let stDepts = {}; depts.forEach(d=>stDepts[d]=0);
+            let stMolding = 0; let stTotal = 0; let stGtotal = 0;
+
+            vendors.forEach((vendor, vIdx) => {
+                let rTotal = 0;
+                depts.forEach(d => {
+                    let v = parseInt(document.querySelector(`.hc-input[data-shift="${sIdx}"][data-vendor="${vIdx}"][data-dept="${d}"]`).value) || 0;
+                    rTotal += v; stDepts[d] += v; vHcDepts[vIdx][d] += v; gtHcDepts[d] += v;
+                });
+                let mMold = parseInt(document.querySelector(`.hc-input[data-shift="${sIdx}"][data-vendor="${vIdx}"][data-dept="molding"]`).value) || 0;
+                let rGtotal = rTotal + mMold;
+                stMolding += mMold; stTotal += rTotal; stGtotal += rGtotal;
+                vHcDepts[vIdx].molding += mMold; vHcDepts[vIdx].total += rTotal; vHcDepts[vIdx].gtotal += rGtotal;
+                gtHcMolding += mMold; gtHcTotal += rTotal; gtHcGtotal += rGtotal;
+                document.getElementById(`tot_${sIdx}_${vIdx}`).innerText = rTotal || 0;
+                document.getElementById(`gtot_${sIdx}_${vIdx}`).innerText = rGtotal || 0;
+            });
+            depts.forEach(d => document.getElementById(`stot_${sIdx}_${d}`).innerText = stDepts[d] || 0);
+            document.getElementById(`stot_${sIdx}_total`).innerText = stTotal || 0;
+            document.getElementById(`stot_${sIdx}_molding`).innerText = stMolding || 0;
+            document.getElementById(`stot_${sIdx}_gtotal`).innerText = stGtotal || 0;
+        });
+
+        vendors.forEach((vendor, vIdx) => {
+            depts.forEach(d => document.getElementById(`vsum_${vIdx}_${d}`).innerText = vHcDepts[vIdx][d] || 0);
+            document.getElementById(`vsum_${vIdx}_total`).innerText = vHcDepts[vIdx].total || 0;
+            document.getElementById(`vsum_${vIdx}_molding`).innerText = vHcDepts[vIdx].molding || 0;
+            document.getElementById(`vsum_${vIdx}_gtotal`).innerText = vHcDepts[vIdx].gtotal || 0;
+        });
+
+        depts.forEach(d => document.getElementById(`gt_hc_${d}`).innerText = gtHcDepts[d] || 0);
+        document.getElementById(`gt_hc_total`).innerText = gtHcTotal || 0;
+        document.getElementById(`gt_hc_molding`).innerText = gtHcMolding || 0;
+        document.getElementById(`gt_hc_gtotal`).innerText = gtHcGtotal || 0;
+
+        // OT
+        let otSumDepts = {}; depts.forEach(d=>otSumDepts[d]=0); let otSumMold=0; let otSumTotal=0; let otSumGtotal=0;
+        vendors.forEach((vendor, vIdx) => {
+            let rTot = 0;
+            depts.forEach(d => { let v = parseInt(document.querySelector(`.ot-input[data-vendor="${vIdx}"][data-dept="${d}"]`).value) || 0; rTot += v; otSumDepts[d] += v; });
+            let m = parseInt(document.querySelector(`.ot-input[data-vendor="${vIdx}"][data-dept="molding"]`).value) || 0;
+            let rGtot = rTot + m; otSumMold += m; otSumTotal += rTot; otSumGtotal += rGtot;
+            document.getElementById(`ot_tot_${vIdx}`).innerText = rTot || 0; document.getElementById(`ot_gtot_${vIdx}`).innerText = rGtot || 0;
+        });
+        depts.forEach(d => document.getElementById(`ot_sum_${d}`).innerText = otSumDepts[d] || 0);
+        document.getElementById(`ot_sum_total`).innerText = otSumTotal || 0; document.getElementById(`ot_sum_molding`).innerText = otSumMold || 0; document.getElementById(`ot_sum_gtotal`).innerText = otSumGtotal || 0;
+
+        // Mandays
+        let manSumDepts = {}; depts.forEach(d=>manSumDepts[d]=0); let manSumMold=0; let manSumTotal=0; let manSumGtotal=0;
+        let vManDepts = vendors.map(() => ({gtotal: 0}));
+        vendors.forEach((vendor, vIdx) => {
+            let rTot = 0;
+            depts.forEach(d => { let v = parseInt(document.querySelector(`.man-input[data-vendor="${vIdx}"][data-dept="${d}"]`).value) || 0; rTot += v; manSumDepts[d] += v; });
+            let m = parseInt(document.querySelector(`.man-input[data-vendor="${vIdx}"][data-dept="molding"]`).value) || 0;
+            let rGtot = rTot + m; manSumMold += m; manSumTotal += rTot; manSumGtotal += rGtot; vManDepts[vIdx].gtotal = rGtot;
+            document.getElementById(`man_tot_${vIdx}`).innerText = rTot || 0; document.getElementById(`man_gtot_${vIdx}`).innerText = rGtot || 0;
+        });
+        depts.forEach(d => document.getElementById(`man_sum_${d}`).innerText = manSumDepts[d] || 0);
+        document.getElementById(`man_sum_total`).innerText = manSumTotal || 0; document.getElementById(`man_sum_molding`).innerText = manSumMold || 0; document.getElementById(`man_sum_gtotal`).innerText = manSumGtotal || 0;
+
+        // Final
+        depts.forEach(d => document.getElementById(`final_gt_${d}`).innerText = (gtHcDepts[d] + manSumDepts[d]) || 0);
+        document.getElementById(`final_gt_total`).innerText = (gtHcTotal + manSumTotal) || 0;
+        document.getElementById(`final_gt_molding`).innerText = (gtHcMolding + manSumMold) || 0;
+        let finalSuperTotal = gtHcGtotal + manSumGtotal;
+        document.getElementById(`final_gt_gtotal`).innerText = finalSuperTotal || 0;
+
+        // Summary
+        let summaryHtml = "";
+        vendors.forEach((v, i) => {
+            let val = (vHcDepts[i].gtotal + vManDepts[i].gtotal) || 0;
+            summaryHtml += `<div class="summary-item"><span>${v.toUpperCase()} TOTAL</span><span>${val}</span></div>`;
+        });
+        summaryHtml += `<div class="summary-item"><span>SYSTEM GROUND TOTAL</span><span>${finalSuperTotal}</span></div>`;
+        document.getElementById("vendorSummaryBox").innerHTML = summaryHtml;
+    }
+
+    function syncDate() {
+        let d = document.getElementById("reportDate").value;
+        if(d) document.getElementById("exportDateLabel").innerText = "Date: " + d;
+    }
+
+    function saveData() {
+        let inputs = Array.from(document.querySelectorAll("input"));
+        let data = inputs.map(input => input.value);
+        localStorage.setItem("polySecNewData", JSON.stringify(data));
+        alert("Data Saved Successfully! (डेटा सेव्ह झाला आहे)");
+    }
+
+    function loadData() {
+        let data = JSON.parse(localStorage.getItem("polySecNewData"));
+        if (data) {
+            let inputs = Array.from(document.querySelectorAll("input"));
+            inputs.forEach((input, i) => input.value = data[i] || "");
+            syncDate();
+            calcData();
+        }
+    }
+
+    function resetData() {
+        if(confirm("Are you sure you want to reset all data? (संपूर्ण डेटा पुसला जाईल)")) {
+            localStorage.removeItem("polySecNewData");
+            document.querySelectorAll("input").forEach(input => input.value = "");
+            document.getElementById("exportDateLabel").innerText = "Date: ";
+            calcData();
+        }
+    }
+
+    /* === PDF DOWNLOAD FUNCTION === */
+    function downloadPDF() {
+        document.getElementById('printZone').classList.add('pdf-mode');
+        document.getElementById('exportHeader').style.display = "block";
+        const element = document.getElementById('printZone');
+        const selectedDate = document.getElementById("reportDate").value || "Report";
+        
+        const opt = {
+            margin: 0.15,
+            filename: `Polycab_Headcount_${selectedDate}.pdf`,
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+        };
+        
+        html2pdf().set(opt).from(element).save().then(() => {
+            document.getElementById('printZone').classList.remove('pdf-mode');
+            document.getElementById('exportHeader').style.display = "none";
+        });
+    }
+
+    /* === EXCEL DOWNLOAD FUNCTION === */
+    function downloadExcel() {
+        let selectedDate = document.getElementById("reportDate").value || "Report";
+        let tableClone = document.getElementById('reportTable').cloneNode(true);
+        
+        // Convert inputs to plain text for Excel
+        let inputs = tableClone.querySelectorAll('input');
+        inputs.forEach(input => {
+            let val = input.value || "0";
+            input.parentNode.innerText = val;
+        });
+
+        let wb = XLSX.utils.book_new();
+        let ws = XLSX.utils.table_to_sheet(tableClone, {raw:true});
+        
+        // Auto-width for Excel columns
+        let wscols = [{wch:15}, {wch:22}];
+        for(let i=0; i<15; i++) wscols.push({wch:10});
+        ws['!cols'] = wscols;
+
+        XLSX.utils.book_append_sheet(wb, ws, "Headcount");
+        XLSX.writeFile(wb, `Polycab_Headcount_${selectedDate}.xlsx`);
+    }
+
+    function shareWhatsApp() {
+        let date = document.getElementById("reportDate").value || "Today";
+        let total = document.getElementById("final_gt_gtotal").innerText || "0";
+        let msg = `*Polycab Headcount Report*\nDate: ${date}\n*Ground Total: ${total}*\n\n(Detailed PDF/Excel available in system)`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    window.onload = buildTable;
+</script>
+</body>
+</html>
